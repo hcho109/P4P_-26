@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>EmotionalGUI Annotation WebPage</title>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>WaveSurfer.js Audio Waveform Example</title>
+        <script src="https://unpkg.com/wavesurfer.js"></script>
+    </head>
+
+    <body>
+        <input type="file" accept="audio/*" id="audio-file-input">
+        <div id="waveform"></div>
+        <button id="play-button">Play</button>
+        <button id="pause-button">Pause</button>
+    </body>
+
+    <script>
+        const waveformContainer = document.getElementById('waveform');
+        const audioFileInput = document.getElementById('audio-file-input');
+        const playButton = document.getElementById('play-button')
+        const pauseButton = document.getElementById('pause-button')
+        // Initialize WaveSurfer
+        const wavesurfer = WaveSurfer.create({
+            container: waveformContainer,
+            waveColor: 'lightgray',
+            progressColor: 'red',
+            barWidth: 2
+        });
+ 
+        // Handle file input change event
+        audioFileInput.addEventListener('change', function () {
+            const files = this.files;
+            if (!files || !files[0]) {
+                return;
+            }
+ 
+            const fileUrl = URL.createObjectURL(files[0]);
+ 
+            // Load the audio file
+
+            wavesurfer.load(fileUrl);
+        });
+ 
+        // Handle play button click event
+        playButton.addEventListener('click', function () {
+            wavesurfer.play();
+        });
+ 
+        // Handle pause button click event
+        pauseButton.addEventListener('click', function () {
+            wavesurfer.pause();
+        });
+        
+    </script>
+
+
+
+
+
+    </html>

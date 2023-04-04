@@ -3,14 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>EmotionalGUI Home Page</title>
+    <title>EmotionalGUI Annotation WebPage</title>
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link 
+      rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" 
+    />
     <link href="annotationpg.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <script src="script.js"></script>
+
   </head>
 
   <body>
+    
     <!-- Top navigation -->
     <div class="nav">
       <a href="#home">Home</a>
@@ -32,26 +42,54 @@
         </div>
 
         <!--open multimedia file button-->
-        <input class="open-file-btn" type="button" id="multimedia_input" value="Open Video/Audio File">
-        
+        <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
+        <input class="open-file-btn" type="file" accept="video/*" id="video-file-input" value="Open Video File">
+
         <!--Video player-->
         <div class="video-wrapper">
           <h4>Video player</h4>
 
-          <video class="video" controls>
-            <source src="movie.mp4" type="video/mp4">
-            <source src="movie.ogg" type="video/ogg">
+          <video class="video" id="video" controls>
+            <source src="test1.mp4" type="video/mp4">
+            <source src="test1.wmv" type="video/wmv">
             Your browser does not support the video tag.
           </video><br>
         </div>
 
         <!--Audio Player-->
-        <div class="audio-wrapper">
-          <h4>Audio player</h4>
-          
+        <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
+
+        <h4>Audio player</h4>
+       
+        <div class="audio-container">
+          <div class="track-name">The name of the audio file</div>
+
+          <div class="audio" id="waveform"></div>
+          <div class="buttons">
+            <span class="play-btn btn">
+              <i class="fa-solid fa-play"></i>
+              <i class="fa-solid fa-pause"></i>
+            </span>
+
+            <span class="stop-btn btn">
+              <i class="fa-solid fa-stop"></i>
+            </span>
+
+            <span class="mute-btn btn">
+              <i class="fa-solid fa-volume-high"></i>
+              <i class="fa-solid fa-volume-mute"></i>
+            </span>
+
+            <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+          </div>
+        </div>
+
+
+
+        <div class="audio-wrapper">          
           <audio controls>
             <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
+            <source src="test_annotation.wav" type="audio/wav">
             Your browser does not support the audio element.
           </audio><br><br>
         </div>
@@ -97,6 +135,50 @@
       </div>
     </div>
 
-  </body>
+    </body>
+    <script>
+
+      const waveformContainer = document.getElementById('waveform');
+      const audioFileInput = document.getElementById('audio-file-input');
+      const videoFileInput = document.getElementById('video-file-input');
+
+      // Initialize WaveSurfer
+      const wavesurfer = WaveSurfer.create({
+          container: waveformContainer,
+          waveColor: 'lightgray',
+          progressColor: 'red',
+          barWidth: 2
+      });
+
+      // Handle audio file input change event
+      audioFileInput.addEventListener('change', function () {
+          const audioFiles = this.files;
+          if (!audioFiles || !audioFiles[0]) {
+              return;
+          }
+
+          const audioFileUrl = URL.createObjectURL(audioFiles[0]);
+
+          // Load the audio file
+
+          wavesurfer.load(audioFileUrl);
+      });
+
+      // Handle video file input change event
+      videoFileInput.addEventListener('change', function () {
+        const videoFiles = this.files;
+        if (!videoFiles || !videoFiles[0]) {
+            return;
+        }
+
+        const videoFileUrl = URL.createObjectURL(videoFiles[0]);
+
+        // Load the video file
+        var video = document.getElementById('video');
+        video.src = videoFileUrl;
+        video.play();
+      });
+    </script>
+
 
 </html>
