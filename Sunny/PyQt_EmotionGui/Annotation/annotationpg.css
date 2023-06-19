@@ -132,7 +132,7 @@ body .video-wrapper h4, body .audio-wrapper h4, label{
     width: 100%;
 }
 
-.video, .audio {
+.video, .audioWaveform {
     width: 100%;
     height: "auto";
     max-width: 100%;
@@ -169,7 +169,7 @@ background-color: #000;
     overflow: hidden;
 }
 
-.audio-container .audio{
+.audio-container .audioWaveform{
     background: #222;
     width: 100%;
     height: 130px;
@@ -202,6 +202,43 @@ background-color: #000;
 }
 .audio-container .buttons .mute-btn .fa-volume-mute{
     display: none;
+}
+
+/* Style the tab */
+.mediaPlayerTab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.mediaPlayerTab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 50px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+/* Change background color of buttons on hover */
+.mediaPlayerTab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.mediaPlayerTab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.mediaTabcontent {
+    display: none;
+    /* padding: 3px 3px;
+    border: 1px solid #ccc;
+    border-top: none; */
 }
 
 /************ Remove slider bar-- no longer needed ******************/
