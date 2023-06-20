@@ -3,7 +3,8 @@ html {
 }
 
 body {
-    background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255));
+    background: white;
+    /* background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255)); */
     font-family:'Times New Roman', Times, serif;
 }
 
@@ -62,6 +63,9 @@ body {
 
 .open-file-btn{
     float: right;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border: none;
 }
 
 /* Create two equal columns that floats next to each other */
@@ -96,7 +100,7 @@ body {
 
 .left, .right{
     /* background-color: white; */
-    background: linear-gradient(hsl(0, 0%, 100%), rgb(242, 252, 230));
+    background: linear-gradient(hsl(0, 0%, 100%), rgb(245, 253, 236));
 }
 
 /* content centered horizontally and vertically */
@@ -126,6 +130,7 @@ body .video-wrapper h4, body .audio-wrapper h4, label{
     color: black;
     font-size: 17px;
 }
+
 
 .video-wrapper, .audio-wrapper {
     height: 100%;
