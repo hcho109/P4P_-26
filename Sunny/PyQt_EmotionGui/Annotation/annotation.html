@@ -23,6 +23,7 @@
     
     <!-- Top navigation -->
     <div class="nav">
+      <img src="University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo img">
       <a href="#home">Home</a>
       <a href="#visualize">Visualize</a>
       <a class="active" href="#annotation">Annotation</a>
@@ -30,9 +31,9 @@
       <a href="#about" class="help">Help</a>
     </div>
 
-    <div class="title">
+    <!-- <div class="title">
       Speech Emotion Annotation
-    </div>
+    </div> -->
 
     <!--Left column-->
     <div class="split left">
@@ -44,7 +45,7 @@
         <!--Multimedia player tab links-->
         <div class="mediaPlayerTabs">
           <!-- Video player tab-->
-          <input type="radio" id="tabVideoPlayer" name="mediaPlayerTab" checked="checked">
+          <input type="radio" id="tabVideoPlayer" name="mediaPlayerTabs" checked="checked">
           <label for="tabVideoPlayer">Video player</label>
           
           <!-- Video player tab content-->
@@ -61,7 +62,7 @@
           </div>
 
           <!-- Audio player tab-->
-          <input type="radio" id="tabAudioPlayer" name="mediaPlayerTab">
+          <input type="radio" id="tabAudioPlayer" name="mediaPlayerTabs">
           <label for="tabAudioPlayer">Audio player</label>
 
           <!-- Audio player tab content-->
@@ -94,10 +95,6 @@
 
         </div>
 
-        
-
-        
-
         <!-- <div class="audio-wrapper">          
           <audio controls>
             <source src="horse.ogg" type="audio/ogg">
@@ -123,11 +120,49 @@
     <div class="split right">
       <div class="centered">
         <div class="subtitle">
-          <h3>Valence-Arousal Plot</h3>
+          <h3>Speech Emotion Annotation</h3>
         </div>
+        <p>'Click' on the emotional model you want to use to annotate emotion in speech inside the tabs below</p>
       
-        <div class="icon-bar">
-          <!-- Remove home icon <a href="#"><i class="fa fa-home fa-2x"></i></a>-->
+        <!--Multimedia player tab links-->
+        <div class="EMtabs">
+
+          <!-- discrete/categorical emotion model tab-->
+          <input type="radio" id="tabCategory" name="EMtabs">
+          <label for="tabCategory">Discrete/Categorical</label>
+          
+          <!-- categorical tab content-->
+          <div class="EMtabContent">
+            <p>insert a input textbox</p>
+          </div>
+
+          <!-- 1D emotion model tab-->
+          <input type="radio" id="tab1D" name="EMtabs">
+          <label for="tab1D">1-D</label>
+          
+          <!-- 1D tab content-->
+          <div class="EMtabContent">
+            <p>include sliders for various emotion dimensions</p>
+          </div>
+
+          <!-- 2D emotion model tab-->
+          <input type="radio" id="tab2D" name="EMtabs" checked="checked">
+          <label for="tab2D">2-D</label>
+          
+          <!-- 2D tab content-->
+          <div class="EMtabContent">
+            <p>insert a canvas for Valence-Arousal_plot</p>
+            <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"><br><br>
+            <form>
+              <input type="button" class=annotation_btn id="clear_btn" value="Clear">
+              <input type="button" class=annotation_btn id="CSV_btn" value="Save as CSV">
+              <input type="button" class=annotation_btn id="Reannotate_btn" value="Re-annotate">
+            </form><br>
+          </div>
+
+
+
+        <!-- <div class="icon-bar">
           <a href="#"><i class="fa fa-arrow-left fa-2x"></i></a>
           <a href="#"><i class="fa fa-arrow-right fa-2x"></i></a>
           <a href="#"><i class="fa fa-arrows fa-2x"></i></a>
@@ -135,15 +170,8 @@
           <a href="#"><i class="fa fa-sliders fa-2x"></i></a>
           <a href="#"><i class="fa fa-line-chart fa-2x"></i></a>
           <a href="#"><i class="fa fa-floppy-o fa-2x"></i></a>
-        </div>
+        </div> -->
 
-        <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"><br><br>
-
-        <form>
-          <input type="button" class=annotation_btn id="clear_btn" value="Clear">
-          <input type="button" class=annotation_btn id="CSV_btn" value="Save as CSV">
-          <input type="button" class=annotation_btn id="Reannotate_btn" value="Re-annotate">
-        </form><br>
       </div>
     </div>
 
