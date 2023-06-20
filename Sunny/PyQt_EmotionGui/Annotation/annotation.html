@@ -42,57 +42,61 @@
         </div>
 
         <!--Multimedia player tab links-->
-        <div class="mediaPlayerTab">
-          <button class="mediaTablinks" onclick="openPlayer(event, 'videoPlayer')" id="defaultPlayerOpen">Video Player</button>
-          <button class="mediaTablinks" onclick="openPlayer(event, 'audioPlayer')">Audio Player</button>
-        </div>
-
-        <!-- Multimedia player tab content-->
-        <div id="videoPlayer" class="mediaTabcontent">
-          <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
-          <input class="open-file-btn" type="file" accept="video/*" id="video-file-input" value="Open Video File">
-
-          <!--Video player-->
-          <div class="video-wrapper">
-            <h4>Video player</h4>
-
-            <video class="video" id="video" controls>
-              <source src="test1.mp4" type="video/mp4">
-              <source src="test1.wmv" type="video/wmv">
-              Your browser does not support the video tag.
-            </video><br>
-          </div>
-        </div>
-
-        <!--Audio Player-->
-        <div id="audioPlayer" class="mediaTabcontent">
-          <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
-
-          <h4>Audio player</h4>
-        
-          <div class="audio-container">
-            <div class="track-name">The name of the audio file</div>
-
-            <div class="audioWaveform" id="waveform"></div>
-            <div class="buttons">
-              <span class="play-btn btn">
-                <i class="fa-solid fa-play"></i>
-                <i class="fa-solid fa-pause"></i>
-              </span>
-
-              <span class="stop-btn btn">
-                <i class="fa-solid fa-stop"></i>
-              </span>
-
-              <span class="mute-btn btn">
-                <i class="fa-solid fa-volume-high"></i>
-                <i class="fa-solid fa-volume-mute"></i>
-              </span>
-
-              <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+        <div class="mediaPlayerTabs">
+          <!-- Video player tab-->
+          <input type="radio" id="tabVideoPlayer" name="mediaPlayerTab" checked="checked">
+          <label for="tabVideoPlayer">Video player</label>
+          
+          <!-- Video player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
+            <input class="open-file-btn" type="file" accept="video/*" id="video-file-input" value="Open Video File">
+            <div class="video-wrapper">
+              <video class="video" id="video" controls>
+                <source src="test1.mp4" type="video/mp4">
+                <source src="test1.wmv" type="video/wmv">
+                Your browser does not support the video tag.
+              </video><br>
             </div>
           </div>
+
+          <!-- Audio player tab-->
+          <input type="radio" id="tabAudioPlayer" name="mediaPlayerTab">
+          <label for="tabAudioPlayer">Audio player</label>
+
+          <!-- Audio player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
+
+            <div class="audio-container">
+              <div class="track-name">The name of the audio file</div>
+
+              <div class="audioWaveform" id="waveform"></div>
+              <div class="buttons">
+                <span class="play-btn btn">
+                  <i class="fa-solid fa-play"></i>
+                  <i class="fa-solid fa-pause"></i>
+                </span>
+
+                <span class="stop-btn btn">
+                  <i class="fa-solid fa-stop"></i>
+                </span>
+
+                <span class="mute-btn btn">
+                  <i class="fa-solid fa-volume-high"></i>
+                  <i class="fa-solid fa-volume-mute"></i>
+                </span>
+
+                <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+              </div>
+            </div>
+          </div>
+
         </div>
+
+        
+
+        
 
         <!-- <div class="audio-wrapper">          
           <audio controls>

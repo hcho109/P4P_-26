@@ -3,7 +3,8 @@ html {
 }
 
 body {
-    background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255));
+    background: white;
+    /* background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255)); */
     font-family:'Times New Roman', Times, serif;
 }
 
@@ -96,7 +97,7 @@ body {
 
 .left, .right{
     /* background-color: white; */
-    background: linear-gradient(hsl(0, 0%, 100%), rgb(242, 252, 230));
+    background: linear-gradient(hsl(0, 0%, 100%), rgb(252, 255, 249));
 }
 
 /* content centered horizontally and vertically */
@@ -205,41 +206,44 @@ background-color: #000;
 }
 
 /* Style the tab */
-.mediaPlayerTab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+.mediaPlayerTabs {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: fit-content;
+    padding: 10px;
 }
 
-/* Style the buttons inside the tab */
-.mediaPlayerTab button {
+.mediaPlayerTabs input[type="radio"] {
+    display: none;
+}
+
+.mediaPlayerTabs label {
     background-color: inherit;
-    float: left;
-    border: none;
     outline: none;
     cursor: pointer;
     padding: 10px 50px;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 17px;
+    font-weight: bold;
 }
 
-/* Change background color of buttons on hover */
-.mediaPlayerTab button:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.mediaPlayerTab button.active {
-    background-color: #ccc;
-}
-
-/* Style the tab content */
-.mediaTabcontent {
-    display: none;
-    /* padding: 3px 3px;
+.mediaPlayerTabs .mediaPlayerTabcontent {
+    width: 100%;
+    background: #fff;
     border: 1px solid #ccc;
-    border-top: none; */
+    order: 1;
+    padding-top: 20px;
+    display: none;
 }
+
+.mediaPlayerTabs input[type="radio"]:checked + label + .mediaPlayerTabcontent {
+    display: block;
+}
+
+.mediaPlayerTabs input[type="radio"]:checked + label {
+    background: #ccc;
+}
+
 
 /************ Remove slider bar-- no longer needed ******************/
 .slider {
