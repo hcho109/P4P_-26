@@ -51,14 +51,16 @@
           <!-- Video player tab content-->
           <div class="mediaPlayerTabcontent">
             <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
-            <input class="open-file-btn" type="file" accept="video/*" id="video-file-input" value="Open Video File">
-            <div class="video-wrapper">
+            <!-- <div class="video-wrapper">
+              
+            </div> -->
+            <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File">
               <video class="video" id="video" controls>
-                <source src="test1.mp4" type="video/mp4">
-                <source src="test1.wmv" type="video/wmv">
+                <!-- <source src="test1.mp4" type="video/mp4">
+                <source src="test1.wmv" type="video/wmv"> -->
                 Your browser does not support the video tag.
               </video><br>
-            </div>
+              <p> * This video player does not support WMV files </p>
           </div>
 
           <!-- Audio player tab-->
@@ -67,6 +69,12 @@
 
           <!-- Audio player tab content-->
           <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" id="fileinput" type="file" accept="audio*,video*"/>
+            <canvas id="canvas"></canvas>
+            <audio id="audio" src="" controls="true"></audio>
+          </div>
+
+          <!-- <div class="mediaPlayerTabcontent">
             <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
 
             <div class="audio-container">
@@ -91,7 +99,7 @@
                 <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -133,7 +141,22 @@
           
           <!-- categorical tab content-->
           <div class="EMtabContent">
-            <p>insert a input textbox</p>
+            <div class="content">
+              <h4>Discrete/Categorical Emotion Model</h4>
+              <p>
+                In a discrete/categorical emotion model, emotions are typically represented 
+                as a fixed set of basic or primary emotions. 
+                Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.<br><br>
+                After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
+                For detailed instructions, click on the '?' at the top rigt corner.
+              </p>
+            </div>
+            <div class="inputTextBox">
+              <label for="emotionLabel">Emotion description (one word):</label>
+              <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
+              <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
+              
+            </div>
           </div>
 
           <!-- 1D emotion model tab-->
@@ -142,7 +165,39 @@
           
           <!-- 1D tab content-->
           <div class="EMtabContent">
-            <p>include sliders for various emotion dimensions</p>
+            <div class="content">
+              <h4>One-dimensional (1-D) Emotion Model</h4>
+              <p>include sliders for various emotion dimensions</p>
+              <!-- <div class=valenceWrapper>
+                <div class="range">
+                  <p>Valence</p>
+                  <input type="range" min="-10" max="10" value="0" id="valenceRange" /> 
+                  <div class="valenceValue">0</div>
+                </div>
+              </div>
+              <div class=arousalWrapper>
+                <div class="range">
+                  <p>Arousal</p>
+                  <div class='verticalSlider'>
+                    <input type="range" min="-10" max="10" value="0" id="arousalRange" /> 
+                    <div class="arousalValue">0</div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="range-slider">
+                <p>Valence</p>
+                <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="valenceRange">
+                <span class="range-slider__value">0</span>
+              </div>
+
+              <div class="range-slider">
+                <p>Arousal</p>
+                <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="arousalRange">
+                <span class="range-slider__value">0</span>
+              </div>
+
+            </div>
           </div>
 
           <!-- 2D emotion model tab-->
@@ -151,7 +206,10 @@
           
           <!-- 2D tab content-->
           <div class="EMtabContent">
-            <p>insert a canvas for Valence-Arousal_plot</p>
+            <div class="content">
+              <h4>Two-dimensional (2-D) Emotion Model</h4>
+              <p>insert a canvas for Valence-Arousal_plot</p>
+            </div>
             <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"><br><br>
             <form>
               <input type="button" class=annotation_btn id="clear_btn" value="Clear">
@@ -159,84 +217,10 @@
               <input type="button" class=annotation_btn id="Reannotate_btn" value="Re-annotate">
             </form><br>
           </div>
-
-
-
-        <!-- <div class="icon-bar">
-          <a href="#"><i class="fa fa-arrow-left fa-2x"></i></a>
-          <a href="#"><i class="fa fa-arrow-right fa-2x"></i></a>
-          <a href="#"><i class="fa fa-arrows fa-2x"></i></a>
-          <a href="#"><i class="fa fa-search fa-2x"></i></a>
-          <a href="#"><i class="fa fa-sliders fa-2x"></i></a>
-          <a href="#"><i class="fa fa-line-chart fa-2x"></i></a>
-          <a href="#"><i class="fa fa-floppy-o fa-2x"></i></a>
-        </div> -->
-
       </div>
     </div>
-
+    <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
+    <script src="audioScript.js"></script>
+    <!-- <script src="annotation.js"></script> -->
     </body>
-
-    <script>
-      const waveformContainer = document.getElementById('waveform');
-      const audioFileInput = document.getElementById('audio-file-input');
-      const videoFileInput = document.getElementById('video-file-input');
-
-      // Initialize WaveSurfer
-      const wavesurfer = WaveSurfer.create({
-          container: waveformContainer,
-          waveColor: 'lightgray',
-          progressColor: 'red',
-          barWidth: 2
-      });
-
-      // Handle audio file input change event
-      audioFileInput.addEventListener('change', function () {
-          const audioFiles = this.files;
-          if (!audioFiles || !audioFiles[0]) {
-              return;
-          }
-
-          const audioFileUrl = URL.createObjectURL(audioFiles[0]);
-
-          // Load the audio file
-
-          wavesurfer.load(audioFileUrl);
-      });
-
-      // Handle video file input change event
-      videoFileInput.addEventListener('change', function () {
-        const videoFiles = this.files;
-        if (!videoFiles || !videoFiles[0]) {
-            return;
-        }
-
-        const videoFileUrl = URL.createObjectURL(videoFiles[0]);
-
-        // Load the video file
-        var video = document.getElementById('video');
-        video.src = videoFileUrl;
-        video.play();
-      });
-
-      function openPlayer(evt, mediaPlayerName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("mediaTabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("mediaTablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(mediaPlayerName).style.display = "block";
-        evt.currentTarget.className += " active";
-      }
-      
-      // Get the element with id="defaultOpen" and click on it
-      document.getElementById("defaultPlayerOpen").click();
-
-    </script>
-
-
 </html>
