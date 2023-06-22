@@ -5,36 +5,29 @@
     <meta name="viewport" content="width=device-width">
     <title>EmotionalGUI Annotation WebPage</title>
     <!-- Add icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link 
       rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
       crossorigin="anonymous" referrerpolicy="no-referrer" 
     />
-    <link href="annotationpg.css" rel="stylesheet" type="text/css" />
+    <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
+    <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script src="https://unpkg.com/wavesurfer.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <script src="script.js"></script>
-
   </head>
 
   <body>
     
     <!-- Top navigation -->
     <div class="nav">
-      <img src="University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo img">
-      <a href="#home">Home</a>
-      <a href="#visualize">Visualize</a>
-      <a class="active" href="#annotation">Annotation</a>
-      <a href="#live_audio">Live Audio</a>
-      <a href="#about" class="help">Help</a>
+      <img src="resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo img">
+      <a href="home.html">Home</a>
+      <a href="visualize.html">Visualize</a>
+      <a class="active" href="annotation.html">Annotation</a>
+      <a href="live_audio.html">Live Audio</a>
+      <a href="about.html" class="help">Help</a>
     </div>
-
-    <!-- <div class="title">
-      Speech Emotion Annotation
-    </div> -->
 
     <!------------------Left column------------------------->
     <div class="split left">
@@ -51,14 +44,8 @@
           
           <!-- Video player tab content-->
           <div class="mediaPlayerTabcontent">
-            <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
-            <!-- <div class="video-wrapper">
-              
-            </div> -->
             <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File">
               <video class="video" id="video" controls>
-                <!-- <source src="test1.mp4" type="video/mp4">
-                <source src="test1.wmv" type="video/wmv"> -->
                 Your browser does not support the video tag.
               </video><br>
               <p> * This video player does not support WMV files </p>
@@ -74,54 +61,7 @@
             <canvas class="canvas_audio" id="canvas_audio"></canvas>
             <audio id="audio" src="" controls="true"></audio>
           </div>
-
-          <!-- <div class="mediaPlayerTabcontent">
-            <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
-
-            <div class="audio-container">
-              <div class="track-name">The name of the audio file</div>
-
-              <div class="audioWaveform" id="waveform"></div>
-              <div class="buttons">
-                <span class="play-btn btn">
-                  <i class="fa-solid fa-play"></i>
-                  <i class="fa-solid fa-pause"></i>
-                </span>
-
-                <span class="stop-btn btn">
-                  <i class="fa-solid fa-stop"></i>
-                </span>
-
-                <span class="mute-btn btn">
-                  <i class="fa-solid fa-volume-high"></i>
-                  <i class="fa-solid fa-volume-mute"></i>
-                </span>
-
-                <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
-              </div>
-            </div>
-          </div> -->
-
         </div>
-
-        <!-- <div class="audio-wrapper">          
-          <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="test_annotation.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio><br><br>
-        </div> -->
-
-        <!-- Remove media player controller buttons
-      <label for="multimedia_file"> Video/Audio Player Controller: </label>
-      <input type="button" class=media_btn id="play_btn" value="Play from start">
-      <input type="button" class=media_btn id="forward_btn" value="Forward">
-      <input type="button" class=media_btn id="backward_btn" value="Backward">
-      <input type="button" class=media_btn id="Vol_inc_btn" value="Increase Volume">
-      <input type="button" class=media_btn id="Vol_dec_btn" value="Decrease Volume"><br><br>
-      <label for="playback_speed">Playback Speed:</label>
-      <input type="range" min="1" max="10" value="5" class="slider" id="speedRange">
-      -->
       </div>
     </div>
 
@@ -181,22 +121,6 @@
                   <li>Adjust each slider independently, focusing on one emotional dimension at a time. For detailed instructions, click on the '?' at the top rigt corner.</li>
                 </ul>
               </p>
-              <!-- <div class=valenceWrapper>
-                <div class="range">
-                  <p>Valence</p>
-                  <input type="range" min="-10" max="10" value="0" id="valenceRange" /> 
-                  <div class="valenceValue">0</div>
-                </div>
-              </div>
-              <div class=arousalWrapper>
-                <div class="range">
-                  <p>Arousal</p>
-                  <div class='verticalSlider'>
-                    <input type="range" min="-10" max="10" value="0" id="arousalRange" /> 
-                    <div class="arousalValue">0</div>
-                  </div>
-                </div>
-              </div> -->
             </div>
             
             <!--Valence slider bar-->
@@ -206,25 +130,11 @@
                 <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
               </form>
               <label for="valenceRange">Valence</label> 
-              <!-- <span class="limit">Unhappy</span> -->
               <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="valenceRange" list="values">
-              <!-- <span class="limit">Happy</span> -->
               <span class="range-slider__value">0</span><br>
               <span>Unhappy</span>
               <span class="endLabel">Happy</span>
-              <img class="samPics" src="valenceSAM.png" alt="SAM valence images">
-
-              <!-- <ul class="sliderLabels">
-                <li class="unhappy">Unhappy</li>
-                <li class="happy">Happy</li> -->
-                <!-- <li class="orange">Orange</li>
-                <li class="red">Red</li>
-              </ul> -->
-
-              <!-- <datalist id="values">
-                <option value="-10" label="Unhappy"></option>
-                <option value="10" label="Happy"></option>
-              </datalist> -->
+              <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
             </div>
             <hr>
             <!--Arousal slider bar-->
@@ -238,7 +148,7 @@
               <span class="range-slider__value">0</span><br>
               <span>Calm</span>
               <span class="endLabel">Excited</span>
-              <img class="samPics" src="arousalSAM.png" alt="SAM arousal images">
+              <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
             </div>
             <hr>
             <!--Dominance slider bar-->
@@ -252,7 +162,7 @@
               <span class="range-slider__value">0</span><br>
               <span>Independent</span>
               <span class="endLabel">Dependent</span>
-              <img class="samPics" src="dominanceSAM.png" alt="SAM dominance images">
+              <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
             </div>
             <hr>
 
@@ -270,7 +180,7 @@
           <div class="EMtabContent">
             <button class="help_popup_btn" onclick="open2dHelpPopup()">
               <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
-              <span class="helpPopupText" id="2dhelpPopup">A 2d em Popup!</span>
+              <span class="helpPopupText" id="2dhelpPopup"></span>
             </button>
             <div class="content">
               <h4 style="margin-bottom: 0px; margin-top: 10px">Two-dimensional (2-D) Emotion Model</h4>
@@ -280,11 +190,10 @@
                   <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
                   <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity). For detailed instructions, click on the '?' at the top rigt corner.</li>
                 </ul>
-               </p>
+              </p>
             </div>
 
             <canvas class="plotCanvas" id="plotCanvas"></canvas>
-            <!-- <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"> -->
             <form class="btns_2D">
               <input type="button" class="clear_btn" id="clear_btn" value="Clear">
               <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
@@ -293,10 +202,14 @@
           </div>
       </div>
     </div>
+
+    <!-- Audio waveform javascript -->
     <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
     <script src="audioScript.js"></script>
+
+    <!-- Help popup javascript -->
     <script>
-      // When the user clicks on ? icon, open the help popup
+      // When the user clicks on '?' icon, open the help popup
       function openHelpPopup() {
         var popup = document.getElementById("helpPopup");
         popup.classList.toggle("show");
@@ -311,7 +224,53 @@
         var popup = document.getElementById("2dhelpPopup");
         popup.classList.toggle("show");
       }
-      </script>
-    <!-- <script src="annotation.js"></script> -->
+    </script>
+
+    <!-- Video player javascript -->
+    <script>
+      // Handle video file input change event
+      const videoFileInput = document.getElementById('video-file-input');
+
+      videoFileInput.addEventListener('change', function () {
+        const videoFiles = this.files;
+        if (!videoFiles || !videoFiles[0]) {
+            return;
+        }
+
+        const videoFileUrl = URL.createObjectURL(videoFiles[0]);
+
+        // Load the video file
+        var video = document.getElementById('video');
+        video.src = videoFileUrl;
+        video.play();
+      });
+    </script>
+    
+    <!-- 1D sliders javascript -->
+    <script>
+      //Handle multiple sliders input change event
+      var rangeSlider = function() {
+        var sliders = document.querySelectorAll('.range-slider');
+        
+        sliders.forEach(function(slider) {
+            var range = slider.querySelector('.range-slider__range');
+            var value = slider.querySelector('.range-slider__value');
+
+            var values = slider.querySelectorAll('.range-slider__value');
+            values.forEach(function(val) {
+            var valValue = val.previousElementSibling.getAttribute('value');
+            val.innerHTML = valValue;
+            });
+
+            range.addEventListener('input', function() {
+            value.innerHTML = this.value;
+            });
+        });
+      };
+
+      rangeSlider();  
+    </script>
+
+    <!-- <script src="annotationScript.js"></script> -->
     </body>
 </html>
