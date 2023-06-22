@@ -65,11 +65,14 @@ body {
     font-size: 15px;
 }
 
+/*open file button*/
 .mediaPlayerTabcontent input{
     float: right;
     padding-top: 20px;
     padding-bottom: 10px;
     border: none;
+    width: 45%;
+    cursor: pointer;
 }
 
 /* Create two equal columns that floats next to each other */
@@ -112,6 +115,14 @@ body {
     left: 5%;
     right: 5%;
     text-align: left;
+}
+
+.left .centered {
+    right:2%
+}
+
+.right .centered {
+    left:2%
 }
 
 /* Style the image inside the centered container*/
@@ -232,6 +243,9 @@ background-color: #000;
     border: 1px solid #ccc;
     order: 1;
     display: none;
+    padding-left: 10px;
+    padding-right:10px;
+    align-items: center;
 }
 
 .mediaPlayerTabs input[type="radio"]:checked + label + .mediaPlayerTabcontent, .EMtabs input[type="radio"]:checked + label + .EMtabContent {
@@ -243,69 +257,199 @@ background-color: #000;
 }
 
 .EMtabContent .content {
-    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
 }
 
+.EMtabContent .content ul {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom:10px;
+    margin-top: 5px;
+    font-size: 15px;
+} 
+
 .inputTextBox label{
+    padding-left:20px;
+    padding-right:10px;
     font-size:15px;
     width: auto;
     display: inline-block;
 }
 
 .inputTextBox .save_btn {
-    margin-left: 10px;
+    margin-left: 30px;
+}
+
+/*************help popup********************/
+.help_popup_btn {
+    margin-top: 13px;
+    padding: 5px;
+    float: right;
+    size: 40px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.help_popup_btn:hover {
+    background-color: #f4f0f0;
+}
+
+/* Popup container - can be anything you want */
+.help_popup_btn {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+  /* The actual popup */
+.help_popup_btn .helpPopupText {
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-right: 30px;
+    /* margin-left: -80px; */
+}
+
+/* Popup arrow */
+.help_popup_btn .helpPopupText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.help_popup_btn .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
 }
 
 
+/*************2D buttons********************/
+/* .btns_2D {
+    padding: 10px;
+} */
 
+.EMtabContent input[type="button"] {
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #555555;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.EMtabContent input[type="button"]:hover {
+    background-color: #555555;
+    color: white;
+}
+
+.btns_2D {
+    float: right;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+}
+
+.btns_2D .save_btn, .btns_2D .reannotate_btn {
+    margin-left: 10px;
+}
+/************ 1D buttons ******************/
+.btns_1D {
+    float: right;
+    padding: 10px 0;
+}
+.btns_1D .save_btn, .btns_1D .clear_btn {
+    margin-left: 5px;
+}
+
+.btns_1D_all {
+    padding: 10px 48px;    
+}
+    /* margin: 13px; */
+    /* width: 90%; */
+
+
+.btns_1D_all .clearAll_btn, .btns_1D_all .saveAll_btn {
+    margin: 10px;
+}
 
 /************ 1D slider bar ******************/
-input[type="range"] {
+
+/* input[type="range"] { */
     /* removing default appearance */
-    -webkit-appearance: none;
-    appearance: none; 
+    /* -webkit-appearance: none;
+    appearance: none;  */
     /* creating a custom design */
-    width: 100%;
+    /* width: 100%;
     cursor: pointer;
     outline: none;
-    border-radius: 15px;
+    border-radius: 15px; */
     /*  overflow: hidden;  remove this line*/
     
     /* New additions */
-    height: 6px;
+    /* height: 6px;
     background: #ccc;
-}
+} */
 
 /* Thumb: webkit */
-input[type="range"]::-webkit-slider-thumb {
+/* input[type="range"]::-webkit-slider-thumb { */
 /* removing default appearance */
-    -webkit-appearance: none;
-    appearance: none; 
+    /* -webkit-appearance: none;
+    appearance: none;  */
     /* creating a custom design */
-    height: 15px;
+    /* height: 15px;
     width: 15px;
     background-color: #f50;
     border-radius: 50%;
-    border: none;
+    border: none; */
 
 /* box-shadow: -407px 0 0 400px #f50; emove this line */
-transition: .2s ease-in-out;
-}
+/* transition: .2s ease-in-out;
+} */
 
 /* Thumb: Firefox */
-input[type="range"]::-moz-range-thumb {
+/* input[type="range"]::-moz-range-thumb {
     height: 15px;
     width: 15px;
     background-color: #f50;
     border-radius: 50%;
-    border: none;
+    border: none; */
 
 /* box-shadow: -407px 0 0 400px #f50; emove this line */
-transition: .2s ease-in-out;
-}
+/* transition: .2s ease-in-out;
+} */
 
 /* Hover, active & focus Thumb: Webkit */
-
+/* 
 input[type="range"]::-webkit-slider-thumb:hover {
     box-shadow: 0 0 0 10px rgba(255,85,0, .1)
 }
@@ -314,10 +458,10 @@ input[type="range"]:active::-webkit-slider-thumb {
 }
 input[type="range"]:focus::-webkit-slider-thumb {
     box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-}
+} */
 
 /* Hover, active & focus Thumb: Firfox */
-
+/* 
 input[type="range"]::-moz-range-thumb:hover {
     box-shadow: 0 0 0 10px rgba(255,85,0, .1)
 }
@@ -331,14 +475,17 @@ box-shadow: 0 0 0 13px rgba(255,85,0, .2)
 .arousalWrapper {
         transform: rotate(270deg);  
 }
+
+.verticalSlider {
+    transform: rotate(270deg);  
+} */
 /*=============
 Aesthetics 
 =========================*/
-
+/* 
 .valenceWrapper, .arousalWrapper{
     color: #4b4949; 
     background: #f50;
-    /* max-width: 400px; */
     width: 100%;
     height: 100px;
     display: flex;
@@ -363,34 +510,34 @@ Aesthetics
     font-size: 26px;    
     width: 50px;
     text-align: center;
-}
+} */
+
 
 /*********multiple slider bars*******************/
 
 .range-slider {
-    margin: 60px 0 0 0;
+    margin: 10px 0 0 0;
+    width: 95%;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
-.range-slider {
-    width: 100%;
-    box-sizing: border-box;
-}
 
 .range-slider__range {
     -webkit-appearance: none;
     /* width: calc(100% - (73px)); */
-    max-width: 400px;
-    width: 80%;
+    /* max-width: 400px; */
+    width: 90%;
     height: 10px;
     border-radius: 5px;
     background: #d7dcdf;
     outline: none;
-    padding: 0;
-    margin: 0;
+    margin: 20px;
+    margin-right: 10px;
 }
 .range-slider__range::-webkit-slider-thumb {
     -webkit-appearance: none;
-            appearance: none;
+    appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -427,15 +574,15 @@ Aesthetics
 
 .range-slider__value {
     display: inline-block;
-    position: relative;
-    width: 60px;
+    position: absolute;
+    width: fit-content;
     color: #fff;
     line-height: 20px;
     text-align: center;
     border-radius: 3px;
     background: #2c3e50;
-    padding: 5px 10px;
-    margin-left: 8px;
+    padding: 5px 15px;
+    margin-top: 10px;
 }
 .range-slider__value:after {
     position: absolute;
@@ -454,8 +601,7 @@ Aesthetics
     border: 0;
 }
 
-input::-moz-focus-inner,
-input::-moz-focus-outer {
+input::-moz-focus-inner, input::-moz-focus-outer {
     border: 0;
 }
 
@@ -592,7 +738,7 @@ input::-moz-focus-outer {
     width: 100%;
 }
 
-canvas {
+.audioCanvas {
     width: 100%;
     height: 250px;
     background: #f9f9f9;
@@ -602,8 +748,75 @@ canvas {
     overflow: hidden;
 }
 
+.plotCanvas {
+    border:1px solid grey;
+    width: 100%;
+    height:500px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .mediaPlayerTabcontent p {
     padding-left: 1rem;
     font-size: small;
 }
+
+/*************1D sliders with labels and SAM******************8**/
+
+.range-slider .endLabel {
+    float:right;
+    width: 10%;
+}
+
+.range-slider img {
+    width: 100%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.range-slider span {
+    font-size: small;
+    margin-left: 10px;
+}
+
+/* .colors {
+    list-style-type: none;
+}
+
+.colors li {
+display: inline-block;
+width: 24%;
+}
+
+.colors .green {
+color: green;
+}
+
+.colors .yellow {
+color: yellow;
+}
+
+.colors .orange {
+color: orange;
+}
+
+.colors .red {
+color: red; 
+}
+
+datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    writing-mode: vertical-lr;
+    width: 78%;
+    margin-left: 20px;
+} 
+option {
+padding: 0;
+writing-mode: horizontal-tb;
+}  
+*/
+
 

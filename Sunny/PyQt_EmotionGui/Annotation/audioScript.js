@@ -5,7 +5,7 @@ class renderWave {
         this._samples = 10000;
         this._strokeStyle = "#3098ff";
         this.audioContext = new AudioContext();
-        this.canvas = document.querySelector("canvas");
+        this.canvas = document.querySelector("audioCanvas");
         this.ctx = this.canvas.getContext("2d");
         this.data = [];
         message
