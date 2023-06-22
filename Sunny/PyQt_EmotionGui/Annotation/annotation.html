@@ -14,6 +14,7 @@
     <link href="annotationpg.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <script src="script.js"></script>
 
@@ -23,6 +24,7 @@
     
     <!-- Top navigation -->
     <div class="nav">
+      <img src="University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo img">
       <a href="#home">Home</a>
       <a href="#visualize">Visualize</a>
       <a class="active" href="#annotation">Annotation</a>
@@ -30,11 +32,11 @@
       <a href="#about" class="help">Help</a>
     </div>
 
-    <div class="title">
+    <!-- <div class="title">
       Speech Emotion Annotation
-    </div>
+    </div> -->
 
-    <!--Left column-->
+    <!------------------Left column------------------------->
     <div class="split left">
       <div class="centered">
         <div class="subtitle">
@@ -42,52 +44,64 @@
         </div>
 
         <!--Multimedia player tab links-->
-        <div class="mediaPlayerTab">
-          <button class="mediaTablinks" onclick="openPlayer(event, 'videoPlayer')" id="defaultPlayerOpen">Video Player</button>
-          <button class="mediaTablinks" onclick="openPlayer(event, 'audioPlayer')">Audio Player</button>
-        </div>
-
-        <!-- Multimedia player tab content-->
-        <div id="videoPlayer" class="mediaTabcontent">
-          <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
-          <input class="open-file-btn" type="file" accept="video/*" id="video-file-input" value="Open Video File">
-
-          <!--Video player-->
-          <div class="video-wrapper">
-            <video class="video" id="video" controls>
-              <source src="test1.mp4" type="video/mp4">
-              <source src="test1.wmv" type="video/wmv">
-              Your browser does not support the video tag.
-            </video><br>
-          </div>
-        </div>
-
-        <!--Audio Player-->
-        <div id="audioPlayer" class="mediaTabcontent">
-          <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
+        <div class="mediaPlayerTabs">
+          <!---------------- Video player tab------------------>
+          <input type="radio" id="tabVideoPlayer" name="mediaPlayerTabs" checked="checked">
+          <label for="tabVideoPlayer">Video player</label>
           
-          <div class="audio-container">
-            <div class="track-name">The name of the audio file</div>
-
-            <div class="audioWaveform" id="waveform"></div>
-            <div class="buttons">
-              <span class="play-btn btn">
-                <i class="fa-solid fa-play"></i>
-                <i class="fa-solid fa-pause"></i>
-              </span>
-
-              <span class="stop-btn btn">
-                <i class="fa-solid fa-stop"></i>
-              </span>
-
-              <span class="mute-btn btn">
-                <i class="fa-solid fa-volume-high"></i>
-                <i class="fa-solid fa-volume-mute"></i>
-              </span>
-
-              <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
-            </div>
+          <!-- Video player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <!-- <input class="open-file-btn" type="button" id="multimediaFile_input" value="Open Video/Audio File"> -->
+            <!-- <div class="video-wrapper">
+              
+            </div> -->
+            <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File">
+              <video class="video" id="video" controls>
+                <!-- <source src="test1.mp4" type="video/mp4">
+                <source src="test1.wmv" type="video/wmv"> -->
+                Your browser does not support the video tag.
+              </video><br>
+              <p> * This video player does not support WMV files </p>
           </div>
+
+          <!------------------ Audio player tab---------------------->
+          <input type="radio" id="tabAudioPlayer" name="mediaPlayerTabs">
+          <label for="tabAudioPlayer">Audio player</label>
+
+          <!-- Audio player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" id="fileinput" type="file" accept="audio*,video*"/>
+            <canvas class="canvas_audio" id="canvas_audio"></canvas>
+            <audio id="audio" src="" controls="true"></audio>
+          </div>
+
+          <!-- <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" type="file" accept="audio/*" id="audio-file-input" value="Open Audio File">
+
+            <div class="audio-container">
+              <div class="track-name">The name of the audio file</div>
+
+              <div class="audioWaveform" id="waveform"></div>
+              <div class="buttons">
+                <span class="play-btn btn">
+                  <i class="fa-solid fa-play"></i>
+                  <i class="fa-solid fa-pause"></i>
+                </span>
+
+                <span class="stop-btn btn">
+                  <i class="fa-solid fa-stop"></i>
+                </span>
+
+                <span class="mute-btn btn">
+                  <i class="fa-solid fa-volume-high"></i>
+                  <i class="fa-solid fa-volume-mute"></i>
+                </span>
+
+                <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-slider">
+              </div>
+            </div>
+          </div> -->
+
         </div>
 
         <!-- <div class="audio-wrapper">          
@@ -115,92 +129,189 @@
     <div class="split right">
       <div class="centered">
         <div class="subtitle">
-          <h3>Valence-Arousal Plot</h3>
+          <h3>Speech Emotion Annotation</h3>
         </div>
+        <p>'Click' on the emotional model you want to use to annotate emotions in speech within the tabs below. Enjoy annotating emotions!</p>
       
-        <div class="icon-bar">
-          <!-- Remove home icon <a href="#"><i class="fa fa-home fa-2x"></i></a>-->
-          <a href="#"><i class="fa fa-arrow-left fa-2x"></i></a>
-          <a href="#"><i class="fa fa-arrow-right fa-2x"></i></a>
-          <a href="#"><i class="fa fa-arrows fa-2x"></i></a>
-          <a href="#"><i class="fa fa-search fa-2x"></i></a>
-          <a href="#"><i class="fa fa-sliders fa-2x"></i></a>
-          <a href="#"><i class="fa fa-line-chart fa-2x"></i></a>
-          <a href="#"><i class="fa fa-floppy-o fa-2x"></i></a>
-        </div>
+        <!--Multimedia player tab links-->
+        <div class="EMtabs">
 
-        <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"><br><br>
+          <!----------- discrete/categorical emotion model tab------------------->
+          <input type="radio" id="tabCategory" name="EMtabs">
+          <label for="tabCategory">Discrete/Categorical</label>
+          
+          <!-- categorical tab content-->
+          <div class="EMtabContent">
+            <button class="help_popup_btn" onclick="openHelpPopup()">
+              <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
+            </button>
+            <div class="content">
+              <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
+              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:260px">
+              <p>
+                In a discrete/categorical emotion model, emotions are typically represented 
+                as a fixed set of basic or primary emotions. 
+                Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.<br><br>
+                After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
+                For detailed instructions, click on the '?' at the top rigt corner.
+              </p>
+            </div>
+            <div class="inputTextBox">
+              <label for="emotionLabel">Emotion description (one word):</label>
+              <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
+              <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
+            </div>
+          </div>
 
-        <form>
-          <input type="button" class=annotation_btn id="clear_btn" value="Clear">
-          <input type="button" class=annotation_btn id="CSV_btn" value="Save as CSV">
-          <input type="button" class=annotation_btn id="Reannotate_btn" value="Re-annotate">
-        </form><br>
+          <!------------- 1D emotion model tab------------------>
+          <input type="radio" id="tab1D" name="EMtabs">
+          <label for="tab1D">1-D</label>
+          
+          <!-- 1D tab content-->
+          <div class="EMtabContent">
+            <button class="help_popup_btn" onclick="open1dHelpPopup()">
+              <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
+            </button>
+            <div class="content">
+              <h4 style="margin-bottom: 0px; margin-top: 10px">One-dimensional (1-D) Emotion Model</h4>
+              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+              <p>
+                <ul>
+                  <li>As you watch a video or listen to an audio, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
+                  <li>Adjust each slider independently, focusing on one emotional dimension at a time. For detailed instructions, click on the '?' at the top rigt corner.</li>
+                </ul>
+              </p>
+              <!-- <div class=valenceWrapper>
+                <div class="range">
+                  <p>Valence</p>
+                  <input type="range" min="-10" max="10" value="0" id="valenceRange" /> 
+                  <div class="valenceValue">0</div>
+                </div>
+              </div>
+              <div class=arousalWrapper>
+                <div class="range">
+                  <p>Arousal</p>
+                  <div class='verticalSlider'>
+                    <input type="range" min="-10" max="10" value="0" id="arousalRange" /> 
+                    <div class="arousalValue">0</div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            
+            <!--Valence slider bar-->
+            <div class="range-slider"> 
+              <form class="btns_1D">
+                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+              </form>
+              <label for="valenceRange">Valence</label> 
+              <!-- <span class="limit">Unhappy</span> -->
+              <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="valenceRange" list="values">
+              <!-- <span class="limit">Happy</span> -->
+              <span class="range-slider__value">0</span><br>
+              <span>Unhappy</span>
+              <span class="endLabel">Happy</span>
+              <img class="samPics" src="valenceSAM.png" alt="SAM valence images">
+
+              <!-- <ul class="sliderLabels">
+                <li class="unhappy">Unhappy</li>
+                <li class="happy">Happy</li> -->
+                <!-- <li class="orange">Orange</li>
+                <li class="red">Red</li>
+              </ul> -->
+
+              <!-- <datalist id="values">
+                <option value="-10" label="Unhappy"></option>
+                <option value="10" label="Happy"></option>
+              </datalist> -->
+            </div>
+            <hr>
+            <!--Arousal slider bar-->
+            <div class="range-slider">
+              <form class="btns_1D">
+                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+              </form>
+              <label for="arousalRange">Arousal</label> 
+              <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="arousalRange">
+              <span class="range-slider__value">0</span><br>
+              <span>Calm</span>
+              <span class="endLabel">Excited</span>
+              <img class="samPics" src="arousalSAM.png" alt="SAM arousal images">
+            </div>
+            <hr>
+            <!--Dominance slider bar-->
+            <div class="range-slider">
+              <form class="btns_1D">
+                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+              </form>
+              <label for="dominanceRange">Dominance</label>
+              <input class="range-slider__range" type="range" value="0" min="-10" max="10" id="dominanceRange">
+              <span class="range-slider__value">0</span><br>
+              <span>Independent</span>
+              <span class="endLabel">Dependent</span>
+              <img class="samPics" src="dominanceSAM.png" alt="SAM dominance images">
+            </div>
+            <hr>
+
+            <form class="btns_1D_all">
+              <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" value="Clear all current values">
+              <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" value="Save all current values as CSV">
+            </form>
+          </div>
+
+          <!----------------- 2D emotion model tab------------------->
+          <input type="radio" id="tab2D" name="EMtabs" checked="checked">
+          <label for="tab2D">2-D</label>
+          
+          <!-- 2D tab content-->
+          <div class="EMtabContent">
+            <button class="help_popup_btn" onclick="open2dHelpPopup()">
+              <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
+              <span class="helpPopupText" id="2dhelpPopup">A 2d em Popup!</span>
+            </button>
+            <div class="content">
+              <h4 style="margin-bottom: 0px; margin-top: 10px">Two-dimensional (2-D) Emotion Model</h4>
+              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+              <p>
+                <ul>
+                  <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
+                  <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity). For detailed instructions, click on the '?' at the top rigt corner.</li>
+                </ul>
+               </p>
+            </div>
+
+            <canvas class="plotCanvas" id="plotCanvas"></canvas>
+            <!-- <img class="plot" src="Valence-Arousal_plot.png" alt = "valence-arousal plot graph img"> -->
+            <form class="btns_2D">
+              <input type="button" class="clear_btn" id="clear_btn" value="Clear">
+              <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+              <input type="button" class="reannotate_btn" id="reannotate_btn" value="Re-annotate">
+            </form><br>
+          </div>
       </div>
     </div>
-
-    </body>
-
+    <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
+    <script src="audioScript.js"></script>
     <script>
-      const waveformContainer = document.getElementById('waveform');
-      const audioFileInput = document.getElementById('audio-file-input');
-      const videoFileInput = document.getElementById('video-file-input');
-
-      // Initialize WaveSurfer
-      const wavesurfer = WaveSurfer.create({
-          container: waveformContainer,
-          waveColor: 'lightgray',
-          progressColor: 'red',
-          barWidth: 2
-      });
-
-      // Handle audio file input change event
-      audioFileInput.addEventListener('change', function () {
-          const audioFiles = this.files;
-          if (!audioFiles || !audioFiles[0]) {
-              return;
-          }
-
-          const audioFileUrl = URL.createObjectURL(audioFiles[0]);
-
-          // Load the audio file
-
-          wavesurfer.load(audioFileUrl);
-      });
-
-      // Handle video file input change event
-      videoFileInput.addEventListener('change', function () {
-        const videoFiles = this.files;
-        if (!videoFiles || !videoFiles[0]) {
-            return;
-        }
-
-        const videoFileUrl = URL.createObjectURL(videoFiles[0]);
-
-        // Load the video file
-        var video = document.getElementById('video');
-        video.src = videoFileUrl;
-        video.play();
-      });
-
-      function openPlayer(evt, mediaPlayerName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("mediaTabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("mediaTablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(mediaPlayerName).style.display = "block";
-        evt.currentTarget.className += " active";
+      // When the user clicks on ? icon, open the help popup
+      function openHelpPopup() {
+        var popup = document.getElementById("helpPopup");
+        popup.classList.toggle("show");
       }
-      
-      // Get the element with id="defaultOpen" and click on it
-      document.getElementById("defaultPlayerOpen").click();
 
-    </script>
+      function open1dHelpPopup() {
+        var popup = document.getElementById("1dhelpPopup");
+        popup.classList.toggle("show");
+      }
 
-
+      function open2dHelpPopup() {
+        var popup = document.getElementById("2dhelpPopup");
+        popup.classList.toggle("show");
+      }
+      </script>
+    <!-- <script src="annotation.js"></script> -->
+    </body>
 </html>

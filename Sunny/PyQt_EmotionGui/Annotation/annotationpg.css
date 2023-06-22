@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 html {
     scroll-behavior: smooth;
 }
@@ -5,7 +6,7 @@ html {
 body {
     background: white;
     /* background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255)); */
-    font-family:'Times New Roman', Times, serif;
+    font-family:"Roboto", sans-serif;
 }
 
 /* Style the links inside the navigation bar */
@@ -18,12 +19,11 @@ body {
 .nav a {
     display: flex;
     float: left;
-    font-family: Arial, Helvetica, sans-serif;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 13px 40px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 /* Change the color of links on hover */
@@ -46,14 +46,14 @@ body {
     color: white;
 }
 
-.title {
+/* .title {
     text-align: center;
     font-size: 25px;
     font-weight: bold;
     width: 800px;
     margin: auto;
     margin-top: 20px;
-}
+} */
 
 .subtitle {
     text-align: center;
@@ -61,11 +61,18 @@ body {
     font-size: 18px;
 }
 
-.open-file-btn{
+.centered p {
+    font-size: 15px;
+}
+
+/*open file button*/
+.mediaPlayerTabcontent input{
     float: right;
     padding-top: 20px;
     padding-bottom: 10px;
     border: none;
+    width: 45%;
+    cursor: pointer;
 }
 
 /* Create two equal columns that floats next to each other */
@@ -73,7 +80,6 @@ body {
     column-fill: balance;
     float: left;
     width: 50%;
-    padding: 30px;
 }
 
 /* Split the screen in half */
@@ -82,9 +88,8 @@ body {
     width: 50%;
     position: fixed;
     z-index: 1;
-    top: 15%;
+    top: 10%;
     overflow-x: hidden;
-    padding-top: 20px;
 }
 
 /* Control the left side */
@@ -100,16 +105,24 @@ body {
 
 .left, .right{
     /* background-color: white; */
-    background: linear-gradient(hsl(0, 0%, 100%), rgb(245, 253, 236));
+    background: linear-gradient(hsl(0, 0%, 100%), rgb(252, 255, 249));
 }
 
 /* content centered horizontally and vertically */
 .centered {
     position: absolute;
     top: 0;
-    left: 10%;
-    right: 10%;
+    left: 5%;
+    right: 5%;
     text-align: left;
+}
+
+.left .centered {
+    right:2%
+}
+
+.right .centered {
+    left:2%
 }
 
 /* Style the image inside the centered container*/
@@ -118,24 +131,16 @@ body {
     border-radius: 0%;
 }
 
-
-label {
-    color: black;
-    font-weight: bold;
-    display: block;
-}
-
 /* style for video and audio player */
-body .video-wrapper h4, body .audio-wrapper h4, label{
+label{
     color: black;
     font-size: 17px;
 }
 
-
-.video-wrapper, .audio-wrapper {
+/* .video-wrapper, .audio-wrapper {
     height: 100%;
     width: 100%;
-}
+} */
 
 .video, .audioWaveform {
     width: 100%;
@@ -168,7 +173,6 @@ background-color: #000;
 .audio-container{
     width: 100%;
     box-shadow: 0 4px 8px -4px rgba(0,0,0,0.3);
-    font-family: "Roboto", sans-serif;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -210,74 +214,609 @@ background-color: #000;
 }
 
 /* Style the tab */
-.mediaPlayerTab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+.mediaPlayerTabs, .EMtabs{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: fit-content;
+    padding: 10px;
 }
 
-/* Style the buttons inside the tab */
-.mediaPlayerTab button {
+.mediaPlayerTabs input[type="radio"], .EMtabs input[type="radio"]{
+    display: none;
+}
+
+.mediaPlayerTabs label, .EMtabs label {
     background-color: inherit;
-    float: left;
-    border: none;
     outline: none;
     cursor: pointer;
-    padding: 10px 50px;
+    padding: 10px 30px;
     transition: 0.3s;
-    font-size: 15px;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    display: block;
 }
 
-/* Change background color of buttons on hover */
-.mediaPlayerTab button:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.mediaPlayerTab button.active {
-    background-color: #ccc;
-}
-
-/* Style the tab content */
-.mediaTabcontent {
-    display: none;
-    /* padding: 3px 3px;
+.mediaPlayerTabs .mediaPlayerTabcontent, .EMtabs .EMtabContent {
+    width: 100%;
+    background: #fff;
     border: 1px solid #ccc;
-    border-top: none; */
+    order: 1;
+    display: none;
+    padding-left: 10px;
+    padding-right:10px;
+    align-items: center;
 }
 
-/************ Remove slider bar-- no longer needed ******************/
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
+.mediaPlayerTabs input[type="radio"]:checked + label + .mediaPlayerTabcontent, .EMtabs input[type="radio"]:checked + label + .EMtabContent {
+    display: block;
+}
+
+.mediaPlayerTabs input[type="radio"]:checked + label, .EMtabs input[type="radio"]:checked + label {
+    background: #ccc;
+}
+
+.EMtabContent .content {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+}
+
+.EMtabContent .content ul {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom:10px;
+    margin-top: 5px;
+    font-size: 15px;
+} 
+
+.inputTextBox label{
+    padding-left:20px;
+    padding-right:10px;
+    font-size:15px;
+    width: auto;
+    display: inline-block;
+}
+
+.inputTextBox .save_btn {
+    margin-left: 30px;
+}
+
+/*************help popup********************/
+.help_popup_btn {
+    margin-top: 13px;
+    padding: 5px;
+    float: right;
+    size: 40px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.help_popup_btn:hover {
+    background-color: #f4f0f0;
+}
+
+/* Popup container - can be anything you want */
+.help_popup_btn {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+  /* The actual popup */
+.help_popup_btn .helpPopupText {
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-right: 30px;
+    /* margin-left: -80px; */
+}
+
+/* Popup arrow */
+.help_popup_btn .helpPopupText::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.help_popup_btn .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+
+/*************2D buttons********************/
+/* .btns_2D {
+    padding: 10px;
+} */
+
+.EMtabContent input[type="button"] {
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #555555;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.EMtabContent input[type="button"]:hover {
+    background-color: #555555;
+    color: white;
+}
+
+.btns_2D {
+    float: right;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+}
+
+.btns_2D .save_btn, .btns_2D .reannotate_btn {
+    margin-left: 10px;
+}
+/************ 1D buttons ******************/
+.btns_1D {
+    float: right;
+    padding: 10px 0;
+}
+.btns_1D .save_btn, .btns_1D .clear_btn {
+    margin-left: 5px;
+}
+
+.btns_1D_all {
+    padding: 10px 48px;    
+}
+    /* margin: 13px; */
+    /* width: 90%; */
+
+
+.btns_1D_all .clearAll_btn, .btns_1D_all .saveAll_btn {
+    margin: 10px;
+}
+
+/************ 1D slider bar ******************/
+
+/* input[type="range"] { */
+    /* removing default appearance */
+    /* -webkit-appearance: none;
+    appearance: none;  */
+    /* creating a custom design */
+    /* width: 100%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 15px; */
+    /*  overflow: hidden;  remove this line*/
+    
+    /* New additions */
+    /* height: 6px;
+    background: #ccc;
+} */
+
+/* Thumb: webkit */
+/* input[type="range"]::-webkit-slider-thumb { */
+/* removing default appearance */
+    /* -webkit-appearance: none;
+    appearance: none;  */
+    /* creating a custom design */
+    /* height: 15px;
+    width: 15px;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none; */
+
+/* box-shadow: -407px 0 0 400px #f50; emove this line */
+/* transition: .2s ease-in-out;
+} */
+
+/* Thumb: Firefox */
+/* input[type="range"]::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none; */
+
+/* box-shadow: -407px 0 0 400px #f50; emove this line */
+/* transition: .2s ease-in-out;
+} */
+
+/* Hover, active & focus Thumb: Webkit */
+/* 
+input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(255,85,0, .1)
+}
+input[type="range"]:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+}
+input[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+} */
+
+/* Hover, active & focus Thumb: Firfox */
+/* 
+input[type="range"]::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(255,85,0, .1)
+}
+input[type="range"]:active::-moz-range-thumb {
+    box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+}
+input[type="range"]:focus::-moz-range-thumb {
+box-shadow: 0 0 0 13px rgba(255,85,0, .2)    
+}
+
+.arousalWrapper {
+        transform: rotate(270deg);  
+}
+
+.verticalSlider {
+    transform: rotate(270deg);  
+} */
+/*=============
+Aesthetics 
+=========================*/
+/* 
+.valenceWrapper, .arousalWrapper{
+    color: #4b4949; 
+    background: #f50;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.range {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+    height: 4rem;
+    width: 80%;
+    background: #fff;
+    padding: 0px 10px;
+}
+
+.valenceValue, .arousalValue {
+    font-size: 26px;    
+    width: 50px;
+    text-align: center;
+} */
+
+
+/*********multiple slider bars*******************/
+
+.range-slider {
+    margin: 10px 0 0 0;
+    width: 95%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+
+.range-slider__range {
+    -webkit-appearance: none;
+    /* width: calc(100% - (73px)); */
+    /* max-width: 400px; */
+    width: 90%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d7dcdf;
+    outline: none;
+    margin: 20px;
+    margin-right: 10px;
+}
+.range-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
     appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -webkit-transition: background 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out;
+}
+.range-slider__range::-webkit-slider-thumb:hover {
+    background: #1abc9c;
+}
+.range-slider__range:active::-webkit-slider-thumb {
+    background: #1abc9c;
+}
+.range-slider__range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -moz-transition: background 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out;
+}
+.range-slider__range::-moz-range-thumb:hover {
+    background: #1abc9c;
+}
+.range-slider__range:active::-moz-range-thumb {
+    background: #1abc9c;
+}
+.range-slider__range:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px #1abc9c;
 }
 
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+.range-slider__value {
+    display: inline-block;
+    position: absolute;
+    width: fit-content;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: #2c3e50;
+    padding: 5px 15px;
+    margin-top: 10px;
+}
+.range-slider__value:after {
+    position: absolute;
+    top: 8px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #2c3e50;
+    border-bottom: 7px solid transparent;
+    content: "";
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+::-moz-range-track {
+    background: #d7dcdf;
+    border: 0;
 }
 
-.slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+input::-moz-focus-inner, input::-moz-focus-outer {
+    border: 0;
 }
-/*********************************************************************/
+
+
+/*********audio waveform**************************/
+
+.sh-card {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #edf2f7;
+    padding: 7px 10px;
+    border-radius: 50px;
+    border: none;
+    color: #000;
+    box-shadow: 2px 2px 20px -10px #000;
+    transition: all 0.3s ease;
+    z-index: 99999;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 1.5;
+    overflow: hidden;
+    width: 18px;
+    white-space: nowrap;
+}
+.sh-card:hover {
+    width: 92px;
+}
+
+.sh-card-icon, .sh-card-info {
+    display: inline-block;
+    vertical-align: baseline;
+    line-height: 1;
+}
+
+.sh-card-info {
+    font-size: 16px;
+    margin-left: 7px;
+    }
+
+.sh-card-icon {
+    width: 18px;
+    height: 15px;
+}
+
+.sh-card-link, .sh-card-link:hover, .sh-card-link:active, .sh-card-link:visited {
+    color: #000;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.sh-card-box {
+    display: block;
+}
+
+@-webkit-keyframes bounceIn {
+    0%, 20%, 40%, 60%, 80%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1);
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.9, 0.9, 0.9);
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(1.03, 1.03, 1.03);
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+        -webkit-transform: scale3d(0.97, 0.97, 0.97);
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+}
+@keyframes bounceIn {
+    0%, 20%, 40%, 60%, 80%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+        -webkit-transform: scale3d(1.1, 1.1, 1.1);
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.9, 0.9, 0.9);
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(1.03, 1.03, 1.03);
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+        -webkit-transform: scale3d(0.97, 0.97, 0.97);
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+}
+.sh-bounceIn {
+    -webkit-animation-duration: 0.75s;
+    animation-duration: 0.75s;
+    -webkit-animation-name: bounceIn;
+    animation-name: bounceIn;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+    opacity: 0;
+}
+
+.mediaPlayerTabcontent audio {
+    width: 100%;
+}
+
+.audioCanvas {
+    width: 100%;
+    height: 250px;
+    background: #f9f9f9;
+    margin: auto;
+    box-shadow: inset 0px 0px 25px -15px #000;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.plotCanvas {
+    border:1px solid grey;
+    width: 100%;
+    height:500px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.mediaPlayerTabcontent p {
+    padding-left: 1rem;
+    font-size: small;
+}
+
+/*************1D sliders with labels and SAM******************8**/
+
+.range-slider .endLabel {
+    float:right;
+    width: 10%;
+}
+
+.range-slider img {
+    width: 100%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.range-slider span {
+    font-size: small;
+    margin-left: 10px;
+}
+
+/* .colors {
+    list-style-type: none;
+}
+
+.colors li {
+display: inline-block;
+width: 24%;
+}
+
+.colors .green {
+color: green;
+}
+
+.colors .yellow {
+color: yellow;
+}
+
+.colors .orange {
+color: orange;
+}
+
+.colors .red {
+color: red; 
+}
+
+datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    writing-mode: vertical-lr;
+    width: 78%;
+    margin-left: 20px;
+} 
+option {
+padding: 0;
+writing-mode: horizontal-tb;
+}  
+*/
+
+
