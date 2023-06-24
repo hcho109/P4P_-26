@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EmotionalGUI Annotation WebPage</title>
     <!-- Add icon library -->
     <link 
@@ -12,6 +13,7 @@
     />
     <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
     <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+    <link href="navStyle.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
@@ -20,14 +22,31 @@
   <body>
     
     <!-- Top navigation -->
-    <div class="nav">
-      <img src="resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo img">
-      <a href="home.html">Home</a>
-      <a href="visualize.html">Visualize</a>
-      <a class="active" href="annotation.html">Annotation</a>
-      <a href="live_audio.html">Live Audio</a>
-      <a href="about.html" class="help">Help</a>
-    </div>
+    <header>   
+      <div class="website_name">
+          <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
+          <h3>EmotionGUI</h3>
+      </div>
+      <nav>
+          <ul class="nav_links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="visualise.html">Visualise</a></li>
+          <li><a class="active" href="annotation.html">Annotation</a></li>
+          <li><a href="liveAudio.html">Live Audio</a></li>      
+          </ul>
+      </nav>
+      <div class="dropdown">
+          <button class="dropbtn">Help 
+              <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <a href="#about">EmotionGUI</a>
+              <a href="#annotation">Annotation</a>
+              <a href="#visualise">Visualise</a>
+              <a href="#liveAudio">Live Audio</a>
+          </div>
+      </div> 
+    </header>
 
     <!------------------Left column------------------------->
     <div class="split left">
@@ -272,5 +291,5 @@
     </script>
 
     <!-- <script src="annotationScript.js"></script> -->
-    </body>
+  </body>
 </html>
