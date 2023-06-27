@@ -1,68 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>
-            EmotionalGUI Home Page
-        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> EmotionalGUI Home Page </title>
         <script src="https://kit.fontawesome.com/275debf7ad.js" crossorigin="anonymous"></script> <!-- icon script file -->
         <link rel="stylesheet" type="text/css" href="visualpage.css"> 
+
         <!-- Pyscript css and js files import -->
-        <link rel=”stylesheet” href=”htpps://pyscript.net/alpha/pyscript.css” />
-        <script defer src=”htpps://pyscript.net/alpha/pyscript.js”> </script>
+        <link
+            rel="stylesheet"
+            href="https://pyscript.net/latest/pyscript.css"
+        />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
     </head>
 
     <body>
-        <div class="left"> 
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
-            </p>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            </p>
-    
-            <form>
-                <label for="CSV_File"> 1. Plot a CSV file: </label> <br>
-                <input type="text"> <br><br>
-                <input type="button" value="Select CSV File">
-                <input type="button" value="!">
-                <input type="button" value="Plot Emotional data of CSV File"> <br><br>
-    
-                <label for="WAV_File"> 2. Plot a WAV file with a model: </label> <br>
-                <input type="text"> <br><br>
-                <input type="button" value="Select a WAV File">
-                <input type="button" value="Plot Emotional Data of CSV File"> <br>
-                <input type="button" value="Change Model"> <br><br>
-    
-                <label for="Manual_Plot"> 3. Set coordinates and plot manually </label> <br><br>
-                <label> Valence: <input type="text">  </label> <br><br>
-                <label> Arousal: <input type="text">  </label> <br><br>
-                <input type="button" value="Plot">
-            </form>
-        </div>
+    <h1>EmotionGUI Plot</h1>
+    <div id="plot"></div>
+    <py-config>
+        packages = ["numpy", 
+                    "matplotlib", 
+                    "pandas",
+                    "keras"
+                    ]
         
-        <div class="right"> 
-            <h4> Valence-Arousal Plot</h4>
-        
-            <a class="list-group-item" style="text-decoration: none;" href="homePage.html"> <i class="fa fa-home fa-2x" aria-hidden="true"></i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-arrows fa-2x" aria-hidden="true"> </i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-search fa-2x" aria-hidden="true"> </i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-sliders fa-2x" aria-hidden="true"></i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-line-chart fa-2x" aria-hidden="true"></i> </a>
-            <a class="list-group-item" style="text-decoration: none;" href="#"> <i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i> </a>
-            <br>
+    </py-config>
+    <py-script>
+        import matplotlib.pyplot as plt
+        import numpy as np
 
-            <img src = "Valence-Arousal_plot.png" alt = "valence-arousal placeholder graph img"> 
-            <br>
-            <a href="homePage.html"> <input type="button" value="Main Menu"></a>
-            <input type="button" value="Clear">
-            <input type="button" value="Save as CSV"><br>
+        fig = plt.figure()
+        axes = fig.subplots()
 
-        </div>
-        
-        
-    </body>
+        theta = np.linspace(0, 2 * np.pi, 100)
+        radius = 1
+
+        a = radius * np.cos(theta)
+        b = radius * np.sin(theta)
+
+        axes.plot(a, b, color='k', linewidth=1)
+        axes.set_aspect(1)
+
+        axes.hlines(y=0, xmin=-1, xmax=1, linewidth=0.7, color='k')
+        axes.vlines(x=0, ymin=-1, ymax=1, linewidth=0.7, color='k')
+
+        axes.tick_params(axis='both', which='major', labelsize=10)
+        axes.tick_params(axis='both', which='minor', labelsize=10)
+
+        plt.xlabel("Valence")
+        plt.ylabel("Arousal")
+
+        landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
+                        'interested', 'happy', 'pleased', 'relaxed', 'content']
+        landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
+                       0.2, 0.5, 0.35, 0.6, 0.5)
+        landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
+                       0.7, 0.5, 0.35, -0.3, -0.45)
+
+        for point in range(len(landmarkEmotions)):
+            axes.scatter(landmarkValence, landmarkArousal, color='k', s=15)
+            axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
+                  landmarkEmotions[point], fontsize='large')
+
+        axes.yaxis.grid(color='red', linestyle='dashed', linewidth=0.3)
+        axes.xaxis.grid(color='red', linestyle='dashed', linewidth=0.3)
+
+        display(fig, target="plot")
+
+    </py-script>
+  </body>
 </html>
