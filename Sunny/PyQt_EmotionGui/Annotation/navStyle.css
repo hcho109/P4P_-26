@@ -6,7 +6,7 @@
     padding:0;
 }
 
-.nav_links li a, .dropbtn {
+.nav_links li a, .dropbtn{
     font-family: "Montserrat", sans-serif;
     font-weight: 550;
     font-size: 16px;
@@ -107,15 +107,21 @@ header {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 140px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 2;
     order: 0;
 }
 
-.dropdown-content a {
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button{
+    border: none;
     float: none;
-    color: black;
+    width: 100%;
+    /* color: black; */
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -124,10 +130,6 @@ header {
     font-size: 15px;
 }
 
-.dropdown-content a:hover {
+.dropdown-content button:hover {
     background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
 }

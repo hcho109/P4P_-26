@@ -89,7 +89,8 @@ body {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    max-width: fit-content;
+    /* max-width: fit-content; */
+    max-width: 100%;
     padding: 10px;
 }
 
@@ -145,14 +146,14 @@ body {
 }
 
 /* Popup container - can be anything you want */
-.help_popup_btn {
+/* .help_popup_btn {
     position: relative;
     display: inline-block;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
+} */
 
 /************ Buttons **************/
 
@@ -222,7 +223,7 @@ body {
 
 /* Discrete/categorical emotion model */
 .inputTextBox label{
-    padding-left:20px;
+    padding-left:30px;
     padding-right:10px;
     font-size:15px;
     width: auto;

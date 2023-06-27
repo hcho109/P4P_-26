@@ -29,10 +29,10 @@
       </div>
       <nav>
           <ul class="nav_links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="visualise.html">Visualise</a></li>
-          <li><a class="active" href="annotation.html">Annotation</a></li>
-          <li><a href="liveAudio.html">Live Audio</a></li>      
+            <li><a href="home.html">Home</a></li>
+            <li><a class="active" href="annotation.html">Annotation</a></li>
+            <li><a href="visualise.html">Visualise</a></li>
+            <li><a href="liveAudio.html">Live Audio</a></li>      
           </ul>
       </nav>
       <div class="dropdown">
@@ -40,15 +40,15 @@
               <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-              <a href="#about">EmotionGUI</a>
-              <a href="#annotation">Annotation</a>
-              <a href="#visualise">Visualise</a>
-              <a href="#liveAudio">Live Audio</a>
+              <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+              <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+              <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
+              <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
           </div>
       </div> 
     </header>
 
-    <!------------------Left column------------------------->
+    <!------------------ Left column ------------------------->
     <div class="split left">
       <div class="centered">
         <div class="subtitle">
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <!--Right Column-->
+    <!------------------ Right Column ----------------->
     <div class="split right">
       <div class="centered">
         <div class="subtitle">
@@ -101,18 +101,21 @@
           
           <!-- categorical tab content-->
           <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="openHelpPopup()">
+            <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
+            'About', 900, 600);">
               <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
             </button>
             <div class="content">
               <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
               <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:260px">
               <p>
-                In a discrete/categorical emotion model, emotions are typically represented 
-                as a fixed set of basic or primary emotions. 
-                Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.<br><br>
-                After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
-                For detailed instructions, click on the '?' at the top rigt corner.
+                <ul>
+                  <li>In a discrete/categorical emotion model, emotions are typically represented 
+                    as a fixed set of basic or primary emotions. 
+                    Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.</li>
+                  <li>After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
+                    <br><br>For detailed instructions, click on the '?' at the top rigt corner.</li>
+                </ul>
               </p>
             </div>
             <div class="inputTextBox">
@@ -128,7 +131,8 @@
           
           <!-- 1D tab content-->
           <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="open1dHelpPopup()">
+            <button class="help_popup_btn" onclick="createPopupWin('about/about1D.html',
+            'About', 900, 600);">
               <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
             </button>
             <div class="content">
@@ -137,7 +141,7 @@
               <p>
                 <ul>
                   <li>As you watch a video or listen to an audio, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
-                  <li>Adjust each slider independently, focusing on one emotional dimension at a time. For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  <li>Adjust each slider independently, focusing on one emotional dimension at a time.<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
                 </ul>
               </p>
             </div>
@@ -197,7 +201,8 @@
           
           <!-- 2D tab content-->
           <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="open2dHelpPopup()">
+            <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
+            'About', 900, 600);">
               <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
               <span class="helpPopupText" id="2dhelpPopup"></span>
             </button>
@@ -207,7 +212,7 @@
               <p>
                 <ul>
                   <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
-                  <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity). For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity).<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
                 </ul>
               </p>
             </div>
@@ -228,21 +233,19 @@
 
     <!-- Help popup javascript -->
     <script>
+      var newWin;
       // When the user clicks on '?' icon, open the help popup
-      function openHelpPopup() {
-        var popup = document.getElementById("helpPopup");
-        popup.classList.toggle("show");
-      }
+      function createPopupWin(pageURL, pageTitle,
+                    popupWinWidth, popupWinHeight) {
+            var left = (screen.width - popupWinWidth) / 2;
+            var top = (screen.height - popupWinHeight) / 4;
+      
+            var myWindow = window.open(pageURL, pageTitle,
+                    'resizable=yes, width=' + popupWinWidth
+                    + ', height=' + popupWinHeight + ', top='
+                    + top + ', left=' + left);
+        }
 
-      function open1dHelpPopup() {
-        var popup = document.getElementById("1dhelpPopup");
-        popup.classList.toggle("show");
-      }
-
-      function open2dHelpPopup() {
-        var popup = document.getElementById("2dhelpPopup");
-        popup.classList.toggle("show");
-      }
     </script>
 
     <!-- Video player javascript -->
