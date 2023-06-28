@@ -16,7 +16,7 @@
     <link href="navStyle.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   </head>
 
   <body>
@@ -217,7 +217,38 @@
               </p>
             </div>
 
-            <canvas class="plotCanvas" id="plotCanvas"></canvas>
+            <!--------------- 2D V-A plot-------------->
+            <div class="plotCanvas" id="VA-plot"></div>
+            <py-config>
+              packages = ["numpy", 
+                          "matplotlib", 
+                          "pandas",
+                          "keras"
+                          ]
+              [[fetch]]
+              from = "http://127.0.0.1:5500"
+              files = ['annotationMethods.py']
+              
+            </py-config>
+
+            <py-script output="VA-plot">
+              from annotationMethods import createCircle
+              import matplotlib.pyplot as plt
+
+              fig = plt.figure()
+              axes = fig.subplots()
+
+              createCircle(axes)
+
+              plt.title("V-A Plot")
+              plt.xlabel("Valence")
+              plt.ylabel("Arousal")
+
+              display(fig, target="VA-plot")
+            </py-script>
+
+            <p id="plot-msg"></p>
+
             <form class="btns_2D">
               <input type="button" class="clear_btn" id="clear_btn" value="Clear">
               <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
