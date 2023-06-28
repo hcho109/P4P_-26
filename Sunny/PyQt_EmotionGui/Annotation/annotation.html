@@ -15,8 +15,8 @@
     <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
     <link href="navStyle.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js"></script>
   </head>
 
   <body>
@@ -280,7 +280,7 @@
     </script>
 
     <!-- Video player javascript -->
-    <script>
+    <!-- <script>
       // Handle video file input change event
       const videoFileInput = document.getElementById('video-file-input');
 
@@ -297,7 +297,54 @@
         video.src = videoFileUrl;
         video.play();
       });
-    </script>
+    </script> -->
+
+    <py-script>
+      from js import document
+      from pyodide.ffi import create_proxy
+
+      def handle_file_input(event):
+        videoFiles = event.target.files
+
+        if not videoFiles or not videoFiles[0]:
+            return
+
+        videoFileUrl = URL.createObjectURL(videoFiles[0])
+
+        # Load the video file
+        video = document.getElementById('video')
+        video.src = videoFileUrl
+        video.play()
+
+      videoFileInput_proxy = create_proxy(handle_file_input)
+      videoFileInput = document.getElementById('video-file-input')
+      videoFileInput.addEventListener("change", videoFileInput_proxy)
+    </py-script>
+
+    <!-- <py-script>
+      from js import document, URL
+      from pyodide.ffi.wrappers import add_event_listener
+
+      def handle_file_input(event):
+        videoFiles = event.target.files
+
+        if not videoFiles or not videoFiles[0]:
+            return
+
+        videoFileUrl = URL.createObjectURL(videoFiles[0])
+
+        # Load the video file
+        video = document.getElementById('video')
+        video.src = videoFileUrl
+        video.play()
+
+      add_event_listener(
+        document.getElementById('video-file-input'),
+        "change",
+        handle_file_input
+      )
+
+    </py-script> -->
     
     <!-- 1D sliders javascript -->
     <script>
