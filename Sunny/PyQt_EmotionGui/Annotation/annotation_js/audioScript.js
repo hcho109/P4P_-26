@@ -5,8 +5,10 @@ class renderWave {
         this._samples = 10000;
         this._strokeStyle = "#3098ff";
         this.audioContext = new AudioContext();
-        this.canvas = document.querySelector("#canvas_audio");
+        this.canvas = document.querySelector("#canvas_waveform");
         this.ctx = this.canvas.getContext("2d");
+        this.isPlaying = false; // Flag to track if audio is currently playing
+        this.playheadPosition = 0; // Current position of the playhead (slider)
         this.data = [];
         message
             .then(arrayBuffer => {
@@ -66,22 +68,40 @@ class renderWave {
         ctx.lineTo(x + width, height);
         ctx.stroke();
     }
-    drawData(data, colors = this._strokeStyle) {
-        data.map(item => {
+    // drawData(data, colors = this._strokeStyle) {
+    //     data.map(item => {
+    //         this.drawLineSegment(this.ctx, item.x, item.h, item.w, item.isEven, colors);
+    //     });
+    // }
+
+    drawData(data) {
+        data.forEach(item => {
+          const colors = this.isPlaying && item.x <= this.playheadPosition * this.canvas.offsetWidth
+            ? "#000000" // Change color to black if it's part of the audio being played
+            : this._strokeStyle; // Otherwise, use the original color
             this.drawLineSegment(this.ctx, item.x, item.h, item.w, item.isEven, colors);
         });
     }
+
     drawTimeline(percent) {
         let end = Math.ceil(this._samples * percent);
         let start = end - 5 || 0;
         let t = this.data.slice(0, end);
         this.drawData(t, "#1d1e22");
+        this.playheadPosition = percent;
     }
 }
 document.getElementById("fileinput").addEventListener("change", function () {
     var wave = new renderWave(this.files[0].arrayBuffer());
     var audioPlayer = document.getElementById("audio");
     audioPlayer.src = URL.createObjectURL(this.files[0]);
+    audioPlayer.addEventListener("play", () => {
+        wave.isPlaying = true;
+    });
+    
+    audioPlayer.addEventListener("pause", () => {
+        wave.isPlaying = false;
+    });
     // audioPlayer.play();
     audioPlayer.ontimeupdate = function () {
         let percent = this.currentTime / this.duration;
