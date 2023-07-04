@@ -82,21 +82,21 @@ audio {
 }
 
 .rec_buttons {
-    width: max-content;
-    float: right;
-    border: none;
     padding: 10px;
     padding-top: 20px;
-    padding-right: 0;
     align-items: center;
 }
 
+.rec_buttons p {
+    text-align: center;
+    margin-left: 30px;
+}
+
 .rec_buttons button {
-    /* float: right; */
     border-radius: 3px;
     border-width: 1px;
     cursor: pointer;
-    padding: 10px 30px; 
+    padding: 10px 40px; 
     margin-left: 30px;
     font-weight: 500;
     transition: .3s;

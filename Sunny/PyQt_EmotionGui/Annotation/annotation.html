@@ -82,10 +82,10 @@
           <!-- Video player tab content-->
           <div class="mediaPlayerTabcontent">
             <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File">
-              <video class="video" id="video" controls>
-                Your browser does not support the video tag.
-              </video><br>
-              <p> * This video player does not support WMV files </p>
+            <video class="video" id="video" controls>
+              Your browser does not support the video tag.
+            </video><br>
+            <p> * This video player does not support WMV files </p>
           </div>
 
           <!------------------ Audio player tab---------------------->
@@ -288,7 +288,7 @@
     </script>
 
     <!-- Video player javascript -->
-    <!-- <script>
+    <script>
       // Handle video file input change event
       const videoFileInput = document.getElementById('video-file-input');
 
@@ -305,9 +305,9 @@
         video.src = videoFileUrl;
         video.play();
       });
-    </script> -->
+    </script>
 
-
+<!-- 
     <py-script>
       from js import document
       from pyodide.ffi import create_proxy
@@ -328,7 +328,7 @@
       videoFileInput_proxy = create_proxy(handle_file_input)
       videoFileInput = document.getElementById('video-file-input')
       videoFileInput.addEventListener("change", videoFileInput_proxy)
-    </py-script>
+    </py-script> -->
 
   <!-- videoFileInput = document.getElementById('video-file-input')
       videoFileInput.addEventListener("change", videoFileInput) -->
