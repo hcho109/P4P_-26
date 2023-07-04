@@ -1,3 +1,94 @@
+/* Split the screen in half */
+.split {
+    height: 90%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 9%;
+    overflow-x: hidden;
+}
+
+.left, .right{
+    /* background-color: white; */
+    background: linear-gradient(hsl(0, 0%, 100%), rgb(252, 255, 249));
+}
+
+/* Control the left side */
+.left {
+    left: 0;
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+}
+
+/* content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    text-align: left;
+}
+
+.left .centered {
+    right:2%
+}
+
+.right .centered {
+    left:2%
+}
+
+/*********** File Tabs *************/
+
+/* Style the tab */
+.fileTabs {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    /* max-width: fit-content; */
+    max-width: 100%;
+    padding: 10px;
+}
+
+.fileTabs input[type="radio"] {
+    display: none;
+}
+
+/* Tab labels */
+.fileTabs label {
+    background-color: inherit;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 30px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    display: block;
+}
+
+.fileTabs .fileTabcontent {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    order: 1;
+    display: none;
+    padding-left: 10px;
+    padding-right:10px;
+    align-items: center;
+}
+
+.fileTabs input[type="radio"]:checked + label + .fileTabcontent {
+    display: block;
+}
+
+.fileTabs input[type="radio"]:checked + label {
+    background: #ccc;
+}
+
+/********* plot style **********/
 #plot {
     float: right;
     width: fit-content;

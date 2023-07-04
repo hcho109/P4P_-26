@@ -48,7 +48,6 @@
             </div>
         </div> 
         </header>
-        <h1>EmotionGUI Plot</h1>
         
         <py-config>
             packages = ["numpy", 
@@ -56,52 +55,101 @@
                         "pandas",
                         "keras"
                         ]
-            
+            [[fetch]]
+            files = ["./file_processing.py"]
         </py-config>
-        <section id="plot">
-            <py-script>
-                import matplotlib.pyplot as plt
-                import numpy as np
 
-                fig = plt.figure()
-                axes = fig.subplots()
+        <!------------------ Left column ------------------------->
+        <div class="split left">
+            <div class="centered">
+                <!--Files tab links-->
+                <div class="fileTabs">
+                    <!----------------  CSV File select tab------------------>
+                    <input type="radio" id="tabCSVFile" name="fileTabs" checked="checked">
+                    <label for="tabCSVFile">Select CSV File</label>
+            
+                    <!-- CSV tab content-->
+                    <div class="fileTabcontent">
+                        <py-script>
+                            from file_processing import FileProcessing
 
-                theta = np.linspace(0, 2 * np.pi, 100)
-                radius = 1
+                            # to get the dialog box when the 'Select CSV' button is clicked and write the path of file on the text editor
+		                    self.select_csv = self.findChild(QtWidgets.QPushButton, 'select_csv')
+		                    self.select_csv.clicked.connect(lambda: self.textEdit.setText(FileProcessing.open_dialog_box(self)))
+		                    # --------------------------------------------------------------
+                        </py-script>
+                            
 
-                a = radius * np.cos(theta)
-                b = radius * np.sin(theta)
+                        <!-- <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File"> -->
+                        <p> * This is where you add csv files </p>
+                    </div>
+  
+                    <!------------------ WAV File select tab---------------------->
+                    <input type="radio" id="tabWAVFile" name="fileTabs">
+                    <label for="tabWAVFile">Select WAV File</label>
+  
+                    <!-- WAV tab content-->
+                    <div class="fileTabcontent">
+                        <p> * This is where you add wav files </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                axes.plot(a, b, color='k', linewidth=1)
-                axes.set_aspect(1)
 
-                axes.hlines(y=0, xmin=-1, xmax=1, linewidth=0.7, color='k')
-                axes.vlines(x=0, ymin=-1, ymax=1, linewidth=0.7, color='k')
+        <!------------------ Right column ------------------------->
+        <div class="split right">
+            <div class="centered">
+                <div id="plot">
+                    <py-script>
+                        import matplotlib.pyplot as plt
+                        import numpy as np
+        
+                        fig = plt.figure()
+                        axes = fig.subplots()
+        
+                        theta = np.linspace(0, 2 * np.pi, 100)
+                        radius = 1
+        
+                        a = radius * np.cos(theta)
+                        b = radius * np.sin(theta)
+        
+                        axes.plot(a, b, color='k', linewidth=1)
+                        axes.set_aspect(1)
+        
+                        axes.hlines(y=0, xmin=-1, xmax=1, linewidth=0.7, color='k')
+                        axes.vlines(x=0, ymin=-1, ymax=1, linewidth=0.7, color='k')
+        
+                        axes.tick_params(axis='both', which='major', labelsize=10)
+                        axes.tick_params(axis='both', which='minor', labelsize=10)
+        
+                        plt.xlabel("Valence")
+                        plt.ylabel("Arousal")
+        
+                        landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
+                                        'interested', 'happy', 'pleased', 'relaxed', 'content']
+                        landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
+                                    0.2, 0.5, 0.35, 0.6, 0.5)
+                        landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
+                                    0.7, 0.5, 0.35, -0.3, -0.45)
+        
+                        for point in range(len(landmarkEmotions)):
+                            axes.scatter(landmarkValence, landmarkArousal, color='k', s=15)
+                            axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
+                                landmarkEmotions[point], fontsize='large')
+        
+                        axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+                        axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+        
+                        display(fig, target="plot")
+        
+                    </py-script>
+                </div>
+            </div>
+        </div>
 
-                axes.tick_params(axis='both', which='major', labelsize=10)
-                axes.tick_params(axis='both', which='minor', labelsize=10)
 
-                plt.xlabel("Valence")
-                plt.ylabel("Arousal")
 
-                landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
-                                'interested', 'happy', 'pleased', 'relaxed', 'content']
-                landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
-                            0.2, 0.5, 0.35, 0.6, 0.5)
-                landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
-                            0.7, 0.5, 0.35, -0.3, -0.45)
-
-                for point in range(len(landmarkEmotions)):
-                    axes.scatter(landmarkValence, landmarkArousal, color='k', s=15)
-                    axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
-                        landmarkEmotions[point], fontsize='large')
-
-                axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
-                axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
-
-                display(fig, target="plot")
-
-            </py-script>
-        </section>
+        
     </body>
 </html>
