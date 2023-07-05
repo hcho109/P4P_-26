@@ -55,8 +55,6 @@
                         "pandas",
                         "keras"
                         ]
-            [[fetch]]
-            files = ["./file_processing.py"]
         </py-config>
 
         <!------------------ Left column ------------------------->
@@ -66,27 +64,30 @@
                 <div class="fileTabs">
                     <!----------------  CSV File select tab------------------>
                     <input type="radio" id="tabCSVFile" name="fileTabs" checked="checked">
-                    <label for="tabCSVFile">Select CSV File</label>
+                    <label for="tabCSVFile">Plot CSV File</label>
             
                     <!-- CSV tab content-->
                     <div class="fileTabcontent">
                         <py-script>
-                            from file_processing import FileProcessing
-
-                            # to get the dialog box when the 'Select CSV' button is clicked and write the path of file on the text editor
-		                    self.select_csv = self.findChild(QtWidgets.QPushButton, 'select_csv')
-		                    self.select_csv.clicked.connect(lambda: self.textEdit.setText(FileProcessing.open_dialog_box(self)))
-		                    # --------------------------------------------------------------
-                        </py-script>
+                            import csv
                             
+                            csv_address = /Users/enurikolugala/Desktop/test1.csv
 
-                        <!-- <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File"> -->
-                        <p> * This is where you add csv files </p>
+                            if (csv_address != ''):
+                                with open(csv_address, 'r') as file:
+                                    csvreader = csv.reader(file)
+                                    header = next(csvreader)
+                                    for row in csvreader:
+                                        print(row)
+
+                        </py-script>
+                        
+                        
                     </div>
   
                     <!------------------ WAV File select tab---------------------->
                     <input type="radio" id="tabWAVFile" name="fileTabs">
-                    <label for="tabWAVFile">Select WAV File</label>
+                    <label for="tabWAVFile">Plot WAV File</label>
   
                     <!-- WAV tab content-->
                     <div class="fileTabcontent">
@@ -108,6 +109,10 @@
                         fig = plt.figure()
                         axes = fig.subplots()
         
+                        plt.title("V-A Plot")
+                        plt.xlabel("Valence")
+                        plt.ylabel("Arousal")
+
                         theta = np.linspace(0, 2 * np.pi, 100)
                         radius = 1
         
@@ -123,8 +128,7 @@
                         axes.tick_params(axis='both', which='major', labelsize=10)
                         axes.tick_params(axis='both', which='minor', labelsize=10)
         
-                        plt.xlabel("Valence")
-                        plt.ylabel("Arousal")
+                        
         
                         landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
                                         'interested', 'happy', 'pleased', 'relaxed', 'content']
