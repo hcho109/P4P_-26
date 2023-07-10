@@ -82,6 +82,10 @@ body {
     border-radius: 0%;
 }
 
+.centered span {
+    padding: 10px;
+}
+
 /*********** Multimedia Tabs & Emotion model Tabs *************/
 
 /* Style the tab */
@@ -130,6 +134,24 @@ body {
     background: #ccc;
 }
 
+.yData, .xData {
+    float: right;
+    display: flex;
+    margin-right: 5px;
+}
+
+.xData label, .yData label {
+    padding: 2px;
+    font-weight: 100;
+    font-size: small;
+}
+
+.xData input, .yData input{
+    border: none;
+    font-weight: 100;
+    font-size: small;
+    text-align: left;
+}
 /***************** Help popup *******************/
 .help_popup_btn {
     margin-top: 13px;

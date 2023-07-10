@@ -27,7 +27,7 @@
                   ]
       [[fetch]]
       from = "http://127.0.0.1:5500"
-      files = ['annotationMethods.py']
+      files = ['plot2d.py', 'annotator.py']
       
       [[interpreters]]
       src = 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js'
@@ -85,7 +85,8 @@
             <video class="video" id="video" controls>
               Your browser does not support the video tag.
             </video><br>
-            <p> * This video player does not support WMV files </p>
+            <p id="playerStatus" style="padding-bottom:0">Choose a 'MP4' video file and Click 'Play' button to start playing</p>
+            <p style="float:right; font-size:small"> * This video player does not support WMV files </p>
           </div>
 
           <!------------------ Audio player tab---------------------->
@@ -98,8 +99,15 @@
             <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
             <canvas class="canvas_audio" id="canvas_waveform"></canvas>
             <audio id="audio" src="" controls="true"></audio>
+            <p id="playerStatus">Choose a 'WAV'/'MP3' audio file and Click 'Play' button to start playing</p>
           </div>
         </div>
+        
+        <span id="playEnabled">Debug: playing?</span>
+        <span id="duration">0.00</span>
+        <span id="currentTime"> 0.0000 </span>
+        <span id="currentTimeinSec"> 0.00 </span>
+
       </div>
     </div>
 
@@ -239,29 +247,29 @@
             <!--------------- 2D V-A plot-------------->
             <div class="plotCanvas" id="VA-plot"></div>
 
-            <py-script output="VA-plot">
-              from annotationMethods import createCircle
-              import matplotlib.pyplot as plt
+            <div class="yData" id="yData"> 
+              <label for="y_input">y-data:</label>
+              <input type="text" id="x_input" required size="5" value="y.yyy">
+            </div>
 
-              fig = plt.figure()
-              axes = fig.subplots()
+            <div class="xData" id="xData"> 
+              <label for="x_input">x-data:</label>
+              <input type="text" id="x_input" required size="5" value="x.xxx">
+            </div>
 
-              createCircle(axes)
+            <br>            
+            <span id="MediaDuration"> Debug: raw duration</span>
+            <span id="MediaTime"> Debug: raw time </span>
+            <span id="MediaTimeInSec"> Debug: time in sec </span>
 
-              plt.title("V-A Plot")
-              plt.xlabel("Valence")
-              plt.ylabel("Arousal")
-
-              display(fig, target="VA-plot")
-            </py-script>
-
-            <p id="plot-msg"></p>
+            <p id="update-note"> Play a media file and then Click anywhere on the plot to start annnotation</p>
 
             <form class="btns_2D">
-              <input type="button" class="clear_btn" id="clear_btn" value="Clear">
-              <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
-              <input type="button" class="reannotate_btn" id="reannotate_btn" value="Re-annotate">
+              <input type="button" class="clear_btn" id="clear_btn" py-click="clear_plot()" value="Clear">
+              <input type="button" class="save_btn" id="CSV_btn" py-click="saveAsCSV()" value="Save as CSV">
+              <input type="button" class="reannotate_btn" id="reannotate_btn" py-click="reannotate()" value="Re-annotate">
             </form><br>
+
           </div>
       </div>
     </div>
@@ -269,6 +277,9 @@
     <!-- Audio waveform javascript -->
     <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
     <script src="annotation_js/audioScript.js"></script>
+
+    <!-- video player javascript -->
+    <script src="annotation_js/videoScript.js"></script>
 
     <!-- Help popup javascript -->
     <script>
@@ -287,25 +298,205 @@
 
     </script>
 
-    <!-- Video player javascript -->
-    <script>
-      // Handle video file input change event
-      const videoFileInput = document.getElementById('video-file-input');
+    <py-script output="VA-plot">
+      from plot2d import createCircle
+      import matplotlib.pyplot as plt
+      from pyodide.ffi import create_proxy
+      from js import document
 
-      videoFileInput.addEventListener('change', function () {
-        const videoFiles = this.files;
-        if (!videoFiles || !videoFiles[0]) {
-            return;
-        }
+      duration_txt = Element("MediaDuration")
+      timeRaw_txt = Element("MediaTime")
+      time_txt = Element("MediaTimeInSec")
+      video=document.getElementById("video")
+      audio= document.getElementById("audio")
 
-        const videoFileUrl = URL.createObjectURL(videoFiles[0]);
+      seconds = 0
+      secondsRaw =0
+      mediaDuration =0
 
-        // Load the video file
-        var video = document.getElementById('video');
-        video.src = videoFileUrl;
-        video.play();
-      });
-    </script>
+      fig = plt.figure()
+      axes = fig.subplots()
+
+      createCircle(axes)
+
+      plt.title("V-A Plot")
+      plt.xlabel("Valence")
+      plt.ylabel("Arousal")
+
+      display(fig, target="VA-plot")
+
+      def getMediaDuration(e):
+        from js import duration
+
+        global mediaDuration
+
+        mediaDuration = duration
+        duration_txt.write(mediaDuration)
+      
+      def getMediaTime(e):
+        from js import currentTime, currentTimeInSec
+
+        global seconds, secondsRaw
+
+        secondsRaw = currentTime
+        seconds = currentTimeInSec
+
+        timeRaw_txt.write(secondsRaw)
+        time_txt.write(seconds)
+
+      video.addEventListener("play", create_proxy(getMediaDuration))
+      video.addEventListener("timeupdate", create_proxy(getMediaTime))
+
+      audio.addEventListener("play", create_proxy(getMediaDuration))
+      audio.addEventListener("timeupdate", create_proxy(getMediaTime))
+
+
+
+    </py-script>
+<!--
+    <py-script output="VA-plot">
+      import js
+      from js import isPlaying, duration, currentTime, currentTimeInSec, handleVideoFileChange
+      import matplotlib.pyplot as plt
+      
+      fig = plt.figure()
+      axes = fig.subplots()
+
+      #canvas = Element("VA-plot")
+      update_note = Element("update-note")
+
+      # js objects converted to equivalent py types
+      seconds = currentTimeInSec
+      mediaSeconds = duration
+
+      clicked = false
+      count_out_of_bounds = 0
+      time_points = []
+      valence_points = []
+      arousal_points = []
+
+      fig.canvas.mpl_connect(
+			"button_press_event", annotateOnClick)
+
+      self.mediaPlayer.positionChanged.connect(self.positionChanged)
+      self.mediaPlayer.durationChanged.connect(self.durationChanged)
+      self.mediaPlayer.error.connect(self.handleError)
+
+
+      def annotateOnClick(event):
+        global clicked, count_out_of_bounds, time_points, valence_points, arousal_points, fig, seconds
+
+        if isPlaying:
+          clicked = True
+          print(round(event.xdata, 2), round(event.ydata, 2))
+          if event is not None and (event.xdata >= -1 and event.xdata <= 1 and event.ydata >= -1 and event.ydata <= 1):
+            axes.scatter(round(event.xdata, 2), round(event.ydata, 2), color='red', s=15)
+            display(fig, target="VA-plot")
+            savePoints(round(event.xdata, 2), round(event.ydata, 2))
+            fig.canvas.mpl_connect(
+            "motion_notify_event", autoClicking)
+          else:
+            count_out_of_bounds += 1
+            time_points.append(seconds)
+            valence_points.append(None)
+            arousal_points.append(None)
+
+            update_note.write(
+              "You have clicked out of the annotation model {} times. Do you want to re-annotate?".format(count_out_of_bounds))
+            fig.canvas.mpl_connect(
+            "motion_notify_event", autoClicking)
+
+      def reannotate(self):
+        # clear the plot and all the time and emotional coordinates list
+        self.clear_plot()
+        self.time_points = []
+        self.valence_points = []
+        self.arousal_points = []
+        self.count_out_of_bounds = 0
+        self.clicked = False
+        # pause the media and begin again
+        self.setPosition(0)
+        self.mediaPlayer.pause()
+        self.out_of_bounds_lbl.setText(
+          "You can now begin the annotation again")
+
+      def autoClicking(event):
+        global isPlaying, clicked, seconds, mediaSeconds
+        if isPlaying and clicked == True:
+          if event is not None and (event.xdata != None and event.ydata != None):
+            print(round(event.xdata, 2), round(event.ydata, 2))
+            if (event.xdata >= -1 and event.xdata <= 1 and event.ydata >= -1 and event.ydata <= 1):
+              time_elapsed = seconds
+              if float(time_elapsed) <= float(mediaSeconds) / 3:
+                print(mediaSeconds)
+                color = 'red'
+                opacity = 1 - (float(time_elapsed) / (float(mediaSeconds) / 3))
+                if opacity < 0:
+                  opacity = 0.3
+                elif opacity > 1:
+                  opacity = 1
+              elif float(time_elapsed) > float(self.mediaSeconds) / 3 and float(time_elapsed) <= 2 * float(self.mediaSeconds) / 3:
+                color = 'yellow'
+                opacity = 1 - ((float(time_elapsed) - (float(self.mediaSeconds) / 3)) / 3)
+                print('yellow', opacity)
+                if opacity < 0:
+                  opacity = 0.3
+                elif opacity > 1:
+                  opacity = 1
+              elif float(time_elapsed) > 2 * float(self.mediaSeconds) / 3:
+                color = 'blue'
+                opacity = 1 - ((float(time_elapsed) - 2 * (float(self.mediaSeconds) / 3)) / 3)
+                print('blue', opacity)
+                if opacity < 0:
+                  opacity = 0.3
+                elif opacity > 1:
+                  opacity = 1
+
+              self.axes.scatter(round(event.xdata, 2), round(
+                event.ydata, 2), color=color, s=18, alpha=opacity)
+              self.canvas.draw()
+              self.savePoints(round(event.xdata, 2),
+                      round(event.ydata, 2))
+            else:
+              self.count_out_of_bounds += 1
+              self.time_points.append(self.seconds)
+              self.valence_points.append(None)
+              self.arousal_points.append(None)
+              self.out_of_bounds_lbl.setText(
+                "You have clicked out of the annotation model {} times. Do you want to re-annotate?".format(self.count_out_of_bounds))
+
+      def savePoints(xdata, ydata):
+        valence_points.append(xdata)
+        arousal_points.append(ydata)
+        time_points.append(seconds)
+
+      def saveAsCSV(self):
+        header = ["Time", "Valence", "Arousal"]
+
+        # this opens a dialog box to save the file
+        filename = 'annotated-file'
+        filename, _ = QFileDialog.getSaveFileName(
+          self, "Save CSV file", filename, "CSV Files (*.csv)"
+        )
+      
+        for i in range(len(self.time_points)):
+          if i != 0:
+              if self.time_points[i] == self.time_points[i-1] or float(self.time_points[i]) < float(self.time_points[i-1]):
+                self.time_points[i] = round(float(self.time_points[i-1]) + random.uniform(0.02, 0.07), 2)
+
+        if filename:
+          with open(filename, 'w+', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(header)
+            rows = [(str(time), str(valence), str(arousal)) for time, valence, arousal in zip(self.time_points,
+                                                      self.valence_points, self.arousal_points)]
+            writer.writerows(rows)
+
+      def clear_plot(self):
+
+      
+    </py-script>
+-->
 
 <!-- 
     <py-script>
@@ -361,7 +552,7 @@
     
     <!-- 1D sliders javascript -->
     <script>
-      //Handle multiple sliders input change event
+      //Handle multiple sliders input crdhange event
       var rangeSlider = function() {
         var sliders = document.querySelectorAll('.range-slider');
         

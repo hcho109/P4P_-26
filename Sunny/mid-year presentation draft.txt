@@ -1,0 +1,22 @@
+intro + motivation
+short literature review
+describe research questions
+overall diagram (high-level block diagram)
+achieved so far, 
+remaining to do
+
+technical (js, py-script, pyQt5 they already know)
+speechemotion recognition, how difficult to collect data.(general background)
+Why, What main focus! 
+ongoing project for a year
+
+overall story 
+then go into specfic parts
+
+survey got ethics 
+
+
+Mid-year Report
+- overall progress abt technical sides
+
+

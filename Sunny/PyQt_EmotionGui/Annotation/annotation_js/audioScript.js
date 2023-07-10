@@ -7,7 +7,7 @@ class renderWave {
         this.audioContext = new AudioContext();
         this.canvas = document.querySelector("#canvas_waveform");
         this.ctx = this.canvas.getContext("2d");
-        this.isPlaying = false; // Flag to track if audio is currently playing
+        this.isPlaying = 0; // Flag to track if audio is currently playing
         this.playheadPosition = 0; // Current position of the playhead (slider)
         this.data = [];
         message
@@ -91,20 +91,58 @@ class renderWave {
         this.playheadPosition = percent;
     }
 }
+
+var duration = 0;
+var currentTime = 0;
+var currentTimeInSec = 0;
+
 document.getElementById("fileinput").addEventListener("change", function () {
+
     var wave = new renderWave(this.files[0].arrayBuffer());
     var audioPlayer = document.getElementById("audio");
     audioPlayer.src = URL.createObjectURL(this.files[0]);
+
+    var currentTimeElement = document.getElementById('currentTime');
+    var currentTimeInSecElement = document.getElementById('currentTimeinSec');
+    var durationElement = document.getElementById('duration');
+    var playEnabled = document.getElementById('playEnabled');
+    let playerStatus = document.getElementById("playerStatus");
+
     audioPlayer.addEventListener("play", () => {
-        wave.isPlaying = true;
-    });
-    
-    audioPlayer.addEventListener("pause", () => {
-        wave.isPlaying = false;
+        wave.isPlaying = 1;
+        playEnabled.textContent = wave.isPlaying;
+        playerStatus.textContent = "Audio is playing...";
     });
     // audioPlayer.play();
+    
+    audioPlayer.addEventListener("pause", () => {
+        wave.isPlaying = 0;
+        playEnabled.textContent = wave.isPlaying;
+        playerStatus.textContent = "Audio paused...";
+    });
+
+    audioPlayer.addEventListener('ended', function() {
+        wave.isPlaying = 0;
+        playEnabled.textContent = wave.isPlaying;
+        playerStatus.textContent = "Audio ended...";
+    });
+
+    audioPlayer.addEventListener('durationchange', function() {
+        duration = this.duration;
+        durationElement.textContent = duration;
+        ;
+        // var formattedDuration = formatTime(duration);
+        // console.log('Video duration changed: ' + formattedDuration);
+    });
+
     audioPlayer.ontimeupdate = function () {
         let percent = this.currentTime / this.duration;
         wave.drawTimeline(percent);
+
+        currentTime = this.currentTime;
+        currentTimeInSec = currentTime.toFixed(2);
+
+        currentTimeElement.textContent = currentTime;
+        currentTimeInSecElement.textContent = currentTimeInSec;
     };
 });
