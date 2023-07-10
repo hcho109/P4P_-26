@@ -257,7 +257,8 @@
               <input type="text" id="x_input" required size="5" value="x.xxx">
             </div>
 
-            <br>            
+            <br>
+            <span id="playerEnabled"> player status</span>           
             <span id="MediaDuration"> Debug: raw duration</span>
             <span id="MediaTime"> Debug: raw time </span>
             <span id="MediaTimeInSec"> Debug: time in sec </span>
@@ -304,6 +305,7 @@
       from pyodide.ffi import create_proxy
       from js import document
 
+      player_txt = Element("playerEnabled")
       duration_txt = Element("MediaDuration")
       timeRaw_txt = Element("MediaTime")
       time_txt = Element("MediaTimeInSec")
@@ -313,6 +315,7 @@
       seconds = 0
       secondsRaw =0
       mediaDuration =0
+      isPlaying = False;
 
       fig = plt.figure()
       axes = fig.subplots()
@@ -324,14 +327,16 @@
       plt.ylabel("Arousal")
 
       display(fig, target="VA-plot")
-
+      
       def getMediaDuration(e):
         from js import duration
 
-        global mediaDuration
-
+        global mediaDuration, isPlaying
+        isPlaying = True
         mediaDuration = duration
+        
         duration_txt.write(mediaDuration)
+        player_txt.write(isPlaying)
       
       def getMediaTime(e):
         from js import currentTime, currentTimeInSec
@@ -344,13 +349,22 @@
         timeRaw_txt.write(secondsRaw)
         time_txt.write(seconds)
 
+      def disablePlayer(e):
+
+        global isPlaying
+        isPlaying = False
+        player_txt.write(isPlaying)
+
       video.addEventListener("play", create_proxy(getMediaDuration))
       video.addEventListener("timeupdate", create_proxy(getMediaTime))
+      video.addEventListener("pause", create_proxy(disablePlayer))
+      video.addEventListener("ended", create_proxy(disablePlayer))
 
       audio.addEventListener("play", create_proxy(getMediaDuration))
       audio.addEventListener("timeupdate", create_proxy(getMediaTime))
-
-
+      audio.addEventListener("pause", create_proxy(disablePlayer))
+      audio.addEventListener("ended", create_proxy(disablePlayer))
+    
 
     </py-script>
 <!--
