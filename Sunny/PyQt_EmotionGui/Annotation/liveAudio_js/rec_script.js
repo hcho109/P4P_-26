@@ -7,7 +7,7 @@ class renderWave {
       this.audioContext = new AudioContext();
       this.canvas = document.querySelector("#canvas_waveform");
       this.ctx = this.canvas.getContext("2d");
-      this.isPlaying = 0; // Flag to track if audio is currently playing
+      this.isPlaying = false; // Flag to track if audio is currently playing
       this.playheadPosition = 0; // Current position of the playhead (slider)
       this.data = [];
       message
@@ -92,6 +92,7 @@ document
   .addEventListener("click", initFunction);
 
 let isRecording = document.getElementById("isRecording");
+let audioPlayer = document.getElementById("audioElement");
 
 function initFunction() {
   // Display recording
@@ -122,7 +123,6 @@ function initFunction() {
 
   function handlerFunction(stream) {
     rec = new MediaRecorder(stream);
-    var audioPlayer = document.getElementById("audioElement");
     rec.start();
     rec.ondataavailable = (e) => {
       audioChunks.push(e.data);
@@ -139,14 +139,17 @@ function initFunction() {
           // Initialize renderWave after recording is stopped
           const wave = new renderWave(audioChunks[0].arrayBuffer());
 
-          audioPlayer.addEventListener("play", () => {
-            wave.isPlaying = 1;});
-          audioPlayer.addEventListener("pause", () => {
-              wave.isPlaying = 0;});
-    
-          audioPlayer.addEventListener('ended', function() {
-            wave.isPlaying = 0;});
-    
+          audioPlayer.addEventListener("play", function () {
+            wave.isPlaying = true;
+          });
+
+          audioPlayer.addEventListener("pause", function () {
+            wave.isPlaying = false;
+          });
+          audioPlayer.addEventListener("ended", function () {
+            wave.isPlaying = false;
+          });
+          
           audioPlayer.addEventListener("timeupdate", function () {
             let percent = this.currentTime / this.duration;
             wave.drawTimeline(percent);
