@@ -103,8 +103,10 @@
           </div>
         </div>
 
-
-
+        <span id="playEnabled">Debug: playing?</span>
+        <span id="duration">0.00</span>
+        <span id="currentTime"> 0.0000 </span>
+        <span id="currentTimeinSec"> 0.00 </span>
 
       </div>
     </div>
@@ -269,8 +271,11 @@
 
             <br>
 
+            <span id="playerEnabled"> player status</span>           
+            <span id="MediaDuration"> Debug: raw duration</span>
+            <span id="MediaTime"> Debug: raw time </span>
+            <span id="MediaTimeInSec"> Debug: time in sec </span>
 
-            
             <p id="update-note"> Play a media file and then Click anywhere on the plot to start annnotation</p>
 
             <form class="btns_2D">
@@ -308,7 +313,6 @@
       img.onload = function(){
         drawImageScaled(img,ctx)
       }
-     
     </script>
 
     <!-- video player javascript -->
