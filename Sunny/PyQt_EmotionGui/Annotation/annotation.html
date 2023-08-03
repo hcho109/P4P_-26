@@ -231,8 +231,9 @@
             </div>
 
             <!--------------- 2D V-A plot-------------->
-            <div class="plotCanvas" id="VA-plot"></div>
-
+            <div class="plotCanvas" >
+              <canvas id="2dCanvas"></canvas>
+            </div>
             <div class="yData" id="yData"> 
               <label for="y_input">y-data:</label>
               <input type="text" id="x_input" required size="5" value="y.yyy">
@@ -255,6 +256,9 @@
           </div>
       </div>
     </div>
+
+    <!-- 2d plot javascript -->
+    <script src="annotation_js/2dPlotScript.js"></script>
 
     <!-- Audio waveform javascript -->
     <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
