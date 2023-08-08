@@ -1,24 +1,5 @@
 // Draw 2d V-A plot on html canvas 
 
-// Retrieve the canvas element
-var canvas = document.getElementById('2dCanvas');
-var ctx = canvas.getContext('2d');
-
-const videoPlayer = document.getElementById('video');
-const audioPlayer = document.getElementById('audio');
-
-// Set the canvas size
-canvas.width = 600;
-canvas.height = 600;
-
-// Set the canvas size and plot boundaries
-const canvasWidth = canvas.width;
-const canvasHeight = canvas.height;
-const plotMin = -1.1;
-const plotMax = 1.1;
-const gridStep = 0.25;
-const plotRectRatio = 0.7; // Percentage of canvas size for the inner rectangle
-
 // Function to convert x and y coordinates to canvas coordinates
 function toCanvasX(x) {
     return (x - plotMin) / (plotMax - plotMin) * (canvasWidth * plotRectRatio) + (canvasWidth * (1 - plotRectRatio)) / 2;
@@ -185,24 +166,129 @@ function drawPlot() {
         }
 }
 
+// Print x and y coordinates in 2s.f.
+function printData(x,y){
+    let xData = document.getElementById('xData');
+    let yData = document.getElementById('yData');
+
+    xData.value = toValence(x).toFixed(2);
+    yData.value = toArousal(y).toFixed(2);
+}
+
+// Draw a circular point on the plot
+function drawPoint(x,y,radius,colour){
+    ctx.beginPath();
+    ctx.arc(x,y,radius,0,Math.PI * 2);
+    ctx.fillStyle = colour;
+    ctx.fill();
+}
+
+// Save data for valence, arousal, timestamp in 2s.f.
+function savePoints(x,y){
+    valence_points.push(toValence(x).toFixed(2)); 
+    arousal_points.push(toArousal(y).toFixed(2));
+    time_points.push(elapsedTime.toFixed(2)); 
+
+    /*console.log("Valence Points:", valence_points);
+    console.log("Arousal Points:", arousal_points);
+    console.log("Time Points:", time_points);*/
+}
+
+function annotateOnClick(event) {
+    console.log('Click event triggered');
+    if (!videoPlayer.paused || !audioPlayer.paused){
+        clicked=true;
+        //print x and y coordinates
+        printData(event.offsetX, event.offsetY);
+
+        /* draw circle for the x and y coordinates when mouse is clicked within the valid area
+            when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
+            when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
+        if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
+            drawPoint(event.offsetX, event.offsetY, 3, "red"); // drawPoint(x,y,radius,colour)
+            savePoints(event.offsetX, event.offsetY) // save x,y,time 
+        }
+    }
+}
+
+// Retrieve the canvas element
+var canvas = document.getElementById('2dCanvas');
+var ctx = canvas.getContext('2d');
+
+let videoPlayer = document.getElementById('video');
+let audioPlayer = document.getElementById('audio');
+
+
+
+// Set the canvas size
+canvas.width = 600;
+canvas.height = 600;
+
+// Set the canvas size and plot boundaries
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const plotMin = -1.1;
+const plotMax = 1.1;
+const gridStep = 0.25;
+const plotRectRatio = 0.7; // Percentage of canvas size for the inner rectangle
+
 // Initialize new arrays to store Valence, Arousal, and timestamps data
-var recordedValence = [];
-var recordedArousal = [];
-var recordedTimestamps = [];
+var valence_points = [];
+var arousal_points = [];
+var time_points = [];
+
+var media_duration=0; //total duration of video or audio in seconds
+var elapsedTime=0; // current time of video or audio in seconds
 
 var isPlaying;
-
-// Add an event listener to the video player for the "play" event
-videoPlayer.addEventListener('play', function() {
-    isPlaying = true;
-});
+var clicked;
 
 // Interval for recording data every 20ms
 const recordingInterval = 20;
-canvas.addEventListener('click', function(event) {
-    console.log('Click event triggered');
+
+// Update the current play status for video and audio elements
+videoPlayer.addEventListener('play', function() {
+    isPlaying = true;
 });
+videoPlayer.addEventListener('pause', function() {
+    isPlaying = false;
+});
+videoPlayer.addEventListener('ended', function() {
+    isPlaying = false;
+});
+
+videoPlayer.addEventListener('durationchange', function() {
+    media_duration = videoPlayer.duration;
+    //console.log('video duration:', media_duration);
+});
+
+videoPlayer.addEventListener('timeupdate', function() {
+    elapsedTime = videoPlayer.currentTime;
+    //console.log('video time update:', elapsedTime);
+});
+
+audioPlayer.addEventListener('play', function() {
+    isPlaying = true;
+});
+audioPlayer.addEventListener('pause', function() {
+    isPlaying = false;
+});
+audioPlayer.addEventListener('ended', function() {
+    isPlaying = false;
+});
+audioPlayer.addEventListener('durationchange', function() {
+    media_duration = audioPlayer.duration;
+    //console.log('audio duration:', media_duration);
+});
+
+audioPlayer.addEventListener('timeupdate', function() {
+    elapsedTime = audioPlayer.currentTime;
+    //console.log('audio time update:', elapsedTime);
+});
+
 // Add an event listener to the canvas element to capture mouse movement
+canvas.addEventListener('click', annotateOnClick);
+
 canvas.addEventListener('mousemove', function(event) {
     // Get the mouse position relative to the canvas    
     var mouseX = event.offsetX -scrollX;
@@ -223,15 +309,17 @@ canvas.addEventListener('mousemove', function(event) {
     console.log('plotX:', plotX, 'plotY:', plotY);
 
     // Draw the newly recorded scatter plot on top
-    ctx.beginPath();
+    /*ctx.beginPath();
     ctx.arc(plotX, plotY, 2, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.fill();*/
 
     // Store the Valence, Arousal, and timestamps data in their respective arrays
-    recordedValence.push(valence);
-    recordedArousal.push(arousal);
-    recordedTimestamps.push(videoPlayer.currentTime); // Store the current timestamp of the video
+    /*valence_points.push(valence);
+    arousal_points.push(arousal);
+    time_points.push(videoPlayer.currentTime); // Store the current timestamp of the video
+    */
 });
 
 // Call the drawPlot function initially
 drawPlot();
+

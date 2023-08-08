@@ -234,14 +234,14 @@
             <div class="plotCanvas" >
               <canvas id="2dCanvas"></canvas>
             </div>
-            <div class="yData" id="yData"> 
+            <div class="yData"> 
               <label for="y_input">y-data:</label>
-              <input type="text" id="x_input" required size="5" value="y.yyy">
+              <input type="text" id="yData" required size="5" >
             </div>
 
-            <div class="xData" id="xData"> 
+            <div class="xData" id=""> 
               <label for="x_input">x-data:</label>
-              <input type="text" id="x_input" required size="5" value="x.xxx">
+              <input type="text" id="xData" required size="5" >
             </div>
             <br>
 
@@ -278,12 +278,12 @@
                             centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);  
       }
       
-      var canvas=document.getElementById("canvas_spectrogram");
-      var ctx=canvas.getContext("2d");
+      var canvas_spec=document.getElementById("canvas_spectrogram");
+      var ctx_spec=canvas_spec.getContext("2d");
       var img = new Image();
       img.src = "resources/spec.png";
       img.onload = function(){
-        drawImageScaled(img,ctx)
+        drawImageScaled(img,ctx_spec)
       }
     </script>
 
