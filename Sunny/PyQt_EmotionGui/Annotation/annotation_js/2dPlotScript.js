@@ -189,12 +189,40 @@ function calculateRadius() {
     return currentRadius;
 }
 
+// Determine quadrant based on x and y coordinates
+function getQuadrant(x, y) {
+    if (toValence(x) >= 0 && toArousal(y) >= 0) {
+        return 'yellow'; // Top-right quadrant
+    } else if (toValence(x) < 0 && toArousal(y) >= 0) {
+        return 'red'; // Top-left quadrant
+    } else if (toValence(x) < 0 && toArousal(y) < 0) {
+        return 'grey'; // Bottom-left quadrant
+    } else {
+        return 'blue'; // Bottom-right quadrant
+    }
+}
+
+// Function to calculate color based on quadrant
+function getColor(x, y) {
+    const quadrant = getQuadrant(x, y);
+    return quadrantColors[quadrant];
+}
+
 // Draw a circular point on the plot
-function drawPoint(x,y,radius,colour,opacity){
+function drawPoint(x,y){
+    const radius = calculateRadius();
+    const colour = getColor(x, y);
+
+    // Calculate opacity based on the progress of media playback
+    const maxOpacity = 0.8;
+    const minOpacity = 0.3;
+    const progress = elapsedTime / media_duration;
+    const currentOpacity = maxOpacity - (maxOpacity - minOpacity) * progress;
+
     ctx.beginPath();
     ctx.arc(x,y,radius,0,Math.PI * 2);
     ctx.fillStyle = colour;
-    ctx.globalAlpha = opacity; // Set the opacity
+    ctx.globalAlpha = currentOpacity; // Set the opacity
     ctx.fill();
     ctx.globalAlpha = 1; // Reset the opacity
 }
@@ -223,34 +251,7 @@ function handleMouseMove(event){
 
             if (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09) {
                 
-                if (elapsedTime <= media_duration/3){
-                    colour='#ffdb4d';
-                    opacity = 1 - (elapsedTime / (media_duration / 3));
-                    //minimum and maximum opacity
-                    if (opacity < 0) {
-                        opacity = 0.3;
-                    } else if (opacity > 1) {
-                        opacity = 1;
-                    }
-                } else if (elapsedTime > media_duration/3 && elapsedTime <= 2 * media_duration/3) {
-                    colour = 'red';
-                    opacity = 1 - ((elapsedTime - (media_duration / 3)) / 3);
-                    if (opacity < 0) {
-                        opacity = 0.3;
-                    } else if (opacity > 1) {
-                        opacity = 1;
-                    }
-                } else if (elapsedTime > 2 * media_duration / 3) {
-                    colour = 'blue';
-                    opacity = 1 - ((elapsedTime - 2 * (media_duration / 3)) / 3);
-                    if (opacity < 0) {
-                        opacity = 0.3;
-                    } else if (opacity > 1) {
-                        opacity = 1;
-                    }
-                }
-
-                drawPoint(event.offsetX, event.offsetY,calculateRadius(), colour,opacity);
+                drawPoint(event.offsetX, event.offsetY);
                 savePoints(event.offsetX, event.offsetY);
             } else{
                 count_out_of_bounds +=1;
@@ -273,7 +274,7 @@ function annotateOnClick(event) {
             when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
             when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
         if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
-            drawPoint(event.offsetX, event.offsetY, calculateRadius(), colour, opacity); // drawPoint(x,y,radius,colour,opacity)
+            drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
             // Call autoclicking every 20ms
@@ -328,9 +329,15 @@ var arousal_points = [];
 var time_points = [];
 var count_out_of_bounds=0;
 
-var colour = "#ffdb4d";
-var opacity = 1;
 var plotInterval;
+
+// Define quadrant colors
+const quadrantColors = {
+    red: '#ff3333',
+    grey: '#94b8b8',
+    blue: '#0040ff',
+    yellow: '#e6e600'
+};
 
 setupMediaControls(videoPlayer,audioPlayer);
 
