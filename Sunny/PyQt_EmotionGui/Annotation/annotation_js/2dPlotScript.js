@@ -176,11 +176,13 @@ function printData(x,y){
 }
 
 // Draw a circular point on the plot
-function drawPoint(x,y,radius,colour){
+function drawPoint(x,y,radius,colour,opacity){
     ctx.beginPath();
     ctx.arc(x,y,radius,0,Math.PI * 2);
     ctx.fillStyle = colour;
+    ctx.globalAlpha = opacity; // Set the opacity
     ctx.fill();
+    ctx.globalAlpha = 1; // Reset the opacity
 }
 
 // Save data for valence, arousal, timestamp in 2s.f.
@@ -197,16 +199,73 @@ function savePoints(x,y){
 function annotateOnClick(event) {
     console.log('Click event triggered');
     if (!videoPlayer.paused || !audioPlayer.paused){
-        clicked=true;
-        //print x and y coordinates
-        printData(event.offsetX, event.offsetY);
+        
+        printData(event.offsetX, event.offsetY); //print x and y coordinates
 
         /* draw circle for the x and y coordinates when mouse is clicked within the valid area
             when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
             when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
         if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
-            drawPoint(event.offsetX, event.offsetY, 3, "red"); // drawPoint(x,y,radius,colour)
+            drawPoint(event.offsetX, event.offsetY, 3, "red", 1); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
+
+            canvas.addEventListener('mousemove', autoClicking);
+        } else {
+            count_out_of_bounds +=1;
+            time_points.push(elapsedTime.toFixed(2)); 
+            valence_points.push('Invalid');
+            arousal_points.push('Invalid');
+            out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
+            canvas.addEventListener('mousemove', autoClicking);
+        }
+    }
+}
+
+function autoClicking(event){
+
+    console.log('Autp Click event triggered');
+    if (!videoPlayer.paused || !audioPlayer.paused){
+        if (event !== null && event.offsetX !== null && event.offsetY !== null) {
+            printData(event.offsetX, event.offsetY);        
+
+            if (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09) {
+                
+                if (elapsedTime <= media_duration/3){
+                    colour='red';
+                    opacity = 1 - (elapsedTime / (media_duration / 3));
+                    //minimum and maximum opacity
+                    if (opacity < 0) {
+                        opacity = 0.3;
+                    } else if (opacity > 1) {
+                        opacity = 1;
+                    }
+                } else if (elapsedTime > media_duration/3 && elapsedTime <= 2 * media_duration/3) {
+                    colour = 'yellow';
+                    opacity = 1 - ((elapsedTime - (media_duration / 3)) / 3);
+                    if (opacity < 0) {
+                        opacity = 0.3;
+                    } else if (opacity > 1) {
+                        opacity = 1;
+                    }
+                } else if (elapsedTime > 2 * media_duration / 3) {
+                    colour = 'blue';
+                    opacity = 1 - ((elapsedTime - 2 * (media_duration / 3)) / 3);
+                    if (opacity < 0) {
+                        opacity = 0.3;
+                    } else if (opacity > 1) {
+                        opacity = 1;
+                    }
+                }
+
+                drawPoint(event.offsetX, event.offsetY,2, colour,opacity);
+                savePoints(event.offsetX, event.offsetY);
+            } else{
+                count_out_of_bounds +=1;
+                time_points.push(elapsedTime.toFixed(2)); 
+                valence_points.push('Invalid');
+                arousal_points.push('Invalid');
+                out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
+            }           
         }
     }
 }
@@ -217,8 +276,7 @@ var ctx = canvas.getContext('2d');
 
 let videoPlayer = document.getElementById('video');
 let audioPlayer = document.getElementById('audio');
-
-
+var out_of_bounds_lbl =document.getElementById('update-note');
 
 // Set the canvas size
 canvas.width = 600;
@@ -236,89 +294,17 @@ const plotRectRatio = 0.7; // Percentage of canvas size for the inner rectangle
 var valence_points = [];
 var arousal_points = [];
 var time_points = [];
+var count_out_of_bounds=0;
 
-var media_duration=0; //total duration of video or audio in seconds
-var elapsedTime=0; // current time of video or audio in seconds
-
-var isPlaying;
-var clicked;
+var colour = "red";
+var opacity = 1;
+setupMediaControls(videoPlayer,audioPlayer);
 
 // Interval for recording data every 20ms
-const recordingInterval = 20;
-
-// Update the current play status for video and audio elements
-videoPlayer.addEventListener('play', function() {
-    isPlaying = true;
-});
-videoPlayer.addEventListener('pause', function() {
-    isPlaying = false;
-});
-videoPlayer.addEventListener('ended', function() {
-    isPlaying = false;
-});
-
-videoPlayer.addEventListener('durationchange', function() {
-    media_duration = videoPlayer.duration;
-    //console.log('video duration:', media_duration);
-});
-
-videoPlayer.addEventListener('timeupdate', function() {
-    elapsedTime = videoPlayer.currentTime;
-    //console.log('video time update:', elapsedTime);
-});
-
-audioPlayer.addEventListener('play', function() {
-    isPlaying = true;
-});
-audioPlayer.addEventListener('pause', function() {
-    isPlaying = false;
-});
-audioPlayer.addEventListener('ended', function() {
-    isPlaying = false;
-});
-audioPlayer.addEventListener('durationchange', function() {
-    media_duration = audioPlayer.duration;
-    //console.log('audio duration:', media_duration);
-});
-
-audioPlayer.addEventListener('timeupdate', function() {
-    elapsedTime = audioPlayer.currentTime;
-    //console.log('audio time update:', elapsedTime);
-});
+const plotInterval =setInterval(() => autoClicking(null), 2000);
 
 // Add an event listener to the canvas element to capture mouse movement
 canvas.addEventListener('click', annotateOnClick);
-
-canvas.addEventListener('mousemove', function(event) {
-    // Get the mouse position relative to the canvas    
-    var mouseX = event.offsetX -scrollX;
-    var mouseY = event.offsetY -scrollY;
-
-    // Print mouse position on console
-    console.log('Mouse X:', mouseX, 'Mouse Y:', mouseY);
-
-    // Convert mouse position to Valence and Arousal values
-    const valence = toValence(mouseX);
-    const arousal = toArousal(mouseY);
-
-    console.log('valence:', valence, 'arousal:', arousal);
-
-    const plotX = toCanvasX(valence);
-    const plotY = toCanvasY(arousal);
-
-    console.log('plotX:', plotX, 'plotY:', plotY);
-
-    // Draw the newly recorded scatter plot on top
-    /*ctx.beginPath();
-    ctx.arc(plotX, plotY, 2, 0, 2 * Math.PI);
-    ctx.fill();*/
-
-    // Store the Valence, Arousal, and timestamps data in their respective arrays
-    /*valence_points.push(valence);
-    arousal_points.push(arousal);
-    time_points.push(videoPlayer.currentTime); // Store the current timestamp of the video
-    */
-});
 
 // Call the drawPlot function initially
 drawPlot();
