@@ -191,39 +191,18 @@ function savePoints(x,y){
     arousal_points.push(toArousal(y).toFixed(2));
     time_points.push(elapsedTime.toFixed(2)); 
 
-    /*console.log("Valence Points:", valence_points);
+    console.log("Valence Points:", valence_points);
     console.log("Arousal Points:", arousal_points);
-    console.log("Time Points:", time_points);*/
+    console.log("Time Points:", time_points);
 }
 
-function annotateOnClick(event) {
-    console.log('Click event triggered');
-    if (!videoPlayer.paused || !audioPlayer.paused){
-        
-        printData(event.offsetX, event.offsetY); //print x and y coordinates
+// AutoClicking handler updating x, y coordinates, colour and opacity
+function handleMouseMove(event){
+    console.log('mousemove event fired');
+    
+    // Remove the event listener after it's triggered
+    canvas.removeEventListener('mousemove', handleMouseMove);
 
-        /* draw circle for the x and y coordinates when mouse is clicked within the valid area
-            when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
-            when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
-        if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
-            drawPoint(event.offsetX, event.offsetY, 3, "red", 1); // drawPoint(x,y,radius,colour,opacity)
-            savePoints(event.offsetX, event.offsetY) // save x,y,time 
-
-            canvas.addEventListener('mousemove', autoClicking);
-        } else {
-            count_out_of_bounds +=1;
-            time_points.push(elapsedTime.toFixed(2)); 
-            valence_points.push('Invalid');
-            arousal_points.push('Invalid');
-            out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            canvas.addEventListener('mousemove', autoClicking);
-        }
-    }
-}
-
-function autoClicking(event){
-
-    console.log('Autp Click event triggered');
     if (!videoPlayer.paused || !audioPlayer.paused){
         if (event !== null && event.offsetX !== null && event.offsetY !== null) {
             printData(event.offsetX, event.offsetY);        
@@ -270,6 +249,45 @@ function autoClicking(event){
     }
 }
 
+function annotateOnClick(event) {
+    console.log('Click event triggered');
+    if (!videoPlayer.paused || !audioPlayer.paused){
+        
+        printData(event.offsetX, event.offsetY); //print x and y coordinates
+
+        /* draw circle for the x and y coordinates when mouse is clicked within the valid area
+            when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
+            when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
+        if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
+            drawPoint(event.offsetX, event.offsetY, 3, colour, opacity); // drawPoint(x,y,radius,colour,opacity)
+            savePoints(event.offsetX, event.offsetY) // save x,y,time 
+
+            // Call autoclicking every 20ms
+            plotInterval =setInterval(() => autoClicking(null), 100);
+ 
+        } else {
+            count_out_of_bounds +=1;
+            time_points.push(elapsedTime.toFixed(2)); 
+            valence_points.push('Invalid');
+            arousal_points.push('Invalid');
+            out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
+            plotInterval =setInterval(() => autoClicking(null), 100);
+        }
+    } 
+}
+
+function autoClicking(){
+    console.log('Auto Click event triggered');
+    if (!videoPlayer.paused || !audioPlayer.paused){
+        canvas.addEventListener('mousemove', handleMouseMove);
+    } else if (videoPlayer.ended || audioPlayer.ended){
+        clearInterval(plotInterval);
+    } else{
+        clearInterval(plotInterval);
+        out_of_bounds_lbl.innerHTML = "Paused the media file? To resume annotating, play the media and click on the plot. <br><br> Or, Restart from the beginning with the 'Re-annotate' button below.";
+    }
+}
+
 // Retrieve the canvas element
 var canvas = document.getElementById('2dCanvas');
 var ctx = canvas.getContext('2d');
@@ -298,10 +316,9 @@ var count_out_of_bounds=0;
 
 var colour = "red";
 var opacity = 1;
+var plotInterval;
 setupMediaControls(videoPlayer,audioPlayer);
 
-// Interval for recording data every 20ms
-const plotInterval =setInterval(() => autoClicking(null), 2000);
 
 // Add an event listener to the canvas element to capture mouse movement
 canvas.addEventListener('click', annotateOnClick);
