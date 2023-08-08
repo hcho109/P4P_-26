@@ -175,6 +175,20 @@ function printData(x,y){
     yData.value = toArousal(y).toFixed(2);
 }
 
+function calculateRadius() {
+    // Define min and max radius values
+    const minRadius = 1;
+    const maxRadius = 10;
+
+    // Calculate progress as a value between 0 and 1
+    const progress = elapsedTime / media_duration;
+
+    // Calculate the current radius based on the progress
+    const currentRadius = maxRadius - (maxRadius - minRadius) * progress;
+
+    return currentRadius;
+}
+
 // Draw a circular point on the plot
 function drawPoint(x,y,radius,colour,opacity){
     ctx.beginPath();
@@ -210,7 +224,7 @@ function handleMouseMove(event){
             if (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09) {
                 
                 if (elapsedTime <= media_duration/3){
-                    colour='red';
+                    colour='#ffdb4d';
                     opacity = 1 - (elapsedTime / (media_duration / 3));
                     //minimum and maximum opacity
                     if (opacity < 0) {
@@ -219,7 +233,7 @@ function handleMouseMove(event){
                         opacity = 1;
                     }
                 } else if (elapsedTime > media_duration/3 && elapsedTime <= 2 * media_duration/3) {
-                    colour = 'yellow';
+                    colour = 'red';
                     opacity = 1 - ((elapsedTime - (media_duration / 3)) / 3);
                     if (opacity < 0) {
                         opacity = 0.3;
@@ -236,7 +250,7 @@ function handleMouseMove(event){
                     }
                 }
 
-                drawPoint(event.offsetX, event.offsetY,2, colour,opacity);
+                drawPoint(event.offsetX, event.offsetY,calculateRadius(), colour,opacity);
                 savePoints(event.offsetX, event.offsetY);
             } else{
                 count_out_of_bounds +=1;
@@ -259,14 +273,14 @@ function annotateOnClick(event) {
             when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
             when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
         if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
-            drawPoint(event.offsetX, event.offsetY, 3, colour, opacity); // drawPoint(x,y,radius,colour,opacity)
+            drawPoint(event.offsetX, event.offsetY, calculateRadius(), colour, opacity); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
             // Call autoclicking every 20ms
             plotInterval =setInterval(() => autoClicking(null), 100);
  
         } else {
-            count_out_of_bounds +=1;
+            count_out_of_bounds +=1;   
             time_points.push(elapsedTime.toFixed(2)); 
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
@@ -314,9 +328,10 @@ var arousal_points = [];
 var time_points = [];
 var count_out_of_bounds=0;
 
-var colour = "red";
+var colour = "#ffdb4d";
 var opacity = 1;
 var plotInterval;
+
 setupMediaControls(videoPlayer,audioPlayer);
 
 
