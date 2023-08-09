@@ -178,7 +178,7 @@ function printData(x,y){
 function calculateRadius() {
     // Define min and max radius values
     const minRadius = 1;
-    const maxRadius = 10;
+    const maxRadius = 20;
 
     // Calculate progress as a value between 0 and 1
     const progress = elapsedTime / media_duration;
@@ -202,10 +202,30 @@ function getQuadrant(x, y) {
     }
 }
 
-// Function to calculate color based on quadrant
+// Function to calculate color based on angle
 function getColor(x, y) {
-    const quadrant = getQuadrant(x, y);
-    return quadrantColors[quadrant];
+    const angle = Math.atan2(toArousal(y), toValence(x)); // Calculate the angle in radians
+    const angleInDegrees = (angle < 0 ? angle + 2 * Math.PI : angle) * (180 / Math.PI); // Convert angle to degrees and ensure positive
+
+    // Calculate the index of the color based on the angle and the number of slices (12)
+    const colorIndex = Math.floor(angleInDegrees / 45) % 8;
+
+    return sliceColors[colorIndex];
+}
+
+// Function to calculate opacity based on progress
+function calculateOpacity() {
+    // Define min and max opacity values
+    const minOpacity = 0.1;
+    const maxOpacity = 1;
+
+    // Calculate progress as a value between 0 and 1
+    const progress = elapsedTime / media_duration;
+
+    // Calculate the current opacity based on the progress
+    const currentOpacity = minOpacity + (maxOpacity - minOpacity) * progress;
+
+    return currentOpacity;
 }
 
 // Draw a circular point on the plot
@@ -214,10 +234,7 @@ function drawPoint(x,y){
     const colour = getColor(x, y);
 
     // Calculate opacity based on the progress of media playback
-    const maxOpacity = 0.8;
-    const minOpacity = 0.3;
-    const progress = elapsedTime / media_duration;
-    const currentOpacity = maxOpacity - (maxOpacity - minOpacity) * progress;
+    const currentOpacity = calculateOpacity();
 
     ctx.beginPath();
     ctx.arc(x,y,radius,0,Math.PI * 2);
@@ -303,12 +320,41 @@ function autoClicking(){
     }
 }
 
+// Function to clear the plot and arrays
+function clearPlot() {
+    // Clear the canvas and redraw plot
+    ctx.fillStyle = 'black';
+    drawPlot();
+
+    // Clear the arrays
+    valence_points = [];
+    arousal_points = [];
+    time_points = [];
+    count_out_of_bounds = 0;
+
+    // Clear the out of bounds label
+    out_of_bounds_lbl.innerHTML = "Annotation data has been reset! <br><br> Get started by playing a media file and clicking anywhere within the plot area.";
+}
+
+function reAnnotate() {
+    // Pause the media player
+    videoPlayer.pause();
+    audioPlayer.pause();
+
+    // Set the slider position to the beginning
+    videoPlayer.currentTime = 0;
+    audioPlayer.currentTime = 0;
+
+    // Clear the plot and arrays
+    clearPlot();
+
+    out_of_bounds_lbl.textContent ="You can now begin the annotation again";
+}
+
 // Retrieve the canvas element
 var canvas = document.getElementById('2dCanvas');
 var ctx = canvas.getContext('2d');
 
-let videoPlayer = document.getElementById('video');
-let audioPlayer = document.getElementById('audio');
 var out_of_bounds_lbl =document.getElementById('update-note');
 
 // Set the canvas size
@@ -329,15 +375,13 @@ var arousal_points = [];
 var time_points = [];
 var count_out_of_bounds=0;
 
-var plotInterval;
+var plotInterval=0;
 
-// Define quadrant colors
-const quadrantColors = {
-    red: '#ff3333',
-    grey: '#94b8b8',
-    blue: '#0040ff',
-    yellow: '#e6e600'
-};
+// Define colors for 12 slices
+const sliceColors = [
+    '#66ff33', '#ffcc00', '#ff751a', '#ff3333',
+    '#751aff', '#0066ff', '#00e6e6', '#009933'
+];
 
 setupMediaControls(videoPlayer,audioPlayer);
 

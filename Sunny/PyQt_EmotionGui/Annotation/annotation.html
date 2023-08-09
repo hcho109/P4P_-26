@@ -11,6 +11,7 @@
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
       crossorigin="anonymous" referrerpolicy="no-referrer" 
     />
+    <link rel="shortcut icon" href="#" />
     <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
     <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
     <link href="navStyle.css" rel="stylesheet" type="text/css" />
@@ -248,9 +249,9 @@
             <p id="update-note"> Start annotating by playing a media file and clicking anywhere within the plot area. </p>
 
             <form class="btns_2D">
-              <input type="button" class="clear_btn" id="clear_btn" py-click="clear_plot()" value="Clear">
-              <input type="button" class="save_btn" id="CSV_btn" py-click="saveAsCSV()" value="Save as CSV">
-              <input type="button" class="reannotate_btn" id="reannotate_btn" py-click="reannotate()" value="Re-annotate">
+              <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
+              <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
+              <input type="button" class="save_btn" id="CSV_btn" onclick="saveAsCSV()" value="Save as CSV">
             </form><br>
 
           </div>
@@ -262,7 +263,6 @@
     <script src="annotation_js/2dPlotScript.js"></script>
 
     <!-- Audio waveform javascript -->
-    <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
     <script src="annotation_js/audioScript.js"></script>
 
     <!-- Temporarily added spectrogram image -->
