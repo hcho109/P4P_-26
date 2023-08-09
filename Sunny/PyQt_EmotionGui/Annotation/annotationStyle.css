@@ -51,8 +51,21 @@ body {
 /* Control the right side */
 .right {
     right: 0;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
+.scrollable-content{
+    min-width: 700px;
+}
+
+/* Add invisible content to trigger scroll bar */
+.scrollable-content::after {
+    content: "";
+    display: block;
+    width: 800px;
+    height: 400px; 
+}
 /* content centered horizontally and vertically */
 .centered {
     position: absolute;
@@ -134,9 +147,16 @@ body {
 }
 
 .yData, .xData {
-    float: right;
+    float: left;
     display: flex;
-    margin-right: 5px;
+}
+
+.xData{
+    margin-left: 100px;
+}
+
+.yData{
+    margin-left: 10px;
 }
 
 .xData label, .yData label {

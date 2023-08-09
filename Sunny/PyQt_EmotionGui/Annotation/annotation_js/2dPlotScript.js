@@ -1,4 +1,5 @@
-// Draw 2d V-A plot on html canvas 
+/* 2D annotation script
+   Draw 2d V-A plot on html canvas */
 
 // Function to convert x and y coordinates to canvas coordinates
 function toCanvasX(x) {
@@ -106,20 +107,20 @@ function drawPlot() {
     const centerY = toCanvasY(0);
     const radius = (canvasWidth * plotRectRatio * 0.5) / plotMax;
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'grey';
     ctx.stroke();
 
     // Draw title, x and y axis labels
     ctx.font = 'bold 15px Roboto';
-    ctx.fillText('V-A Plot', canvasWidth/2.16, 60);
+    ctx.fillText('V-A Plot', canvasWidth/2.16, 80);
 
     ctx.font = 'bold 13px Roboto';
-    ctx.fillText('Valence', canvasWidth / 2.16, canvasHeight -50);
+    ctx.fillText('Valence', canvasWidth / 2.12, canvasHeight -60);
 
     ctx.save();
     ctx.translate(canvasWidth * (1 - plotRectRatio) / 2 - 45, canvasHeight / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Arousal', -20, 5);
+    ctx.fillText('Arousal', -20, -5);
     ctx.restore();
 
     // Draw y values on the outer left side
@@ -149,9 +150,7 @@ function drawPlot() {
         // Convert x and y coordinates to canvas coordinates
         const plotX = toCanvasX(x);
         const plotY = toCanvasY(y);
-        console.log('plotX:', plotX, 'plotY:', plotY);
-
-
+        
         // Draw the landmark point
         ctx.beginPath();
         ctx.arc(plotX, plotY, 2, 0, 2 * Math.PI);
@@ -163,7 +162,10 @@ function drawPlot() {
         ctx.font = '11px Roboto';
         ctx.fillText(landmarkEmotions[i], plotX + 12, plotY - 15);
 
-        }
+    }
+
+    // console.log('X -1:', toCanvasX(-1), 'x 1:', toCanvasX(1));
+    // console.log('y -1:', toCanvasY(-1), 'y 1:', toCanvasY(1));
 }
 
 // Print x and y coordinates in 2s.f.
@@ -178,7 +180,7 @@ function printData(x,y){
 function calculateRadius() {
     // Define min and max radius values
     const minRadius = 1;
-    const maxRadius = 20;
+    const maxRadius = 10;
 
     // Calculate progress as a value between 0 and 1
     const progress = elapsedTime / media_duration;
@@ -246,6 +248,7 @@ function drawPoint(x,y){
 
 // Save data for valence, arousal, timestamp in 2s.f.
 function savePoints(x,y){
+    console.log('data added');
     valence_points.push(toValence(x).toFixed(2)); 
     arousal_points.push(toArousal(y).toFixed(2));
     time_points.push(elapsedTime.toFixed(2)); 
@@ -266,7 +269,7 @@ function handleMouseMove(event){
         if (event !== null && event.offsetX !== null && event.offsetY !== null) {
             printData(event.offsetX, event.offsetY);        
 
-            if (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09) {
+            if (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272) {
                 
                 drawPoint(event.offsetX, event.offsetY);
                 savePoints(event.offsetX, event.offsetY);
@@ -290,12 +293,12 @@ function annotateOnClick(event) {
         /* draw circle for the x and y coordinates when mouse is clicked within the valid area
             when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
             when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
-        if (event !== null && (event.offsetX >= 109.091 && event.offsetX <= 490.09 && event.offsetY >= 109.091 && event.offsetY <= 490.09)) {
+        if (event !== null && (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272)) {
             drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
             // Call autoclicking every 20ms
-            plotInterval =setInterval(() => autoClicking(null), 100);
+            plotInterval =setInterval(() => autoClicking(null), 300);
  
         } else {
             count_out_of_bounds +=1;   
@@ -303,7 +306,7 @@ function annotateOnClick(event) {
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
             out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            plotInterval =setInterval(() => autoClicking(null), 100);
+            plotInterval =setInterval(() => autoClicking(null), 300);
         }
     } 
 }
@@ -351,6 +354,35 @@ function reAnnotate() {
     out_of_bounds_lbl.textContent ="You can now begin the annotation again";
 }
 
+function generateCSVContent() {
+    let csvContent = "Time,Valence,Arousal\n"; // Add header row
+    
+    // Loop through the data arrays and combine them into rows
+    for (let i = 0; i < time_points.length; i++) {
+        csvContent += `${time_points[i]},${valence_points[i]},${arousal_points[i]}\n`;
+    }
+    
+    return csvContent;
+}
+
+function downloadCSV_2d() {
+    const csvContent = generateCSVContent();
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "2D_annotation_data.csv";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    
+    a.click();
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+
 // Retrieve the canvas element
 var canvas = document.getElementById('2dCanvas');
 var ctx = canvas.getContext('2d');
@@ -358,8 +390,8 @@ var ctx = canvas.getContext('2d');
 var out_of_bounds_lbl =document.getElementById('update-note');
 
 // Set the canvas size
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = 700;
+canvas.height = 700;
 
 // Set the canvas size and plot boundaries
 const canvasWidth = canvas.width;
@@ -384,7 +416,6 @@ const sliceColors = [
 ];
 
 setupMediaControls(videoPlayer,audioPlayer);
-
 
 // Add an event listener to the canvas element to capture mouse movement
 canvas.addEventListener('click', annotateOnClick);

@@ -93,168 +93,173 @@
           <h3>Speech Emotion Annotation</h3>
         </div>
         <p>'Click' on the emotional model you want to use to annotate emotions in speech within the tabs below. Enjoy annotating emotions!</p>
-      
-        <!--Multimedia player tab links-->
-        <div class="EMtabs">
 
-          <!----------- discrete/categorical emotion model tab------------------->
-          <input type="radio" id="tabCategory" name="EMtabs">
-          <label for="tabCategory">Discrete/Categorical</label>
-          
-          <!-- categorical tab content-->
-          <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
-            'About', 900, 600);">
-              <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
-            </button>
-            <div class="content">
-              <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
-              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:260px">
-              <p>
-                <ul>
-                  <li>In a discrete/categorical emotion model, emotions are typically represented 
-                    as a fixed set of basic or primary emotions. 
-                    Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.</li>
-                  <li>After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
-                    <br><br>For detailed instructions, click on the '?' at the top rigt corner.</li>
-                </ul>
-              </p>
-            </div>
-            <div class="inputTextBox">
-              <label for="emotionLabel">Emotion description (one word):</label>
-              <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
-              <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br>
-              <label for="categories">Choose an emotion:</label>
-              <select id="categories" name="emotion-Categories">
-                <option value="happy">Happiness</option>
-                <option value="Sad">Sadness</option>
-                <option value="fear">Fear</option>
-                <option value="disgust">Disgust</option>
-                <option value="anger">Anger</option>
-                <option value="surprise">Surprise</option>
-                <option value="trust">Trust</option>
-                <option value="anticipation">Anticipation</option>
-              </select>
-              <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
-            </div>
-          </div>
+        <div class="scrollable-content">
+        
+          <!--Multimedia player tab links-->
+          <div class="EMtabs">
 
-          <!------------- 1D emotion model tab------------------>
-          <input type="radio" id="tab1D" name="EMtabs">
-          <label for="tab1D">1-D</label>
-          
-          <!-- 1D tab content-->
-          <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="createPopupWin('about/about1D.html',
-            'About', 900, 600);">
-              <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
-            </button>
-            <div class="content">
-              <h4 style="margin-bottom: 0px; margin-top: 10px">One-dimensional (1-D) Emotion Model</h4>
-              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
-              <p>
-                <ul>
-                  <li>As you watch a video or listen to an audio, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
-                  <li>Adjust each slider independently, focusing on one emotional dimension at a time.<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
-                </ul>
-              </p>
-            </div>
+            <!----------- discrete/categorical emotion model tab------------------->
+            <input type="radio" id="tabCategory" name="EMtabs">
+            <label for="tabCategory">Discrete/Categorical</label>
             
-            <!--Valence slider bar-->
-            <div class="range-slider"> 
-              <form class="btns_1D">
-                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
-              </form>
-              <label for="valenceRange">Valence</label> 
-              <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values">
-              <span class="range-slider__value">0</span><br>
-              <span>Unhappy</span>
-              <span class="endLabel">Happy</span>
-              <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+            <!-- categorical tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:260px">
+                <p>
+                  <ul>
+                    <li>In a discrete/categorical emotion model, emotions are typically represented 
+                      as a fixed set of basic or primary emotions. 
+                      Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.</li>
+                    <li>After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
+                      <br><br>For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+              <div class="inputTextBox">
+                <label for="emotionLabel">Emotion description (one word):</label>
+                <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
+                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br>
+                <label for="categories">Choose an emotion:</label>
+                <select id="categories" name="emotion-Categories">
+                  <option value="happy">Happiness</option>
+                  <option value="Sad">Sadness</option>
+                  <option value="fear">Fear</option>
+                  <option value="disgust">Disgust</option>
+                  <option value="anger">Anger</option>
+                  <option value="surprise">Surprise</option>
+                  <option value="trust">Trust</option>
+                  <option value="anticipation">Anticipation</option>
+                </select>
+                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
+              </div>
             </div>
-            <hr>
-            <!--Arousal slider bar-->
-            <div class="range-slider">
-              <form class="btns_1D">
-                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
-              </form>
-              <label for="arousalRange">Arousal</label> 
-              <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange">
-              <span class="range-slider__value">0</span><br>
-              <span>Calm</span>
-              <span class="endLabel">Excited</span>
-              <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
-            </div>
-            <hr>
-            <!--Dominance slider bar-->
-            <div class="range-slider">
-              <form class="btns_1D">
-                <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
-              </form>
-              <label for="dominanceRange">Dominance</label>
-              <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange">
-              <span class="range-slider__value">0</span><br>
-              <span>Low</span>
-              <span class="endLabel">High</span>
-              <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
-            </div>
-            <hr>
 
-            <form class="btns_1D_all">
-              <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" value="Clear all current values">
-              <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" value="Save all current values as CSV">
-            </form>
+            <!------------- 1D emotion model tab------------------>
+            <input type="radio" id="tab1D" name="EMtabs">
+            <label for="tab1D">1-D</label>
+            
+            <!-- 1D tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/about1D.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">One-dimensional (1-D) Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+                <p>
+                  <ul>
+                    <li>As you watch a video or listen to an audio, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
+                    <li>Adjust each slider independently, focusing on one emotional dimension at a time.<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+              
+              <!--Valence slider bar-->
+              <div class="range-slider"> 
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                </form>
+                <label for="valenceRange">Valence</label> 
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values">
+                <span class="range-slider__value">0</span><br>
+                <span>Unhappy</span>
+                <span class="endLabel">Happy</span>
+                <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+              </div>
+              <hr>
+              <!--Arousal slider bar-->
+              <div class="range-slider">
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                </form>
+                <label for="arousalRange">Arousal</label> 
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange">
+                <span class="range-slider__value">0</span><br>
+                <span>Calm</span>
+                <span class="endLabel">Excited</span>
+                <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
+              </div>
+              <hr>
+              <!--Dominance slider bar-->
+              <div class="range-slider">
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
+                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                </form>
+                <label for="dominanceRange">Dominance</label>
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange">
+                <span class="range-slider__value">0</span><br>
+                <span>Low</span>
+                <span class="endLabel">High</span>
+                <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
+              </div>
+              <hr>
+
+              <form class="btns_1D_all">
+                <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" value="Clear all current values">
+                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" value="Save all current values as CSV">
+              </form>
+            </div>
+
+            <!----------------- 2D emotion model tab------------------->
+            <input type="radio" id="tab2D" name="EMtabs" checked="checked">
+            <label for="tab2D">2-D</label>
+            
+            <!-- 2D tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
+                <span class="helpPopupText" id="2dhelpPopup"></span>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">Two-dimensional (2-D) Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+                <p>
+                  <ul>
+                    <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
+                    <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity).<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+
+              <!--------------- 2D V-A plot-------------->
+              <div class="plotCanvas" >
+                <canvas id="2dCanvas"></canvas>
+                <div>
+                  <div class="xData" id=""> 
+                    <label for="x_input">x-data:</label>
+                    <input type="text" id="xData" required size="5" >
+                  </div>
+                  <div class="yData"> 
+                    <label for="y_input">y-data:</label>
+                    <input type="text" id="yData" required size="5" >
+                  </div>
+                </div>
+              </div>
+              <br>
+
+              <p id="update-note"> Start annotating by playing a media file and clicking anywhere within the plot area. </p>
+
+              <form class="btns_2D">
+                <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
+                <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
+                <input type="button" class="save_btn" id="2d_CSV_btn" onclick="downloadCSV_2d()" value="Save as CSV">
+              </form><br>
+
+            </div>
           </div>
-
-          <!----------------- 2D emotion model tab------------------->
-          <input type="radio" id="tab2D" name="EMtabs" checked="checked">
-          <label for="tab2D">2-D</label>
-          
-          <!-- 2D tab content-->
-          <div class="EMtabContent">
-            <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
-            'About', 900, 600);">
-              <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
-              <span class="helpPopupText" id="2dhelpPopup"></span>
-            </button>
-            <div class="content">
-              <h4 style="margin-bottom: 0px; margin-top: 10px">Two-dimensional (2-D) Emotion Model</h4>
-              <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
-              <p>
-                <ul>
-                  <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
-                  <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity).<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
-                </ul>
-              </p>
-            </div>
-
-            <!--------------- 2D V-A plot-------------->
-            <div class="plotCanvas" >
-              <canvas id="2dCanvas"></canvas>
-            </div>
-            <div class="yData"> 
-              <label for="y_input">y-data:</label>
-              <input type="text" id="yData" required size="5" >
-            </div>
-
-            <div class="xData" id=""> 
-              <label for="x_input">x-data:</label>
-              <input type="text" id="xData" required size="5" >
-            </div>
-            <br>
-
-            <p id="update-note"> Start annotating by playing a media file and clicking anywhere within the plot area. </p>
-
-            <form class="btns_2D">
-              <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
-              <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
-              <input type="button" class="save_btn" id="CSV_btn" onclick="saveAsCSV()" value="Save as CSV">
-            </form><br>
-
-          </div>
+        </div>
       </div>
     </div>
 
@@ -264,6 +269,17 @@
 
     <!-- Audio waveform javascript -->
     <script src="annotation_js/audioScript.js"></script>
+
+
+    <!-- video player javascript -->
+    <script src="annotation_js/videoScript.js"></script>
+
+    <!-- Help popup javascript -->
+    <script src="annotation_js/helpWinScript.js"></script>
+    
+
+    <!-- 1D sliders javascript -->
+    <script src="annotation_js/1dSliderScript.js"></script>
 
     <!-- Temporarily added spectrogram image -->
     <script>
@@ -286,325 +302,6 @@
       img.onload = function(){
         drawImageScaled(img,ctx_spec)
       }
-    </script>
-
-    <!-- video player javascript -->
-    <script src="annotation_js/videoScript.js"></script>
-
-    <!-- Help popup javascript -->
-    <script>
-      var newWin;
-      // When the user clicks on '?' icon, open the help popup
-      function createPopupWin(pageURL, pageTitle,
-                    popupWinWidth, popupWinHeight) {
-            var left = (screen.width - popupWinWidth) / 2;
-            var top = (screen.height - popupWinHeight) / 4;
-      
-            var myWindow = window.open(pageURL, pageTitle,
-                    'resizable=yes, width=' + popupWinWidth
-                    + ', height=' + popupWinHeight + ', top='
-                    + top + ', left=' + left);
-        }
-
-    </script>
-
-<!-- 2d plot 
-    <py-script output="VA-plot">
-      from plot2d import createCircle
-      import matplotlib.pyplot as plt
-      from pyodide.ffi import create_proxy
-      from js import document
-
-      player_txt = Element("playerEnabled")
-      duration_txt = Element("MediaDuration")
-      timeRaw_txt = Element("MediaTime")
-      time_txt = Element("MediaTimeInSec")
-      video=document.getElementById("video")
-      audio= document.getElementById("audio")
-
-      seconds = 0
-      secondsRaw =0
-      mediaDuration =0
-      isPlaying = False;
-
-      fig = plt.figure()
-      axes = fig.subplots()
-
-      createCircle(axes)
-
-      plt.title("V-A Plot")
-      plt.xlabel("Valence")
-      plt.ylabel("Arousal")
-
-      display(fig, target="VA-plot")
-
-      def annotateOnClick(e):
-        print(e.xdata)
-
-      fig.canvas.mpl_connect("button_press_event",annotateOnClick)
-
-      
-
-      def getMediaDuration(e):
-        from js import duration
-
-        global mediaDuration, isPlaying
-        isPlaying = True
-        mediaDuration = duration
-
-        duration_txt.write(mediaDuration)
-        player_txt.write(isPlaying)
-      
-      def getMediaTime(e):
-        from js import currentTime, currentTimeInSec
-
-        global seconds, secondsRaw
-
-        secondsRaw = currentTime
-        seconds = currentTimeInSec
-
-        timeRaw_txt.write(secondsRaw)
-        time_txt.write(seconds)
-
-      def disablePlayer(e):
-
-        global isPlaying
-        isPlaying = False
-        player_txt.write(isPlaying)
-
-      video.addEventListener("play", create_proxy(getMediaDuration))
-      video.addEventListener("timeupdate", create_proxy(getMediaTime))
-      video.addEventListener("pause", create_proxy(disablePlayer))
-      video.addEventListener("ended", create_proxy(disablePlayer))
-
-      audio.addEventListener("play", create_proxy(getMediaDuration))
-      audio.addEventListener("timeupdate", create_proxy(getMediaTime))
-      audio.addEventListener("pause", create_proxy(disablePlayer))
-      audio.addEventListener("ended", create_proxy(disablePlayer))
-    
-
-    </py-script>
--->
-<!--
-    <py-script output="VA-plot">
-      import js
-      from js import isPlaying, duration, currentTime, currentTimeInSec, handleVideoFileChange
-      import matplotlib.pyplot as plt
-      
-      fig = plt.figure()
-      axes = fig.subplots()
-
-      #canvas = Element("VA-plot")
-      update_note = Element("update-note")
-
-      # js objects converted to equivalent py types
-      seconds = currentTimeInSec
-      mediaSeconds = duration
-
-      clicked = false
-      count_out_of_bounds = 0
-      time_points = []
-      valence_points = []
-      arousal_points = []
-
-      fig.canvas.mpl_connect(
-			"button_press_event", annotateOnClick)
-
-      self.mediaPlayer.positionChanged.connect(self.positionChanged)
-      self.mediaPlayer.durationChanged.connect(self.durationChanged)
-      self.mediaPlayer.error.connect(self.handleError)
-
-
-      def annotateOnClick(event):
-        global clicked, count_out_of_bounds, time_points, valence_points, arousal_points, fig, seconds
-
-        if isPlaying:
-          clicked = True
-          print(round(event.xdata, 2), round(event.ydata, 2))
-          if event is not None and (event.xdata >= -1 and event.xdata <= 1 and event.ydata >= -1 and event.ydata <= 1):
-            axes.scatter(round(event.xdata, 2), round(event.ydata, 2), color='red', s=15)
-            display(fig, target="VA-plot")
-            savePoints(round(event.xdata, 2), round(event.ydata, 2))
-            fig.canvas.mpl_connect(
-            "motion_notify_event", autoClicking)
-          else:
-            count_out_of_bounds += 1
-            time_points.append(seconds)
-            valence_points.append(None)
-            arousal_points.append(None)
-
-            update_note.write(
-              "You have clicked out of the annotation model {} times. Do you want to re-annotate?".format(count_out_of_bounds))
-            fig.canvas.mpl_connect(
-            "motion_notify_event", autoClicking)
-
-      def reannotate(self):
-        # clear the plot and all the time and emotional coordinates list
-        self.clear_plot()
-        self.time_points = []
-        self.valence_points = []
-        self.arousal_points = []
-        self.count_out_of_bounds = 0
-        self.clicked = False
-        # pause the media and begin again
-        self.setPosition(0)
-        self.mediaPlayer.pause()
-        self.out_of_bounds_lbl.setText(
-          "You can now begin the annotation again")
-
-      def autoClicking(event):
-        global isPlaying, clicked, seconds, mediaSeconds
-        if isPlaying and clicked == True:
-          if event is not None and (event.xdata != None and event.ydata != None):
-            print(round(event.xdata, 2), round(event.ydata, 2))
-            if (event.xdata >= -1 and event.xdata <= 1 and event.ydata >= -1 and event.ydata <= 1):
-              time_elapsed = seconds
-              if float(time_elapsed) <= float(mediaSeconds) / 3:
-                print(mediaSeconds)
-                color = 'red'
-                opacity = 1 - (float(time_elapsed) / (float(mediaSeconds) / 3))
-                if opacity < 0:
-                  opacity = 0.3
-                elif opacity > 1:
-                  opacity = 1
-              elif float(time_elapsed) > float(self.mediaSeconds) / 3 and float(time_elapsed) <= 2 * float(self.mediaSeconds) / 3:
-                color = 'yellow'
-                opacity = 1 - ((float(time_elapsed) - (float(self.mediaSeconds) / 3)) / 3)
-                print('yellow', opacity)
-                if opacity < 0:
-                  opacity = 0.3
-                elif opacity > 1:
-                  opacity = 1
-              elif float(time_elapsed) > 2 * float(self.mediaSeconds) / 3:
-                color = 'blue'
-                opacity = 1 - ((float(time_elapsed) - 2 * (float(self.mediaSeconds) / 3)) / 3)
-                print('blue', opacity)
-                if opacity < 0:
-                  opacity = 0.3
-                elif opacity > 1:
-                  opacity = 1
-
-              self.axes.scatter(round(event.xdata, 2), round(
-                event.ydata, 2), color=color, s=18, alpha=opacity)
-              self.canvas.draw()
-              self.savePoints(round(event.xdata, 2),
-                      round(event.ydata, 2))
-            else:
-              self.count_out_of_bounds += 1
-              self.time_points.append(self.seconds)
-              self.valence_points.append(None)
-              self.arousal_points.append(None)
-              self.out_of_bounds_lbl.setText(
-                "You have clicked out of the annotation model {} times. Do you want to re-annotate?".format(self.count_out_of_bounds))
-
-      def savePoints(xdata, ydata):
-        valence_points.append(xdata)
-        arousal_points.append(ydata)
-        time_points.append(seconds)
-
-      def saveAsCSV(self):
-        header = ["Time", "Valence", "Arousal"]
-
-        # this opens a dialog box to save the file
-        filename = 'annotated-file'
-        filename, _ = QFileDialog.getSaveFileName(
-          self, "Save CSV file", filename, "CSV Files (*.csv)"
-        )
-      
-        for i in range(len(self.time_points)):
-          if i != 0:
-              if self.time_points[i] == self.time_points[i-1] or float(self.time_points[i]) < float(self.time_points[i-1]):
-                self.time_points[i] = round(float(self.time_points[i-1]) + random.uniform(0.02, 0.07), 2)
-
-        if filename:
-          with open(filename, 'w+', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(header)
-            rows = [(str(time), str(valence), str(arousal)) for time, valence, arousal in zip(self.time_points,
-                                                      self.valence_points, self.arousal_points)]
-            writer.writerows(rows)
-
-      def clear_plot(self):
-
-      
-    </py-script>
--->
-
-<!-- 
-    <py-script>
-      from js import document
-      from pyodide.ffi import create_proxy
-
-      def handle_file_input(event):
-        videoFiles = event.target.files
-
-        if not videoFiles or not videoFiles[0]:
-            return
-
-        videoFileUrl = URL.createObjectURL(videoFiles[0])
-
-        # Load the video file
-        video = document.getElementById('video')
-        video.src = videoFileUrl
-        video.play()
-
-      videoFileInput_proxy = create_proxy(handle_file_input)
-      videoFileInput = document.getElementById('video-file-input')
-      videoFileInput.addEventListener("change", videoFileInput_proxy)
-    </py-script> -->
-
-  <!-- videoFileInput = document.getElementById('video-file-input')
-      videoFileInput.addEventListener("change", videoFileInput) -->
-
-
-    <!-- <py-script>
-      from js import document, URL
-      from pyodide.ffi.wrappers import add_event_listener
-
-      def handle_file_input(event):
-        videoFiles = event.target.files
-
-        if not videoFiles or not videoFiles[0]:
-            return
-
-        videoFileUrl = URL.createObjectURL(videoFiles[0])
-
-        # Load the video file
-        video = document.getElementById('video')
-        video.src = videoFileUrl
-        video.play()
-
-      add_event_listener(
-        document.getElementById('video-file-input'),
-        "change",
-        handle_file_input
-      )
-
-    </py-script> -->
-    
-    <!-- 1D sliders javascript -->
-    <script>
-      //Handle multiple sliders input crdhange event
-      var rangeSlider = function() {
-        var sliders = document.querySelectorAll('.range-slider');
-        
-        sliders.forEach(function(slider) {
-            var range = slider.querySelector('.range-slider__range');
-            var value = slider.querySelector('.range-slider__value');
-
-            var values = slider.querySelectorAll('.range-slider__value');
-            values.forEach(function(val) {
-            var valValue = val.previousElementSibling.getAttribute('value');
-            val.innerHTML = valValue;
-            });
-
-            range.addEventListener('input', function() {
-            value.innerHTML = this.value;
-            });
-        });
-      };
-
-      rangeSlider();  
     </script>
 
     <!-- <script src="annotationScript.js"></script> -->
