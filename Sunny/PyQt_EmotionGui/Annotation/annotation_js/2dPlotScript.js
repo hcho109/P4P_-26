@@ -179,8 +179,8 @@ function printData(x,y){
 
 function calculateRadius() {
     // Define min and max radius values
-    const minRadius = 1;
-    const maxRadius = 10;
+    const minRadius = 2;
+    const maxRadius = 15;
 
     // Calculate progress as a value between 0 and 1
     const progress = elapsedTime / media_duration;
@@ -253,9 +253,18 @@ function savePoints(x,y){
     arousal_points.push(toArousal(y).toFixed(2));
     time_points.push(elapsedTime.toFixed(2)); 
 
-    console.log("Valence Points:", valence_points);
-    console.log("Arousal Points:", arousal_points);
-    console.log("Time Points:", time_points);
+    // Save the points to localStorage
+    localStorage.setItem('time_points', JSON.stringify(time_points));
+    localStorage.setItem('valence_points', JSON.stringify(valence_points));
+    localStorage.setItem('arousal_points', JSON.stringify(arousal_points));
+}
+
+// Function to open the data display window
+function openDataDisplayWindow() {
+    var dataDisplayWindow = window.open('annotation_data.html', '_blank', 'width=800,height=600');
+    if (!dataDisplayWindow) {
+        alert('Please allow pop-ups to view the data.');
+    }
 }
 
 // AutoClicking handler updating x, y coordinates, colour and opacity

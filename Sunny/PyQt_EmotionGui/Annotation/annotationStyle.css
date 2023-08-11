@@ -149,6 +149,7 @@ body {
 .yData, .xData {
     float: left;
     display: flex;
+    margin-bottom: 10px;
 }
 
 .xData{
@@ -241,7 +242,7 @@ body {
     margin-bottom: 15px;
 }
 
-.btns_2D .save_btn, .btns_2D .reannotate_btn {
+.btns_2D .save_btn, .btns_2D .reannotate_btn, .btns_2D .view_data_btn{
     margin-left: 10px;
 }
 
@@ -392,3 +393,5 @@ input::-moz-focus-inner, input::-moz-focus-outer {
     border-radius: 5px;
     overflow: hidden;
 }
+
+
