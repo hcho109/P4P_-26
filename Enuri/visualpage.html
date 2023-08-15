@@ -15,9 +15,45 @@
         <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
         <link href="navStyle.css" rel="stylesheet" type="text/css" />
         <link href="visualpage.css" rel="stylesheet" type="text/css" /> <!-- css file for visual page-->
+<<<<<<< Updated upstream
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+=======
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
+        <!-- Py-Script header files-->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css" />
+        <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
+
+        <!-- javascript csv files -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.js"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.js"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@holoviz/panel@0.13.0/dist/panel.min.js"></script>
+        <script type="text/javascript">
+          Bokeh.set_log_level("info");
+        </script>
+
+
+        <py-config>
+            packages = ["numpy", 
+                        "matplotlib", 
+                        "pandas",
+                        "keras"
+                        ]
+                        
+            [[interpreters]]
+            src = 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js'
+            name = 'pyodide-0.23.3'
+            lang = 'python'
+        </py-config>
+
+>>>>>>> Stashed changes
     </head>
 
     <body>
@@ -48,6 +84,7 @@
             </div>
         </div> 
         </header>
+<<<<<<< Updated upstream
         
         <py-config>
             packages = ["numpy", 
@@ -83,6 +120,87 @@
                         </py-script>
                         
                         
+=======
+        <!------------------ Left column ------------------------->
+        <div class="split left">
+            <div class="centered">
+                <!--Files tab links-->
+                <div class="fileTabs">
+                    <!----------------  CSV File select tab------------------>
+                    <input type="radio" id="tabCSVFile" name="fileTabs" checked="checked">
+                    <label for="tabCSVFile">Plot CSV File</label>
+            
+                    <!-- CSV tab content-->
+                    <div class="fileTabcontent">
+
+                        <h3>Upload CSV file </h3>
+
+                        <form id="form">
+                            <input type="file" id="file" accept=".csv" />
+                            <br />
+                            <input id="submit_btn" type="submit" value="Upload" />
+                        </form>
+                        <button py-click="plot_csv()" id="csv_plot" class="py-button">Plot CSV </button>
+
+                        <script>
+                            const myForm = document.getElementById("form");
+                            const csvFile = document.getElementById("file");
+
+                            // valence and arousal arrays
+                            var valence=[];
+                            var arousal=[];
+
+                            myForm.addEventListener("submit", function (e) {
+                                e.preventDefault();
+                                const input = csvFile.files[0];
+                                const reader = new FileReader();
+                
+                                reader.onload = function (e) {
+                                    const text = e.target.result;
+                                    var array = csvToArray(text);
+
+                                    var z = (array.length) - 2; //last element
+                                    // document.write(array);
+                                    // document.write("\n"); // new line
+                                    var j = 0;
+                                    for (let i = 4; i < z + 1; i = i + 3) { 
+                                        valence[j] = array[i];
+                                        arousal[j] = array[i+1];
+                                        j = j +1;
+                                    }  
+                                    
+
+                                    // document.write(valence);
+                                    // document.write("\n"); // new line
+                                    // document.write(arousal);
+                                    // document.write("\n"); // new line
+
+                                };
+                
+                                reader.readAsText(input);
+                
+                                function csvToArray(str, delimiter = ",") {
+                                    const lines = str.split("\n");
+                                    var array = lines.flatMap(line => line.split(delimiter));
+                                    
+                                    return array;
+                                }
+                            });
+
+
+                        </script>
+
+
+                        <p id="content"></p>
+
+
+
+
+                        <div id="container"> 
+
+                        </div>
+
+>>>>>>> Stashed changes
                     </div>
   
                     <!------------------ WAV File select tab---------------------->
@@ -91,7 +209,20 @@
   
                     <!-- WAV tab content-->
                     <div class="fileTabcontent">
+<<<<<<< Updated upstream
                         <p> * This is where you add wav files </p>
+=======
+                        <label for="upload"> WAV File Upload: </label>
+                        <input type="file" name="upload" id="upload">
+
+                        <label for="upload"> Select Model: </label>
+                        <input type="file" name="upload" id="upload">
+                        
+                        <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
+                        <canvas class="canvas_audio" id="canvas_waveform"></canvas>
+                        <audio id="audio" src="" controls="true"></audio>
+
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </div>
@@ -105,6 +236,14 @@
                     <py-script>
                         import matplotlib.pyplot as plt
                         import numpy as np
+<<<<<<< Updated upstream
+=======
+                        import pandas as pd
+                        from pyodide.ffi import create_proxy, to_js
+                        from js import valence, arousal
+                        import asyncio
+
+>>>>>>> Stashed changes
         
                         fig = plt.figure()
                         axes = fig.subplots()
@@ -128,8 +267,11 @@
                         axes.tick_params(axis='both', which='major', labelsize=10)
                         axes.tick_params(axis='both', which='minor', labelsize=10)
         
+<<<<<<< Updated upstream
                         
         
+=======
+>>>>>>> Stashed changes
                         landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
                                         'interested', 'happy', 'pleased', 'relaxed', 'content']
                         landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
@@ -137,6 +279,7 @@
                         landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
                                     0.7, 0.5, 0.35, -0.3, -0.45)
         
+<<<<<<< Updated upstream
                         for point in range(len(landmarkEmotions)):
                             axes.scatter(landmarkValence, landmarkArousal, color='k', s=15)
                             axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
@@ -147,12 +290,36 @@
         
                         display(fig, target="plot")
         
+=======
+                        for point in range(len(landmarkEmotions)) :
+                            axes.scatter(landmarkValence, landmarkArousal, color='black', s=5)
+                            axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
+                                landmarkEmotions[point], fontsize='large')
+                        
+                        axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+                        axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+                        
+                        display(fig, target="plot")
+
+                        def plot_csv() :
+                            for num in range(len(valence))
+                                axes.scatter(valence[num], arousal[num], color='red', s=15)
+                            
+
+
+>>>>>>> Stashed changes
                     </py-script>
                 </div>
             </div>
         </div>
 
+<<<<<<< Updated upstream
 
+=======
+        <!-- Audio waveform javascript -->
+        <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
+        <script src="annotation_js/audioScript.js"></script>
+>>>>>>> Stashed changes
 
         
     </body>
