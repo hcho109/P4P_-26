@@ -15,11 +15,6 @@
         <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
         <link href="navStyle.css" rel="stylesheet" type="text/css" />
         <link href="visualpage.css" rel="stylesheet" type="text/css" /> <!-- css file for visual page-->
-<<<<<<< Updated upstream
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-=======
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
         <!-- Py-Script header files-->
@@ -53,7 +48,6 @@
             lang = 'python'
         </py-config>
 
->>>>>>> Stashed changes
     </head>
 
     <body>
@@ -84,43 +78,6 @@
             </div>
         </div> 
         </header>
-<<<<<<< Updated upstream
-        
-        <py-config>
-            packages = ["numpy", 
-                        "matplotlib", 
-                        "pandas",
-                        "keras"
-                        ]
-        </py-config>
-
-        <!------------------ Left column ------------------------->
-        <div class="split left">
-            <div class="centered">
-                <!--Files tab links-->
-                <div class="fileTabs">
-                    <!----------------  CSV File select tab------------------>
-                    <input type="radio" id="tabCSVFile" name="fileTabs" checked="checked">
-                    <label for="tabCSVFile">Plot CSV File</label>
-            
-                    <!-- CSV tab content-->
-                    <div class="fileTabcontent">
-                        <py-script>
-                            import csv
-                            
-                            csv_address = /Users/enurikolugala/Desktop/test1.csv
-
-                            if (csv_address != ''):
-                                with open(csv_address, 'r') as file:
-                                    csvreader = csv.reader(file)
-                                    header = next(csvreader)
-                                    for row in csvreader:
-                                        print(row)
-
-                        </py-script>
-                        
-                        
-=======
         <!------------------ Left column ------------------------->
         <div class="split left">
             <div class="centered">
@@ -146,47 +103,50 @@
                             const myForm = document.getElementById("form");
                             const csvFile = document.getElementById("file");
 
-                            // valence and arousal arrays
-                            var valence=[];
-                            var arousal=[];
+                            var valence_arr = [];
+                            var arousal_arr = [];
 
-                            myForm.addEventListener("submit", function (e) {
-                                e.preventDefault();
+                            // Function to process CSV data
+                            function processCSV() {
                                 const input = csvFile.files[0];
                                 const reader = new FileReader();
-                
+
                                 reader.onload = function (e) {
                                     const text = e.target.result;
                                     var array = csvToArray(text);
 
-                                    var z = (array.length) - 2; //last element
-                                    // document.write(array);
-                                    // document.write("\n"); // new line
-                                    var j = 0;
-                                    for (let i = 4; i < z + 1; i = i + 3) { 
-                                        valence[j] = array[i];
-                                        arousal[j] = array[i+1];
-                                        j = j +1;
-                                    }  
-                                    
+                                    for (let i = 1; i < array.length; i++) {
+                                        const values = array[i];
+                                        if (values.length >= 3) {
+                                            const time = parseFloat(values[0].trim());
+                                            const valence = parseFloat(values[1].trim());
+                                            const arousal = parseFloat(values[2].trim());
 
-                                    // document.write(valence);
-                                    // document.write("\n"); // new line
-                                    // document.write(arousal);
-                                    // document.write("\n"); // new line
+                                            valence_arr.push(valence);
+                                            arousal_arr.push(arousal);
+                                        }
+                                    }
 
+                                    // Display or do something with valence_arr and arousal_arr
+                                    console.log("Valence:", valence_arr); //debugging
+                                    console.log("Arousal:", arousal_arr); //debugging
                                 };
-                
+
                                 reader.readAsText(input);
-                
-                                function csvToArray(str, delimiter = ",") {
-                                    const lines = str.split("\n");
-                                    var array = lines.flatMap(line => line.split(delimiter));
-                                    
-                                    return array;
-                                }
+                            }
+
+                            // Add event listener to the submit button
+                            myForm.addEventListener("submit", function (e) {
+                                e.preventDefault(); // Prevent the default form submission behavior
+                                processCSV(); // Call the function to process the CSV
                             });
 
+                            function csvToArray(str, delimiter = ",") {
+                                const lines = str.split("\n");
+                                var array = lines.map(line => line.split(delimiter).map(cell => cell.replace(/"/g, '')));
+                                console.log("Array: ", array); //debugging
+                                return array;
+                            }
 
                         </script>
 
@@ -200,7 +160,6 @@
 
                         </div>
 
->>>>>>> Stashed changes
                     </div>
   
                     <!------------------ WAV File select tab---------------------->
@@ -209,9 +168,6 @@
   
                     <!-- WAV tab content-->
                     <div class="fileTabcontent">
-<<<<<<< Updated upstream
-                        <p> * This is where you add wav files </p>
-=======
                         <label for="upload"> WAV File Upload: </label>
                         <input type="file" name="upload" id="upload">
 
@@ -222,7 +178,6 @@
                         <canvas class="canvas_audio" id="canvas_waveform"></canvas>
                         <audio id="audio" src="" controls="true"></audio>
 
->>>>>>> Stashed changes
                     </div>
                 </div>
             </div>
@@ -232,18 +187,15 @@
         <!------------------ Right column ------------------------->
         <div class="split right">
             <div class="centered">
-                <div id="plot">
-                    <py-script>
+                <div id="plot"> </div>
+                    <py-script output="plot">
                         import matplotlib.pyplot as plt
                         import numpy as np
-<<<<<<< Updated upstream
-=======
                         import pandas as pd
                         from pyodide.ffi import create_proxy, to_js
-                        from js import valence, arousal
+                        from js import valence_arr, arousal_arr
                         import asyncio
 
->>>>>>> Stashed changes
         
                         fig = plt.figure()
                         axes = fig.subplots()
@@ -267,11 +219,6 @@
                         axes.tick_params(axis='both', which='major', labelsize=10)
                         axes.tick_params(axis='both', which='minor', labelsize=10)
         
-<<<<<<< Updated upstream
-                        
-        
-=======
->>>>>>> Stashed changes
                         landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
                                         'interested', 'happy', 'pleased', 'relaxed', 'content']
                         landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
@@ -279,18 +226,6 @@
                         landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
                                     0.7, 0.5, 0.35, -0.3, -0.45)
         
-<<<<<<< Updated upstream
-                        for point in range(len(landmarkEmotions)):
-                            axes.scatter(landmarkValence, landmarkArousal, color='k', s=15)
-                            axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
-                                landmarkEmotions[point], fontsize='large')
-        
-                        axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
-                        axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
-        
-                        display(fig, target="plot")
-        
-=======
                         for point in range(len(landmarkEmotions)) :
                             axes.scatter(landmarkValence, landmarkArousal, color='black', s=5)
                             axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
@@ -302,25 +237,23 @@
                         display(fig, target="plot")
 
                         def plot_csv() :
-                            for num in range(len(valence))
-                                axes.scatter(valence[num], arousal[num], color='red', s=15)
-                            
+                            for point in range(len(valence_arr)) :
+                                axes.scatter(valence_arr[point], arousal_arr[point], color='red', s=5)
+
+                            display(fig, target="plot")
 
 
->>>>>>> Stashed changes
                     </py-script>
-                </div>
+                    
+
+
             </div>
         </div>
 
-<<<<<<< Updated upstream
-
-=======
         <!-- Audio waveform javascript -->
         <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
         <script src="annotation_js/audioScript.js"></script>
->>>>>>> Stashed changes
 
         
-    </body>
+    </body> .enuri
 </html>
