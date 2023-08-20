@@ -99,66 +99,7 @@
                         </form>
                         <button py-click="plot_csv()" id="csv_plot" class="py-button">Plot CSV </button>
 
-                        <script>
-                            const myForm = document.getElementById("form");
-                            const csvFile = document.getElementById("file");
-
-                            var valence_arr = [];
-                            var arousal_arr = [];
-
-                            // Function to process CSV data
-                            function processCSV() {
-                                const input = csvFile.files[0];
-                                const reader = new FileReader();
-
-                                reader.onload = function (e) {
-                                    const text = e.target.result;
-                                    var array = csvToArray(text);
-
-                                    for (let i = 1; i < array.length; i++) {
-                                        const values = array[i];
-                                        if (values.length >= 3) {
-                                            const time = parseFloat(values[0].trim());
-                                            const valence = parseFloat(values[1].trim());
-                                            const arousal = parseFloat(values[2].trim());
-
-                                            valence_arr.push(valence);
-                                            arousal_arr.push(arousal);
-                                        }
-                                    }
-
-                                    // Display or do something with valence_arr and arousal_arr
-                                    console.log("Valence:", valence_arr); //debugging
-                                    console.log("Arousal:", arousal_arr); //debugging
-                                };
-
-                                reader.readAsText(input);
-                            }
-
-                            // Add event listener to the submit button
-                            myForm.addEventListener("submit", function (e) {
-                                e.preventDefault(); // Prevent the default form submission behavior
-                                processCSV(); // Call the function to process the CSV
-                            });
-
-                            function csvToArray(str, delimiter = ",") {
-                                const lines = str.split("\n");
-                                var array = lines.map(line => line.split(delimiter).map(cell => cell.replace(/"/g, '')));
-                                console.log("Array: ", array); //debugging
-                                return array;
-                            }
-
-                        </script>
-
-
-                        <p id="content"></p>
-
-
-
-
-                        <div id="container"> 
-
-                        </div>
+                        <div id="container"> </div>
 
                     </div>
   
@@ -168,15 +109,11 @@
   
                     <!-- WAV tab content-->
                     <div class="fileTabcontent">
-                        <label for="upload"> WAV File Upload: </label>
-                        <input type="file" name="upload" id="upload">
-
-                        <label for="upload"> Select Model: </label>
-                        <input type="file" name="upload" id="upload">
-                        
+                        <input class="open-file-btn" id="fileinput" type="file" accept="audio*,video*"/>
                         <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
                         <canvas class="canvas_audio" id="canvas_waveform"></canvas>
                         <audio id="audio" src="" controls="true"></audio>
+                        <p id="AudioPlayerStatus">Choose a 'WAV'/'MP3' audio file and Click 'Play' button to start playing</p>
 
                     </div>
                 </div>
@@ -197,12 +134,12 @@
                         import asyncio
 
         
-                        fig = plt.figure()
+                        fig = plt.figure(figsize=(20, 18))
                         axes = fig.subplots()
         
-                        plt.title("V-A Plot")
-                        plt.xlabel("Valence")
-                        plt.ylabel("Arousal")
+                        plt.title("V-A Plot", fontsize=50)
+                        plt.xlabel("Valence", fontsize=35)
+                        plt.ylabel("Arousal", fontsize=35)
 
                         theta = np.linspace(0, 2 * np.pi, 100)
                         radius = 1
@@ -216,8 +153,8 @@
                         axes.hlines(y=0, xmin=-1, xmax=1, linewidth=0.7, color='k')
                         axes.vlines(x=0, ymin=-1, ymax=1, linewidth=0.7, color='k')
         
-                        axes.tick_params(axis='both', which='major', labelsize=10)
-                        axes.tick_params(axis='both', which='minor', labelsize=10)
+                        axes.tick_params(axis='both', which='major', labelsize=25)
+                        axes.tick_params(axis='both', which='minor', labelsize=25)
         
                         landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
                                         'interested', 'happy', 'pleased', 'relaxed', 'content']
@@ -227,9 +164,9 @@
                                     0.7, 0.5, 0.35, -0.3, -0.45)
         
                         for point in range(len(landmarkEmotions)) :
-                            axes.scatter(landmarkValence, landmarkArousal, color='black', s=5)
+                            axes.scatter(landmarkValence, landmarkArousal, color='black', s=40)
                             axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
-                                landmarkEmotions[point], fontsize='large')
+                                landmarkEmotions[point], fontsize=30)
                         
                         axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
                         axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
@@ -238,7 +175,7 @@
 
                         def plot_csv() :
                             for point in range(len(valence_arr)) :
-                                axes.scatter(valence_arr[point], arousal_arr[point], color='red', s=5)
+                                axes.scatter(valence_arr[point], arousal_arr[point], color='red', s=60)
 
                             display(fig, target="plot")
 
@@ -249,11 +186,14 @@
 
             </div>
         </div>
-
-        <!-- Audio waveform javascript -->
-        <script src='https://codepen.io/bataimx/pen/JjdyXyG.js'></script>
-        <script src="annotation_js/audioScript.js"></script>
-
         
-    </body> .enuri
+        <script src="annotation_js/mediaControls.js"></script>
+
+        <!-- CSV javascript -->
+        <script src="visualise_js/csv.js"></script>
+
+         <!-- Audio waveform javascript -->
+        <script src="visualise_js/audio.js"></script>
+        
+    </body>
 </html>
