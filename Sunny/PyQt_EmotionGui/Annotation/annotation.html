@@ -122,22 +122,24 @@
                   </ul>
                 </p>
               </div>
-              <div class="inputTextBox">
-                <label for="emotionLabel">Emotion description (one word):</label>
-                <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
-                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br>
-                <label for="categories">Choose an emotion:</label>
-                <select id="categories" name="emotion-Categories">
-                  <option value="happy">Happiness</option>
-                  <option value="Sad">Sadness</option>
-                  <option value="fear">Fear</option>
-                  <option value="disgust">Disgust</option>
-                  <option value="anger">Anger</option>
-                  <option value="surprise">Surprise</option>
-                  <option value="trust">Trust</option>
-                  <option value="anticipation">Anticipation</option>
-                </select>
-                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
+              <div class="discrete_container">
+                <div class="inputTextBox">
+                  <label for="emotionLabel">Emotion description (one word):</label>
+                  <input type="text" id="emotionLabel" name="emotionLabel">
+                  <input type="button" class= add_btn id="add_btn" value="Add" title=" Add to emotion list"><br>
+                </div>
+                <div class='EmotionListCreated'>
+                  <label for="emotionList">Choose an emotion:</label>
+                  <select id="emotionList" name="selectedEmotion" multiple>
+                    <!-- Emotion words will be displayed here -->
+                  </select>
+                  <div class="list_btns">
+                    <input type="button" class="delete_btn" id="delete_btn" value="Delete" title="Delete selected emotion">
+                    <input type="button" class="createCode_btn" id="createCode_btn" value="Generate code" title="Generate code to share your emotion list">
+                    <br><br>
+                    <input type="button" class= save_selection id="CSV_btn" value="Save as CSV" title="Save data into CSV file"><br><br>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -264,6 +266,58 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const emotionListSelect = document.getElementById("emotionList");
+      const addBtn = document.getElementById("add_btn");
+      const deleteBtn = document.getElementById("delete_btn");
+      const createCode_Btn = document.getElementById("createCode_btn");
+      const csvBtn = document.getElementById("CSV_btn");
+
+      const emotions = []; // Array to store added emotions
+
+      addBtn.addEventListener("click", function() {
+        const emotionInput = document.getElementById("emotionLabel");
+        const emotion = emotionInput.value.trim();
+        if (emotion !== "") {
+          emotions.push(emotion);
+          updateEmotionList();
+          emotionInput.value = ""; // Clear the input
+        }
+      });
+
+      deleteBtn.addEventListener("click", function() {
+        // Delete the selected emotions from the list
+        const selectedIndices = Array.from(emotionListSelect.selectedOptions).map(opt => opt.index);
+        selectedIndices.sort((a, b) => b - a); // Sort in reverse order to avoid index shifting
+        selectedIndices.forEach(index => {
+          emotions.splice(index, 1);
+        });
+        updateEmotionList();
+      });
+
+      createCode_Btn.addEventListener("click", function() {
+        // Here, you can implement logic to share the emotion list
+        console.log("Sharing the emotion list:", emotions);
+      });
+
+      function updateEmotionList() {
+        // Clear the existing list
+        emotionListSelect.innerHTML = "";
+
+        // Populate the emotion list with the updated emotions
+        emotions.forEach(emotion => {
+          const option = document.createElement("option");
+          option.textContent = emotion;
+          emotionListSelect.appendChild(option);
+        });
+      }
+
+      csvBtn.addEventListener("click", function() {
+        // Here, you can implement logic to save the emotion list as CSV
+        console.log("Emotion list:", emotions);
+      });
+    </script>
 
     <!-- 2d plot javascript -->
     <script src="annotation_js/mediaControls.js"></script>

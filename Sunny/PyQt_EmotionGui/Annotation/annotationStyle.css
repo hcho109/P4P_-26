@@ -212,12 +212,6 @@ body {
     color: white;
 }
 
-/* Discrete emotion model save button */
-
-.inputTextBox .save_btn {
-    margin-left: 30px;
-}
-
 /***** 1D buttons *****/
 .btns_1D {
     float: right;
@@ -264,12 +258,49 @@ body {
 } 
 
 /* Discrete/categorical emotion model */
-.inputTextBox label{
-    padding-left:30px;
-    padding-right:10px;
-    font-size:15px;
-    width: auto;
-    display: inline-block;
+.discrete_container label{
+    font-size: 15px;
+    width: 280px; 
+}
+
+.inputTextBox {
+    display: flex; /* Make the container a flex container */
+    align-items: center; /* Align items vertically in the center */
+}
+
+.inputTextBox input[type="text"]{
+    width: 160px; 
+}
+ 
+.discrete_container input[type="button"]{
+    width: 100px; 
+    margin-left: 80px;
+}
+  
+.EmotionListCreated {
+    display: flex;
+    align-items: flex-start; 
+    flex-wrap: wrap; /* Wrap items to a new line if they overflow */
+}
+
+#emotionList {
+    border: 1px solid #ccc;
+    width: 160px; /* Set the width of the emotion list box */
+    min-height: 150px; /* Set a minimum height to keep the box visible */
+    padding: 10px;
+    float: left;
+}
+
+.EmotionListCreated select, .list_btns{
+    margin-top: 10px;
+}
+
+.list_btns input[type="button"]{
+    display: flex;
+    align-items: center;
+    flex-direction: column; /* Stack buttons vertically */
+    margin-bottom: 10px;
+    white-space: normal;
 }
 
 /* 1D emotion model */
