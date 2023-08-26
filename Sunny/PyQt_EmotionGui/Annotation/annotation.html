@@ -11,6 +11,8 @@
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
       crossorigin="anonymous" referrerpolicy="no-referrer" 
     />
+    <!-- Add papaParse library to extract csv-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="shortcut icon" href="#" />
     <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
     <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
@@ -123,23 +125,34 @@
                 </p>
               </div>
               <div class="discrete_container">
+              <!---
                 <div class="inputTextBox">
                   <label for="emotionLabel">Emotion description (one word):</label>
                   <input type="text" id="emotionLabel" name="emotionLabel">
                   <input type="button" class= add_btn id="add_btn" value="Add" title=" Add to emotion list"><br>
                 </div>
+              -->
                 <div class='EmotionListCreated'>
-                  <label for="emotionList">Choose an emotion:</label>
-                  <select id="emotionList" name="selectedEmotion" multiple>
-                    <!-- Emotion words will be displayed here -->
-                  </select>
-                  <div class="list_btns">
-                    <input type="button" class="delete_btn" id="delete_btn" value="Delete" title="Delete selected emotion">
-                    <input type="button" class="createCode_btn" id="createCode_btn" value="Generate code" title="Generate code to share your emotion list">
-                    <br><br>
-                    <input type="button" class= save_selection id="CSV_btn" value="Save as CSV" title="Save data into CSV file"><br><br>
+                  
+                  <label for="emotionList">Select Emotions:</label>
+                  <div class ="emotionContainer">
+                    <select id="emotionList" multiple>
+                      <!-- Default emotion options will be populated here -->
+                    </select>
+                    <input type="button" id="retrieveDefaultListBtn" value="Retrieve Default List"></button>
+                  </div>
+                  <div class="list_control">
+                    <label for="customListInput">Add Custom List (CSV):</label>
+                    <input type="file" id="customListInput">
+
+                    <label for="mediaFileNameInput">Enter Media File Name:</label>
+                    <input type="text" id="mediaFileNameInput" placeholder="Ex. test_video1">
+                  
+                    <input type="button" class= save_selection id="save_selection_btn" value="Save as CSV" title="Save data into CSV file"><br><br>
+                    <p id="errorPlaceholder" class="error-message"></p>
                   </div>
                 </div>
+                <p>* The default list is created by the University of Auckland.</p>
               </div>
             </div>
 
@@ -240,11 +253,11 @@
                 <canvas id="2dCanvas"></canvas>
                 <div>
                   <div class="xData" id=""> 
-                    <label for="x_input">x-data:</label>
+                    <label for="xData">x-data:</label>
                     <input type="text" id="xData" required size="5" >
                   </div>
                   <div class="yData"> 
-                    <label for="y_input">y-data:</label>
+                    <label for="yData">y-data:</label>
                     <input type="text" id="yData" required size="5" >
                   </div>
                 </div>
@@ -267,6 +280,8 @@
       </div>
     </div>
 
+
+    <!-- discrete js creating custom list
     <script>
       const emotionListSelect = document.getElementById("emotionList");
       const addBtn = document.getElementById("add_btn");
@@ -318,7 +333,10 @@
         console.log("Emotion list:", emotions);
       });
     </script>
+    -->
 
+    <!-- discrete emotion model javascript -->
+    <script src="annotation_js/categoryScript.js"></script>
     <!-- 2d plot javascript -->
     <script src="annotation_js/mediaControls.js"></script>
     <script src="annotation_js/2dPlotScript.js"></script>
@@ -334,8 +352,8 @@
     <script src="annotation_js/helpWinScript.js"></script>
     
 
-    <!-- 1D sliders javascript -->
-    <script src="annotation_js/1dSliderScript.js"></script>
+    <!-- 1D sliders javascript 
+    <script src="annotation_js/1dSliderScript.js"></script> -->
 
     <!-- Temporarily added spectrogram image -->
     <script>
@@ -360,6 +378,6 @@
       }
     </script>
 
-    <!-- <script src="annotationScript.js"></script> -->
+    <script src="annotation_js/annotationScript.js"></script>
   </body>
 </html>

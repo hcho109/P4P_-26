@@ -306,7 +306,7 @@ function annotateOnClick(event) {
             drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
-            // Call autoclicking every 20ms
+            // Call autoclicking every 300ms
             plotInterval =setInterval(() => autoClicking(null), 300);
  
         } else {

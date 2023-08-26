@@ -260,7 +260,7 @@ body {
 /* Discrete/categorical emotion model */
 .discrete_container label{
     font-size: 15px;
-    width: 280px; 
+    width: auto; 
 }
 
 .inputTextBox {
@@ -279,27 +279,51 @@ body {
   
 .EmotionListCreated {
     display: flex;
-    align-items: flex-start; 
-    flex-wrap: wrap; /* Wrap items to a new line if they overflow */
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
 }
+.emotionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
+}
+#retrieveDefaultListBtn{
+    padding: 5px;
+    margin: 10px;
+    width: fit-content;
 
+}
 #emotionList {
     border: 1px solid #ccc;
     width: 160px; /* Set the width of the emotion list box */
-    min-height: 150px; /* Set a minimum height to keep the box visible */
+    min-height: 200px; /* Set a minimum height to keep the box visible */
     padding: 10px;
+    margin-top: 10px;
     float: left;
 }
 
-.EmotionListCreated select, .list_btns{
-    margin-top: 10px;
+#emotionList option {
+    padding: 3px; /* Adjust the padding as needed */
+}
+  
+.list_control{
+    margin-left: 30px;
+}
+#customListInput, #mediaFileNameInput{
+    padding: 5px;
+    margin-left: 30px;
 }
 
-.list_btns input[type="button"]{
-    display: flex;
+#customListInput{
+    margin-bottom: 20px;
+}
+
+.list_control input[type="button"]{
+    /*display: flex;
     align-items: center;
-    flex-direction: column; /* Stack buttons vertically */
-    margin-bottom: 10px;
+    flex-direction: column; Stack buttons vertically */
+    margin-left: 35px;
+    margin-top: 20px;
     white-space: normal;
 }
 

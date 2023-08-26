@@ -1,39 +1,68 @@
+// Define the active slider variable
+let activeSlider = null;
 
-//Handle multiple sliders input change event
-var rangeSlider = function() {
-    var sliders = document.querySelectorAll('.range-slider');
-    
-    sliders.forEach(function(slider) {
-        var range = slider.querySelector('.range-slider__range');
-        var value = slider.querySelector('.range-slider__value');
+// Function to set the active slider
+function setActiveSlider(sliderId) {
+  activeSlider = sliderId;
+}
 
-        var values = slider.querySelectorAll('.range-slider__value');
-        values.forEach(function(val) {
-        var valValue = val.previousElementSibling.getAttribute('value');
-        val.innerHTML = valValue;
-        });
+// Function to clear the active slider
+function clearActiveSlider() {
+  activeSlider = null;
+}
 
-        range.addEventListener('input', function() {
-        value.innerHTML = this.value;
-        });
+// Handle multiple sliders' input change event
+function rangeSlider() {
+  var sliders = document.querySelectorAll('.range-slider');
+
+  sliders.forEach(function (slider) {
+    var range = slider.querySelector('.range-slider__range');
+    var value = slider.querySelector('.range-slider__value');
+
+    var values = slider.querySelectorAll('.range-slider__value');
+    values.forEach(function (val) {
+      var valValue = val.previousElementSibling.getAttribute('value');
+      val.innerHTML = valValue;
     });
-};
 
-rangeSlider();  
+    range.addEventListener('mousedown', function () {
+      setActiveSlider(range.id); // Set the active slider when mouse is down
+    });
 
-// Handle video file input change event
-const videoFileInput = document.getElementById('video-file-input');
+    range.addEventListener('input', function () {
+      value.innerHTML = this.value;
+    });
 
-videoFileInput.addEventListener('change', function () {
-    const videoFiles = this.files;
-    if (!videoFiles || !videoFiles[0]) {
-        return;
-    }
+    range.addEventListener('mouseup', function () {
+      clearActiveSlider(); // Clear the active slider when mouse is up
+    });
+  });
+}
+// Call the rangeSlider function initially
+rangeSlider();
 
-    const videoFileUrl = URL.createObjectURL(videoFiles[0]);
+// Function to record data every 300ms for the active slider
+function recordDataForActiveSlider() {
+  if (activeSlider) {
+    const interval = setInterval(() => {
+      const sliderValue = document.getElementById(activeSlider).value;
+      console.log(`Active slider (${activeSlider}) value: ${sliderValue}`);
+    }, 300);
 
-    // Load the video file
-    var video = document.getElementById('video');
-    video.src = videoFileUrl;
-    video.play();
-});
+    // Stop recording when media ends or is paused
+    videoPlayer.addEventListener('ended', () => clearInterval(interval));
+    audioPlayer.addEventListener('ended', () => clearInterval(interval));
+    videoPlayer.addEventListener('pause', () => clearInterval(interval));
+    audioPlayer.addEventListener('pause', () => clearInterval(interval));
+  }
+}
+
+// Add an event listener to the media player for play event
+videoPlayer.addEventListener('play', recordDataForActiveSlider);
+audioPlayer.addEventListener('play', recordDataForActiveSlider);
+
+// Add an event listener to the media player for pause event
+videoPlayer.addEventListener('pause', clearActiveSlider);
+audioPlayer.addEventListener('pause', clearActiveSlider);
+
+
