@@ -180,11 +180,13 @@
               <!--Valence slider bar-->
               <div class="range-slider"> 
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="valence_clear_btn" onclick="clear1dValues()" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="valence_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="valence_view_data_btn" onclick="open1dDataWindow()" value="View Data">
+                  <input type="button" class="save_btn" id="valence_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
                 </form>
                 <label for="valenceRange">Valence</label> 
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values" data-slider-type="valence">
                 <span class="range-slider__value">0</span><br>
                 <span>Unhappy</span>
                 <span class="endLabel">Happy</span>
@@ -194,11 +196,13 @@
               <!--Arousal slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="arousal_clear_btn" onclick="clear1dValues()" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="arousal_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="arousal_view_data_btn" onclick="open1dDataWindow()" value="View Data">
+                  <input type="button" class="save_btn" id="arousal_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
                 </form>
                 <label for="arousalRange">Arousal</label> 
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange" data-slider-type="arousal">
                 <span class="range-slider__value">0</span><br>
                 <span>Calm</span>
                 <span class="endLabel">Excited</span>
@@ -208,11 +212,13 @@
               <!--Dominance slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="dominance_clear_btn" onclick="clear1dValues()" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="dominace_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="dominance_view_data_btn" onclick="open1dDataWindow()" value="View Data">
+                  <input type="button" class="save_btn" id="dominance_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
                 </form>
                 <label for="dominanceRange">Dominance</label>
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange" data-slider-type="dominance">
                 <span class="range-slider__value">0</span><br>
                 <span>Low</span>
                 <span class="endLabel">High</span>
@@ -221,8 +227,8 @@
               <hr>
 
               <form class="btns_1D_all">
-                <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" value="Clear all current values">
-                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" value="Save all current values as CSV">
+                <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" onclick="clearAllValues()" value="Clear all current values">
+                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" onclick="saveAllValues()" value="Save all current values as CSV">
               </form>
             </div>
 
@@ -270,7 +276,6 @@
                 <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
                 <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
                 <input type="button" class="view_data_btn" id="2d_view_data_btn" onclick="openDataDisplayWindow()" value="View Data">
-
                 <input type="button" class="save_btn" id="2d_CSV_btn" onclick="downloadCSV_2d()" value="Save as CSV">
               </form><br>
 
@@ -350,10 +355,10 @@
 
     <!-- Help popup javascript -->
     <script src="annotation_js/helpWinScript.js"></script>
-    
 
     <!-- 1D sliders javascript 
     <script src="annotation_js/1dSliderScript.js"></script> -->
+    <script src="annotation_js/annotationScript.js"></script>
 
     <!-- Temporarily added spectrogram image -->
     <script>
@@ -378,6 +383,5 @@
       }
     </script>
 
-    <script src="annotation_js/annotationScript.js"></script>
   </body>
 </html>

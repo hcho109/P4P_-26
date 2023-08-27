@@ -253,6 +253,10 @@ function savePoints(x,y){
     arousal_points.push(toArousal(y).toFixed(2));
     time_points.push(elapsedTime.toFixed(2)); 
 
+    console.log('timestamps:', time_points); 
+    console.log('val :', valence_points); 
+    console.log('aro :', arousal_points); 
+
     // Save the points to localStorage
     localStorage.setItem('time_points', JSON.stringify(time_points));
     localStorage.setItem('valence_points', JSON.stringify(valence_points));
