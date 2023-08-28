@@ -189,7 +189,12 @@
                             for point in range(len(valence_arr)):
                                 opacity = calculate_opacity(time_arr, time_arr[point]) #calculate opacity for point
                                 colour = get_color(valence_arr[point], arousal_arr[point])
-                                axes.scatter(valence_arr[point], arousal_arr[point], color=colour, s=60, alpha=opacity)
+                                # Calculate pointer size based on time
+                                min_size = 40  # Minimum pointer size
+                                max_size = 400  # Maximum pointer size
+                                size = min_size + (max_size - min_size) * (time_arr[point] / max(time_arr))
+
+                                axes.scatter(valence_arr[point], arousal_arr[point], color=colour, s=size, alpha=opacity)
                 
                             display(fig, target="plot")
                             fig.canvas.flush_events()
