@@ -3,6 +3,7 @@ const csvFile = document.getElementById("file");
 
 var valence_arr = [];
 var arousal_arr = [];
+var time_arr = [];
 
 // Function to process CSV data
 function processCSV() {
@@ -22,12 +23,14 @@ function processCSV() {
 
                 valence_arr.push(valence);
                 arousal_arr.push(arousal);
+                time_arr.push(time);
             }
         }
 
-        // Display or do something with valence_arr and arousal_arr
+        // Display or do something with valence_arr, arousal_arr and time_arr
         console.log("Valence:", valence_arr); //debugging
         console.log("Arousal:", arousal_arr); //debugging
+        console.log("Time:", time_arr); //debugging
     };
 
     reader.readAsText(input);
