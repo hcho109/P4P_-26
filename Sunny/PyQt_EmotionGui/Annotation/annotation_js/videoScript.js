@@ -1,3 +1,5 @@
+/* Video player JS
+    Need to tidy up (merge into mediaControls.js??) */
 function formatTime(time) {
     var minutes = Math.floor(time / 60);
     var seconds = Math.floor(time % 60);

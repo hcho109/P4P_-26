@@ -1,5 +1,6 @@
 /* Help popup window javascript
  create a pop up window when selected from 'Help' dropdown list*/
+ 
 function createPopupWin(pageURL, pageTitle, popupWinWidth, popupWinHeight) {
     var left = (screen.width - popupWinWidth) / 2;
     var top = (screen.height - popupWinHeight) / 4;

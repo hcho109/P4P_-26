@@ -1,5 +1,5 @@
-/* 2D annotation script
-   Draw 2d V-A plot on html canvas */
+/* 2D Emotion Eodel Annotation JS
+   Draw 2d V-A plot on anvas and save plots every 300ms*/
 
 // Function to convert x and y coordinates to canvas coordinates
 function toCanvasX(x) {
@@ -10,7 +10,7 @@ function toCanvasY(y) {
     return canvasHeight - (y - plotMin) / (plotMax - plotMin) * (canvasHeight * plotRectRatio) - (canvasHeight * (1 - plotRectRatio)) / 2;
 }
 
-// Function to convert canvas coordinates to Valence and Arousal values
+// Function to convert canvas coordinates to Valence 
 
 function toValence(canvasX) {
     return plotMin + (canvasX - (canvasWidth * (1 - plotRectRatio) / 2)) / (canvasWidth * plotRectRatio) * (plotMax - plotMin);
@@ -138,7 +138,6 @@ function drawPlot() {
     }
 
     // Draw the landmark scatter plots
-    // Landmark scatter plot data
     var landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited', 'interested', 'happy', 'pleased', 'relaxed', 'content'];
     var landmarkValence = [-0.7, -0.65, -0.8, -0.1, 0.37, 0.2, 0.5, 0.35, 0.6, 0.5];
     var landmarkArousal = [0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45];
@@ -158,7 +157,6 @@ function drawPlot() {
         ctx.fill();
 
         // Add text label for the landmark
-        
         ctx.font = '11px Roboto';
         ctx.fillText(landmarkEmotions[i], plotX + 12, plotY - 15);
 
@@ -204,7 +202,7 @@ function getQuadrant(x, y) {
     }
 }
 
-// Function to calculate color based on angle
+// Calculate color based on angle
 function getColor(x, y) {
     const angle = Math.atan2(toArousal(y), toValence(x)); // Calculate the angle in radians
     const angleInDegrees = (angle < 0 ? angle + 2 * Math.PI : angle) * (180 / Math.PI); // Convert angle to degrees and ensure positive
@@ -215,7 +213,7 @@ function getColor(x, y) {
     return sliceColors[colorIndex];
 }
 
-// Function to calculate opacity based on progress
+// Calculate opacity based on progress
 function calculateOpacity() {
     // Define min and max opacity values
     const minOpacity = 0.1;
@@ -241,8 +239,11 @@ function drawPoint(x,y){
     ctx.beginPath();
     ctx.arc(x,y,radius,0,Math.PI * 2);
     ctx.fillStyle = colour;
+    ctx.strokeStyle = 'grey'; // Set the stroke color
+    ctx.lineWidth = 2;
     ctx.globalAlpha = currentOpacity; // Set the opacity
     ctx.fill();
+    ctx.stroke();
     ctx.globalAlpha = 1; // Reset the opacity
 }
 
@@ -339,7 +340,7 @@ function autoClicking(){
     }
 }
 
-// Function to clear the plot and arrays
+// Clear the plot and data points arrays
 function clearPlot() {
     // Clear the canvas and redraw plot
     ctx.fillStyle = 'black';
@@ -432,7 +433,7 @@ var count_out_of_bounds=0;
 
 var plotInterval=0;
 
-// Define colors for 12 slices
+// Define colors for 8 slices
 const sliceColors = [
     '#66ff33', '#ffcc00', '#ff751a', '#ff3333',
     '#751aff', '#0066ff', '#00e6e6', '#009933'

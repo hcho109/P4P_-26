@@ -1,3 +1,7 @@
+/* Liveaudio recording Js file
+  generates waveform and spectrogram but not good quality
+  buttons to save images and download audio recording also work */
+  
 const startRecordingButton = document.getElementById("startRecording");
 const stopRecordingButton = document.getElementById("stopRecording");
 const saveRecordingButton = document.getElementById("saveRecording");

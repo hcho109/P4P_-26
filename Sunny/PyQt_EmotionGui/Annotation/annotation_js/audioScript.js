@@ -1,3 +1,4 @@
+/* Audio waveform JS for Audio player */
 "use strict";
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 class renderWave {
@@ -68,12 +69,7 @@ class renderWave {
         ctx.lineTo(x + width, height);
         ctx.stroke();
     }
-    // drawData(data, colors = this._strokeStyle) {
-    //     data.map(item => {
-    //         this.drawLineSegment(this.ctx, item.x, item.h, item.w, item.isEven, colors);
-    //     });
-    // }
-
+  
     drawData(data) {
         data.forEach(item => {
           const colors = this.isPlaying && item.x <= this.playheadPosition * this.canvas.offsetWidth
@@ -108,7 +104,6 @@ document.getElementById("fileinput").addEventListener("change", function () {
         wave.isPlaying = 1;
         playerStatus.textContent = "Audio is playing...";
     });
-    // audioPlayer.play();
     
     audioPlayer.addEventListener("pause", () => {
         wave.isPlaying = 0;

@@ -285,70 +285,15 @@
       </div>
     </div>
 
-
-    <!-- discrete js creating custom list
-    <script>
-      const emotionListSelect = document.getElementById("emotionList");
-      const addBtn = document.getElementById("add_btn");
-      const deleteBtn = document.getElementById("delete_btn");
-      const createCode_Btn = document.getElementById("createCode_btn");
-      const csvBtn = document.getElementById("CSV_btn");
-
-      const emotions = []; // Array to store added emotions
-
-      addBtn.addEventListener("click", function() {
-        const emotionInput = document.getElementById("emotionLabel");
-        const emotion = emotionInput.value.trim();
-        if (emotion !== "") {
-          emotions.push(emotion);
-          updateEmotionList();
-          emotionInput.value = ""; // Clear the input
-        }
-      });
-
-      deleteBtn.addEventListener("click", function() {
-        // Delete the selected emotions from the list
-        const selectedIndices = Array.from(emotionListSelect.selectedOptions).map(opt => opt.index);
-        selectedIndices.sort((a, b) => b - a); // Sort in reverse order to avoid index shifting
-        selectedIndices.forEach(index => {
-          emotions.splice(index, 1);
-        });
-        updateEmotionList();
-      });
-
-      createCode_Btn.addEventListener("click", function() {
-        // Here, you can implement logic to share the emotion list
-        console.log("Sharing the emotion list:", emotions);
-      });
-
-      function updateEmotionList() {
-        // Clear the existing list
-        emotionListSelect.innerHTML = "";
-
-        // Populate the emotion list with the updated emotions
-        emotions.forEach(emotion => {
-          const option = document.createElement("option");
-          option.textContent = emotion;
-          emotionListSelect.appendChild(option);
-        });
-      }
-
-      csvBtn.addEventListener("click", function() {
-        // Here, you can implement logic to save the emotion list as CSV
-        console.log("Emotion list:", emotions);
-      });
-    </script>
-    -->
-
     <!-- discrete emotion model javascript -->
     <script src="annotation_js/categoryScript.js"></script>
+    
     <!-- 2d plot javascript -->
     <script src="annotation_js/mediaControls.js"></script>
     <script src="annotation_js/2dPlotScript.js"></script>
 
     <!-- Audio waveform javascript -->
     <script src="annotation_js/audioScript.js"></script>
-
 
     <!-- video player javascript -->
     <script src="annotation_js/videoScript.js"></script>

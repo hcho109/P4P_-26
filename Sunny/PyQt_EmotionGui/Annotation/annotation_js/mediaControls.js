@@ -1,4 +1,5 @@
-// mediaControls.js
+/* MediaContol JS to assingn variale based on the status of media player
+    handles error messages related to media players */
 function setupMediaControls(videoPlayer, audioPlayer) {
     // Update the current play status for video and audio elements
     videoPlayer.addEventListener('play', function() {

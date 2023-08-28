@@ -1,4 +1,5 @@
-// script.js
+/* Discrete/ Categorical Emotion Model JS
+    helps users upload custom emotion list and save their selections  */
 
 // Populate default emotion options
 const defaultEmotions = ['Happy', 'Sad', 'Fear', 'Disgust', 'Anger', 'Surprise'];
@@ -23,7 +24,7 @@ function handleCustomListUpload(event) {
   }
 }
 
-// Function to update the emotion list based on the provided emotions
+// Update the emotion list based on the provided emotions
 function updateEmotionList(emotions) {
   emotionListSelect.innerHTML = '';
   emotions.forEach(emotion => {
@@ -42,7 +43,7 @@ retrieveDefaultListBtn.addEventListener('click', () => {
 });
 
 
-// Event listener for "Save Selection" button
+// Event listener for "Save Selection" button, allows multiple selections
 const saveSelectionBtn = document.getElementById('save_selection_btn');
 saveSelectionBtn.addEventListener('click', () => {
 

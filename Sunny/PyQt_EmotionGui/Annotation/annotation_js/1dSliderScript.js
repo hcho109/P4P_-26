@@ -1,4 +1,8 @@
-//Handle multiple sliders input change event
+/* 1D Emotion Model Annotation JS
+    manipulate range sliders for three distinct emotion dimensions; valence, arousal, dominance
+    recognise an active slider user's interacting with and save the value of the slider every 300ms */
+
+//Handle multiple sliders input change event: Read and display slider values 
 function rangeSlider() {
     var sliders = document.querySelectorAll('.range-slider');
     
@@ -12,57 +16,55 @@ function rangeSlider() {
         val.innerHTML = valValue;
         });
 
-        // Add a mousedown event listener to the range input
+        // Triggered when user moves a slider
         range.addEventListener('mousedown', function() {
             // Determine which slider is being interacted with
-            sliderType = this.getAttribute('data-slider-type'); // Add a data attribute to each slider
+            sliderType = this.getAttribute('data-slider-type'); 
             console.log('Slider mousedown event fired');
-            console.log('sliderType:', sliderType); // Check the value of sliderType
+            console.log('sliderType:', sliderType); // Check the value of active sliderType
             
             clearInterval(dataInterval);
             
+            // Only save data wile media plays
             if (!videoPlayer.paused || !audioPlayer.paused){
             
-               // Do something based on the slider type
+               // Save data every 300ms based on the slider type
                 if (sliderType === 'valence') {
                     console.log("User is interacting with Valence slider");
-                    // Perform actions specific to Valence slider
-                    // save data every 300ms
                     update_valence_note_lbl.innerHTML = "Valence Annotation in progress...";
                     dataInterval =setInterval(() => autoSaving(null), 300);
 
                 } else if (sliderType === 'arousal') {
                     console.log("User is interacting with Arousal slider");
                     update_arousal_note_lbl.innerHTML = "Arousal Annotation in progress...";
-                    // save data every 300ms
                     dataInterval =setInterval(() => autoSaving(null), 300);
                 } else if (sliderType === 'dominance') {
                     console.log("User is interacting with Dominance slider");
                     update_dominance_note_lbl.innerHTML = "Dominance Annotation in progress...";
-                    // save data every 300ms
                     dataInterval =setInterval(() => autoSaving(null), 300);
                 }
             }
         });
 
+        // Update value of the slider bar whenver input change is detected 
         range.addEventListener('input', function() {
             value.innerHTML = this.value;
             currentValue = this.value;
         });
     });
 };
+
+// autoSaving being called every 300ms while media plays
 function autoSaving(){
     console.log('Auto save triggered');
     if (!videoPlayer.paused || !audioPlayer.paused){
         console.log("Autosaving: Media is playing");
-
-        // Get the current valence slider value and timestamp
-        //var valenceValue = parseFloat(range.value);
         saveData(currentValue);
+
     } else if (videoPlayer.ended || audioPlayer.ended){
         console.log("Autosaving: Media has ended");
-
         clearInterval(dataInterval);
+
         if(sliderType == 'valence') {
             update_valence_note_lbl.innerHTML = "Annotation completed! To check your data, click 'View Data' button.";
         } else if (sliderType =='arousal'){
@@ -70,6 +72,7 @@ function autoSaving(){
         } else{
             update_dominance_note_lbl.innerHTML = "Annotation completed! To check your data, click 'View Data' button.";
         }
+
     } else{
         console.log("Autosaving: Media is paused");
         clearInterval(dataInterval);
@@ -83,7 +86,7 @@ function autoSaving(){
     }
 }
 
-// Save data for valence, arousal, timestamp in 2s.f.
+// Save data for valence, arousal or dominance along with timestamp in 2s.f.
 function saveData(x){
     var currentTimeStamp = elapsedTime.toFixed(2); // Get the current timestamp
 
@@ -117,12 +120,12 @@ function saveData(x){
     localStorage.setItem('1d_dominance_time_points', JSON.stringify(dominance_timePoints));
 }
 
-// Function to clear values for a specific button type (Valence, Arousal, Dominance)
+// Clear values for a specific button type (Valence, Arousal, Dominance)
 function clear1dValues(buttonType) {
     if (buttonType === 'valence') {
         valence_1dPoints = [];
         valence_timePoints = [];
-        localStorage.removeItem('1d_valence_time_points');
+        localStorage.removeItem('1d_valence_time_points');  // Delete values from local storage as well
         localStorage.removeItem('1d_valence_points');
         console.log('Cleared Valence values');
         update_valence_note_lbl.innerHTML = "Annotation data has been reset! <br> Get started by playing a media file and move the slider.";
@@ -143,7 +146,7 @@ function clear1dValues(buttonType) {
     }
 }
 
-// Function to re-annotate values for a specific button type
+// Re-annotate values for a specific button type
 function reAnnotate1dValues(buttonType) {
     // Pause the media player
     videoPlayer.pause();
@@ -156,7 +159,7 @@ function reAnnotate1dValues(buttonType) {
     // Clear the values for the specific button type
     clear1dValues(buttonType);
 
-    // Clear the out of bounds label
+    // Update status message
     if (buttonType === 'valence') {
         update_valence_note_lbl.innerHTML = "You can now begin the Valence annotation again";
     } else if (buttonType === 'arousal') {
@@ -166,7 +169,7 @@ function reAnnotate1dValues(buttonType) {
     }
 }
 
-// Function to open the data display window for a specific button type
+// Open the data display window for a specific button type
 function open1dDataWindow(buttonType) {
     localStorage.setItem('data_type', '1D'); // Set data_type to '1D'
     localStorage.setItem('1d_annotation_type', buttonType); // Store the annotation type
@@ -176,6 +179,7 @@ function open1dDataWindow(buttonType) {
     }
 }
 
+// Data arrangement into a right format before exported into csv
 function generate_1dCSVContent(buttonType) {
     var maxAryLength = Math.max(valence_timePoints.length, arousal_timePoints.length, dominance_timePoints.length);
 
@@ -188,6 +192,7 @@ function generate_1dCSVContent(buttonType) {
             csv_1dContent += `${timePoint},${valenceData}\n`;
         }
         return csv_1dContent;
+
     } else if (buttonType === 'arousal') {
         for (let i = 0; i < maxAryLength; i++) {
             const timePoint = arousal_timePoints[i] !== undefined ? arousal_timePoints[i] : "";
@@ -195,6 +200,7 @@ function generate_1dCSVContent(buttonType) {
             csv_1dContent += `${timePoint},${arousalData}\n`;
         }
         return csv_1dContent;
+
     } else if (buttonType === 'dominance') {
         for (let i = 0; i < maxAryLength; i++) {
             const timePoint = dominance_timePoints[i] !== undefined ? dominance_timePoints[i] : "";
@@ -205,6 +211,7 @@ function generate_1dCSVContent(buttonType) {
     }
 }
 
+// Save individual data for each slider
 function downloadCSV_1d(buttonType) {
     const csv_1dContent = generate_1dCSVContent(buttonType);
     const blob = new Blob([csv_1dContent], { type: "text/csv" });
@@ -222,6 +229,7 @@ function downloadCSV_1d(buttonType) {
     URL.revokeObjectURL(url);
 }
 
+// Clear values from all of the sliders 
 function clearAllValues() {
     valence_1dPoints = [];
     valence_timePoints = [];
@@ -248,6 +256,7 @@ function openAllDataWindow() {
     }
 }
 
+// Combine all three data with time points 
 function generateAllCSVContent() {
     let csvAllContent = "Time,Valence,Time,Arousal,Time,Dominance\n"; // Add header row
     var maxArrayLength = Math.max(

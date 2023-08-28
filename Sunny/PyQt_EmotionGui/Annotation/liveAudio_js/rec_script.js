@@ -1,3 +1,6 @@
+/* Audio waveform Js file
+  generates waveform once recording completes and let users replay the recording */
+  
 "use strict";
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 class renderWave {
@@ -69,20 +72,21 @@ class renderWave {
       ctx.stroke();
   }
 
-  drawData(data) {
-      data.forEach(item => {
-        const colors = this.isPlaying && item.x <= this.playheadPosition * this.canvas.offsetWidth
-          ? "#000000" // Change color to black if it's part of the audio being played
-          : this._strokeStyle; // Otherwise, use the original color
-          this.drawLineSegment(this.ctx, item.x, item.h, item.w, item.isEven, colors);
-      });
-  }
+  drawData(data, playheadPosition) {
+    data.forEach(item => {
+        const colors = item.x <= playheadPosition * this.canvas.offsetWidth
+            ? "#000000" // Change color to black for the currently recorded audio
+            : this._strokeStyle; // Otherwise, use the original color
+        this.drawLineSegment(this.ctx, item.x, item.h, item.w, item.isEven, colors);
+    });
+}
+
 
   drawTimeline(percent) {
       let end = Math.ceil(this._samples * percent);
       let start = end - 5 || 0;
       let t = this.data.slice(0, end);
-      this.drawData(t, "#1d1e22");
+      this.drawData(t, percent);
       this.playheadPosition = percent;
   }
 }
@@ -153,6 +157,8 @@ function initFunction() {
           audioPlayer.addEventListener("timeupdate", function () {
             let percent = this.currentTime / this.duration;
             wave.drawTimeline(percent);
+            wave.drawData(wave.data, percent); // Update the waveform visualization
+
           });
         }else {
           console.log("No recorded audio available.");
