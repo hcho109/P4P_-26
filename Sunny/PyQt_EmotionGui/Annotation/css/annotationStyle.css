@@ -11,6 +11,7 @@ body {
     font-family:"Roboto", sans-serif;
     padding: 0;
     margin: 0;
+    letter-spacing: 0.2px;
 }
 
 .subtitle {
@@ -279,6 +280,7 @@ body {
   
 .EmotionListCreated {
     display: flex;
+yyyy
     /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
 }
 .emotionContainer {
@@ -289,7 +291,7 @@ body {
 }
 #retrieveDefaultListBtn{
     padding: 5px;
-    margin: 10px;
+    margin: 5px;
     width: fit-content;
 
 }
@@ -308,6 +310,7 @@ body {
   
 .list_control{
     margin-left: 30px;
+    border: 1px solid #ccc;
 }
 #customListInput, #mediaFileNameInput{
     padding: 5px;
@@ -424,18 +427,18 @@ input::-moz-focus-inner, input::-moz-focus-outer {
 
 .range-slider .endLabel {
     float:right;
-    width: 10%;
+    width: 12%;
 }
 
 .range-slider img {
     width: 100%;
-    margin-left: 10px;
+    margin-left: 0px;
     margin-bottom: 10px;
 }
 
 .range-slider span {
     font-size: small;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 /* 2D plot canvas*/

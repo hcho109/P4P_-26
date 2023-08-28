@@ -1,3 +1,4 @@
+<!-- Webpage for Annotation -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,9 +15,9 @@
     <!-- Add papaParse library to extract csv-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="shortcut icon" href="#" />
-    <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
-    <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
-    <link href="navStyle.css" rel="stylesheet" type="text/css" />
+    <link href="css/annotationStyle.css" rel="stylesheet" type="text/css" />
+    <link href="css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+    <link href="css/navStyle.css" rel="stylesheet" type="text/css" />
   
   </head>
 
@@ -125,15 +126,7 @@
                 </p>
               </div>
               <div class="discrete_container">
-              <!---
-                <div class="inputTextBox">
-                  <label for="emotionLabel">Emotion description (one word):</label>
-                  <input type="text" id="emotionLabel" name="emotionLabel">
-                  <input type="button" class= add_btn id="add_btn" value="Add" title=" Add to emotion list"><br>
-                </div>
-              -->
                 <div class='EmotionListCreated'>
-                  
                   <label for="emotionList">Select Emotions:</label>
                   <div class ="emotionContainer">
                     <select id="emotionList" multiple>
@@ -141,6 +134,7 @@
                     </select>
                     <input type="button" id="retrieveDefaultListBtn" value="Retrieve Default List"></button>
                   </div>
+                  <!-- buttons for manipulating emotion list-->
                   <div class="list_control">
                     <label for="customListInput">Add Custom List (CSV):</label>
                     <input type="file" id="customListInput">
@@ -152,7 +146,7 @@
                     <p id="errorPlaceholder" class="error-message"></p>
                   </div>
                 </div>
-                <p>* The default list is created by the University of Auckland.</p>
+                <p>* The default list is created by the University of Auckland (2023).</p>
               </div>
             </div>
 
@@ -180,10 +174,10 @@
               <!--Valence slider bar-->
               <div class="range-slider"> 
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="valence_clear_btn" onclick="clear1dValues()" value="Clear Values">
-                  <input type="button" class="reannotate_btn" id="valence_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
-                  <input type="button" class="view_data_btn" id="valence_view_data_btn" onclick="open1dDataWindow()" value="View Data">
-                  <input type="button" class="save_btn" id="valence_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="valence_clear_btn" onclick="clear1dValues('valence')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="valence_reannotate_btn" onclick="reAnnotate1dValues('valence')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="valence_view_data_btn" onclick="open1dDataWindow('valence')" value="View Data">
+                  <input type="button" class="save_btn" id="valence_CSV_btn" onclick="downloadCSV_1d('valence')" value="Save as CSV">
                 </form>
                 <label for="valenceRange">Valence</label> 
                 <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values" data-slider-type="valence">
@@ -191,15 +185,17 @@
                 <span>Unhappy</span>
                 <span class="endLabel">Happy</span>
                 <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+                <p id="valence__update-note"> Start annotating by playing a media file and moving the Valence slider. </p>
+
               </div>
               <hr>
               <!--Arousal slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="arousal_clear_btn" onclick="clear1dValues()" value="Clear Values">
-                  <input type="button" class="reannotate_btn" id="arousal_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
-                  <input type="button" class="view_data_btn" id="arousal_view_data_btn" onclick="open1dDataWindow()" value="View Data">
-                  <input type="button" class="save_btn" id="arousal_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="arousal_clear_btn" onclick="clear1dValues('arousal')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="arousal_reannotate_btn" onclick="reAnnotate1dValues('arousal')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="arousal_view_data_btn" onclick="open1dDataWindow('arousal')" value="View Data">
+                  <input type="button" class="save_btn" id="arousal_CSV_btn" onclick="downloadCSV_1d('arousal')" value="Save as CSV">
                 </form>
                 <label for="arousalRange">Arousal</label> 
                 <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange" data-slider-type="arousal">
@@ -207,28 +203,32 @@
                 <span>Calm</span>
                 <span class="endLabel">Excited</span>
                 <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
+                <p id="arousal__update-note"> Start annotating by playing a media file and moving the Arousal slider. </p>
               </div>
               <hr>
               <!--Dominance slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="dominance_clear_btn" onclick="clear1dValues()" value="Clear Values">
-                  <input type="button" class="reannotate_btn" id="dominace_reannotate_btn" onclick="reAnnotate1dValues()" value="Re-annotate">
-                  <input type="button" class="view_data_btn" id="dominance_view_data_btn" onclick="open1dDataWindow()" value="View Data">
-                  <input type="button" class="save_btn" id="dominance_CSV_btn" onclick="downloadCSV_1d()" value="Save as CSV">
+                  <input type="button" class="clear_btn" id="dominance_clear_btn" onclick="clear1dValues('dominance')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="dominace_reannotate_btn" onclick="reAnnotate1dValues('dominance')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="dominance_view_data_btn" onclick="open1dDataWindow('dominance')" value="View Data">
+                  <input type="button" class="save_btn" id="dominance_CSV_btn" onclick="downloadCSV_1d('dominance')" value="Save as CSV">
                 </form>
                 <label for="dominanceRange">Dominance</label>
                 <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange" data-slider-type="dominance">
                 <span class="range-slider__value">0</span><br>
-                <span>Low</span>
-                <span class="endLabel">High</span>
+                <span>Submissive</span>
+                <span class="endLabel">Confident</span>
                 <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
+                <p id="dominance__update-note"> Start annotating by playing a media file and moving the Dominance slider. </p>
               </div>
               <hr>
 
               <form class="btns_1D_all">
                 <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" onclick="clearAllValues()" value="Clear all current values">
-                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" onclick="saveAllValues()" value="Save all current values as CSV">
+                <input type="button" class="view_Alldata_btn" id="view_Alldata_btn" onclick="openAllDataWindow()" value="View All Data">                
+                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" onclick="downloadAllCSV()" value="Save all current values as CSV">
+                <p id="update-1dNote"> </p>              
               </form>
             </div>
 
@@ -356,9 +356,8 @@
     <!-- Help popup javascript -->
     <script src="annotation_js/helpWinScript.js"></script>
 
-    <!-- 1D sliders javascript 
-    <script src="annotation_js/1dSliderScript.js"></script> -->
-    <script src="annotation_js/annotationScript.js"></script>
+    <!-- 1D sliders javascript  -->
+    <script src="annotation_js/1dSliderScript.js"></script>
 
     <!-- Temporarily added spectrogram image -->
     <script>

@@ -248,6 +248,7 @@ function drawPoint(x,y){
 
 // Save data for valence, arousal, timestamp in 2s.f.
 function savePoints(x,y){
+
     console.log('data added');
     valence_points.push(toValence(x).toFixed(2)); 
     arousal_points.push(toArousal(y).toFixed(2));
@@ -265,6 +266,8 @@ function savePoints(x,y){
 
 // Function to open the data display window
 function openDataDisplayWindow() {
+    localStorage.setItem('data_type', '2D'); // Set data_type to '2D'
+
     var dataDisplayWindow = window.open('annotation_data.html', '_blank', 'width=800,height=600');
     if (!dataDisplayWindow) {
         alert('Please allow pop-ups to view the data.');
@@ -346,7 +349,14 @@ function clearPlot() {
     valence_points = [];
     arousal_points = [];
     time_points = [];
+    localStorage.removeItem('time_points');
+    localStorage.removeItem('valence_points');
+    localStorage.removeItem('arousal_points');
     count_out_of_bounds = 0;
+
+    console.log('timestamps:', time_points); 
+    console.log('val :', valence_points); 
+    console.log('aro :', arousal_points); 
 
     // Clear the out of bounds label
     out_of_bounds_lbl.innerHTML = "Annotation data has been reset! <br><br> Get started by playing a media file and clicking anywhere within the plot area.";
@@ -428,6 +438,7 @@ const sliceColors = [
     '#751aff', '#0066ff', '#00e6e6', '#009933'
 ];
 
+
 setupMediaControls(videoPlayer,audioPlayer);
 
 // Add an event listener to the canvas element to capture mouse movement
@@ -435,4 +446,5 @@ canvas.addEventListener('click', annotateOnClick);
 
 // Call the drawPlot function initially
 drawPlot();
+
 

@@ -67,7 +67,7 @@ saveSelectionBtn.addEventListener('click', () => {
     const emotionRow = selectedEmotions.map(emotion => `"${emotion}"`).join(','); 
     
     // Create CSV content
-    const csvContent = `"Annotation Data for Categorical Emotion Model"\n"Media file name","${mediaFileName}"\n"Emotions",${emotionRow}\n`;
+    const csvContent = `"Media file name","${mediaFileName}"\n"Emotions",${emotionRow}\n`;
 
     // Create a blob and a download link to save the CSV file
     const blob = new Blob([csvContent], { type: 'text/csv' });
