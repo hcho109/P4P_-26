@@ -1,0 +1,32 @@
+body {
+    background-color: white ;
+}
+
+a {
+    text-decoration: none;
+}
+
+.logo {
+    float: right;
+}
+
+.image_speech {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12.5%;
+    margin-top: 5%;
+}
+
+.text {
+    margin-top: 2%;
+    margin-left: 3%;
+}
+
+h2 {
+    margin-top: 1.5%;
+}
+
+h2, h3 {
+    margin-left: 1%;
+}

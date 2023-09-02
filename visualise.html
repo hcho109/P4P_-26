@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EmotionalGUI Annotation WebPage</title>
+        <!-- CSS file headers  -->
+        <link 
+        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" 
+        />
+        <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
+        <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+        <link href="navStyle.css" rel="stylesheet" type="text/css" />
+        <link href="visualpage.css" rel="stylesheet" type="text/css" /> <!-- css file for visual page-->
+
+        <!-- Py-Script header files -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css" />
+        <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
+
+        <!-- JS header files -->
+        <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> <!--for capturing the images of the plots-->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
+        <script src="http://unpkg.com/tone"></script>
+        <script src="http://127.0.0.1:8080/node_modules/meyda/dist/web/meyda.min.js"></script>
+
+
+        <py-config>
+            packages = ["numpy", 
+                        "matplotlib", 
+                        "pandas",
+                        "keras",
+                        "scikit-learn"
+                        ]
+                        
+            [[interpreters]]
+            src = 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js'
+            name = 'pyodide-0.23.3'
+            lang = 'python'
+        </py-config>
+
+    </head>
+
+    <body>
+        
+        <!-- Top navigation -->
+        <header>   
+        <div class="website_name">
+            <img src="resources/University_of_Auckland_logo.png" width='60px' height='auto' alt = "UoA logo">
+            <h3>EmotionGUI</h3>
+        </div>
+        <nav>
+            <ul class="nav_links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="annotation.html">Annotation</a></li>
+                <li><a class="active" href="visualise.html">Visualise</a></li>
+                <li><a href="liveAudio.html">Live Audio</a></li>      
+            </ul>
+        </nav>
+        <div class="dropdown">
+            <button class="dropbtn">Help 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
+                <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+            </div>
+        </div> 
+        </header>
+        <!------------------ Left column ------------------------->
+        <div class="split left">
+            <div class="centered">
+                <!--Files tab links-->
+                <div class="fileTabs">
+                    <!----------------  CSV File select tab------------------>
+                    <input type="radio" id="tabCSVFile" name="fileTabs" checked="checked">
+                    <label for="tabCSVFile">Plot CSV File</label>
+            
+                    <!-- CSV tab content-->
+                    <div class="fileTabcontent">
+
+                        <h3>Upload CSV file </h3>
+
+                        <form id="form">
+                            <input type="file" id="file" accept=".csv" />
+                            <br />
+                            <input id="submit_btn" type="submit" value="Upload" />
+                        </form>
+                        <button py-click="plot_csv()" id="csv_plot" class="py-button">Plot CSV </button>
+
+                        <button id="saveButton" class="py-button" onclick="savePlotAsImage()">Save Plot</button>
+
+                        <div id="container"> </div>
+
+                    </div>
+  
+                    <!------------------ WAV File select tab---------------------->
+                    <input type="radio" id="tabWAVFile" name="fileTabs">
+                    <label for="tabWAVFile">Plot WAV File</label>
+  
+                    <!-- WAV tab content-->
+                    <div class="fileTabcontent">
+                        <input class="open-file-btn" id="fileinput" type="file" accept="audio/wav"/>
+                        <button id="plotWAVButton" class="button" >Plot WAV</button>
+                        <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
+                        <canvas class="canvas_audio" id="canvas_waveform"></canvas>
+                        <audio id="audio" src="" controls="true"></audio>
+                        <p id="AudioPlayerStatus">Choose a WAV audio file and click 'Play' button to start playing</p>
+                        <button id="extractFeaturesButton">Extract Features</button>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <!------------------ Right column ------------------------->
+        <div class="split right">
+            <div class="centered">
+                <div id="plot"> </div>
+
+                <py-script output="plot">
+                    import matplotlib.pyplot as plt
+                    import numpy as np
+                    import math
+                    from pyodide.ffi import create_proxy, to_js
+                    from js import valence_arr, arousal_arr, time_arr
+                
+                    # Define slice colors
+                    slice_colors = ['#66ff33', '#ffcc00', '#ff751a', '#ff3333','#751aff', '#0066ff', '#00e6e6', '#009933']   
+
+                    # Declare fig and axes as global variables
+                    global fig, axes
+                    fig = plt.figure(figsize=(20, 18))
+                    axes = fig.subplots()
+                    button_clicked = False
+                
+                    def initialize_plot():
+                        global fig, axes
+                        plt.title("V-A Plot", fontsize=50)
+                        plt.xlabel("Valence", fontsize=35)
+                        plt.ylabel("Arousal", fontsize=35)
+                
+                        theta = np.linspace(0, 2 * np.pi, 100)
+                        radius = 1
+                
+                        a = radius * np.cos(theta)
+                        b = radius * np.sin(theta)
+                
+                        axes.plot(a, b, color='k', linewidth=1)
+                        axes.set_aspect(1)
+                
+                        axes.hlines(y=0, xmin=-1, xmax=1, linewidth=0.7, color='k')
+                        axes.vlines(x=0, ymin=-1, ymax=1, linewidth=0.7, color='k')
+                
+                        axes.tick_params(axis='both', which='major', labelsize=25)
+                        axes.tick_params(axis='both', which='minor', labelsize=25)
+                
+                        landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited',
+                                            'interested', 'happy', 'pleased', 'relaxed', 'content']
+                        landmarkValence = (-0.7, -0.65, -0.8, -0.1, 0.37,
+                                            0.2, 0.5, 0.35, 0.6, 0.5)
+                        landmarkArousal = (0.65, 0.5, -0.15, -0.45, 0.9,
+                                            0.7, 0.5, 0.35, -0.3, -0.45)
+                
+                        for point in range(len(landmarkEmotions)):
+                            axes.scatter(landmarkValence, landmarkArousal, color='black', s=40)
+                            axes.text(landmarkValence[point] + 0.02, landmarkArousal[point] + 0.02,
+                                        landmarkEmotions[point], fontsize=30)
+                
+                        axes.yaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+                        axes.xaxis.grid(color='grey', linestyle='dashed', linewidth=0.3)
+                
+                        display(fig, target="plot")
+                
+                    def update_plot():
+                        global fig, axes, valence_arr, arousal_arr
+                        if button_clicked:
+                            # axes.clear()
+                
+                            # Update the plot with new data using valence_arr and arousal_arr
+                            for point in range(len(valence_arr)):
+                                opacity = calculate_opacity(time_arr, time_arr[point]) #calculate opacity for point
+                                colour = get_color(valence_arr[point], arousal_arr[point])
+                                # Calculate pointer size based on time
+                                min_size = 40  # Minimum pointer size
+                                max_size = 400  # Maximum pointer size
+                                size = min_size + (max_size - min_size) * (time_arr[point] / max(time_arr))
+
+                                axes.scatter(valence_arr[point], arousal_arr[point], color=colour, s=size, alpha=opacity)
+                
+                            display(fig, target="plot")
+                            fig.canvas.flush_events()
+                
+                    def plot_csv():
+                        global button_clicked
+                        button_clicked = True
+                        update_plot()
+                
+                    def calculate_opacity(time_array, current_time):
+                        # Define min and max opacity values
+                        min_opacity = 0.1
+                        max_opacity = 1
+                    
+                        # Find the corresponding index of the current time in the time array
+                        index = next((i for i, time in enumerate(time_array) if time >= current_time), -1)
+                    
+                        # Calculate progress as a value between 0 and 1 based on the index
+                        progress = 1 if index == -1 else index / (len(time_array) - 1)
+                    
+                        # Calculate the current opacity based on the progress
+                        current_opacity = min_opacity + (max_opacity - min_opacity) * progress
+                    
+                        return current_opacity
+                    
+                    def get_color(x, y):
+                        angle = math.atan2(y, x)  # Calculate the angle in radians
+                        angle_in_degrees = (angle + 2 * math.pi if angle < 0 else angle) * (180 / math.pi)  # Convert angle to degrees and ensure positive
+                    
+                        # Calculate the index of the color based on the angle and the number of slices (12)
+                        color_index = math.floor(angle_in_degrees / 45) % 8
+                    
+                        return slice_colors[color_index]  
+                    
+                    # Initial plot creation
+                    initialize_plot()
+
+                    def predict(self):
+                        # Define scaler, feature number and number of step looking back
+                        scale_range = (0, 1)
+                        scaler = MinMaxScaler(feature_range=scale_range)
+                        n_steps = 24  # exclude the current step
+                        n_features = 7
+
+                        transformTarget = True
+
+                        testingDataset = self.currentDf
+                        testingDataset = testingDataset[['RMS', 'F0',
+                                                        'MFCC1', 'MFCC2', 'MFCC3', 'MFCC4', 'MFCC5']]
+
+                        # load and build testing dataset
+                        values = testingDataset.values
+                        # normalize features
+                        testingScaled = scaler.fit_transform(values)
+                        # frame as supervised learning
+                        reframed = self.series_to_supervised(testingScaled, n_steps, 1)
+                        print(reframed.shape)
+                        values = reframed.values
+                        test = values
+                        test_X = test
+                        # reshape input to be 3D [samples, timesteps (n_steps before + 1 current step), features]
+                        test_X = test_X.reshape((test_X.shape[0], n_steps + 1, n_features))
+
+                        arousalModelPath = 'models/saves/bi-lstm/mArousal.hdf5'
+                        valenceModelPath = 'models/saves/bi-lstm/mValence.hdf5'
+
+                        arousalModel = keras.models.load_model(arousalModelPath)
+                        valenceModel = keras.models.load_model(valenceModelPath)
+
+                        # make a prediction
+                        if transformTarget:
+                            inv_yPredict = arousalModel.predict(test_X)
+                            yPredict = arousalModel.predict(test_X)
+
+                        self.a_pred_test_list = [i for i in yPredict]
+
+                        # make a prediction
+                        if transformTarget:
+                            inv_yPredict = valenceModel.predict(test_X)
+                            yPredict = valenceModel.predict(test_X)
+
+                        self.v_pred_test_list = [i for i in yPredict]
+                        self.time_array = self.currentDf[['Time']].to_numpy()
+                        self.time_array = self.time_array[24:len(self.time_array)]
+
+                </py-script>
+        
+            </div>
+        </div>
+        
+        <!-- <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script> -->
+        <!-- <script src="bundle.js"></script> -->
+        <script src="annotation_js/mediaControls.js"></script>
+        <script src="csv.js"></script> <!-- CSV javascript -->
+        <script src="image_utils.js"></script> <!-- downloading the plots javascript -->
+        <script src="audio.js"></script> <!-- Audio waveform javascript -->
+
+    </body>
+</html> 

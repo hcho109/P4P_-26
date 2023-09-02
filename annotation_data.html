@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2d Annotated Data</title>
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            padding:100px;
+            padding-top:10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black; /* Add a border to the table */
+            margin-top: 30px; /* Add spacing above the table */
+        }
+
+        th, td {
+            border: 1px solid black; /* Add a border to table cells */
+            padding: 8px; /* Add padding inside cells */
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Add a background color to header cells */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Add alternating row background color */
+        }
+    </style>
+</head>
+<body>
+    <h2>Annotated Data for 2D Emotion model</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Valence</th>
+                <th>Arousal</th>
+            </tr>
+        </thead>
+        <tbody id="data-body">
+            <!-- Data rows will be added here -->
+        </tbody>
+    </table>
+
+    <script>
+        // JavaScript code to populate the data table
+        var time_points = JSON.parse(localStorage.getItem('time_points'));
+        var valence_points = JSON.parse(localStorage.getItem('valence_points'));
+        var arousal_points = JSON.parse(localStorage.getItem('arousal_points'));
+
+        var body = document.getElementById('data-body');
+        for (var i = 0; i < time_points.length; i++) {
+            var newRow = body.insertRow();
+            var timeCell = newRow.insertCell(0);
+            var valenceCell = newRow.insertCell(1);
+            var arousalCell = newRow.insertCell(2);
+
+            timeCell.innerHTML = time_points[i];
+            valenceCell.innerHTML = valence_points[i];
+            arousalCell.innerHTML = arousal_points[i];
+        }
+    </script>
+</body>
+</html>

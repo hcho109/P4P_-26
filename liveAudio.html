@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>EmotionalGUI Annotation WebPage</title>
+        <!-- Add icon library -->
+        <link 
+        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" 
+        />
+        <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
+        <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+        <link href="navStyle.css" rel="stylesheet" type="text/css" />
+        <link href="liveAudioStyle.css" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css" />
+        <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
+        
+    </head>
+
+    <body>
+        
+        <!-- Top navigation -->
+        <header>   
+        <div class="website_name">
+            <img src="resources/University_of_Auckland_logo.png" width='60px' height='auto' alt = "UoA logo">
+            <h3>EmotionGUI</h3>
+        </div>
+        <nav>
+            <ul class="nav_links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="annotation.html">Annotation</a></li>
+                <li><a href="visualise.html">Visualise</a></li>
+                <li><a class="active" href="liveAudio.html">Live Audio</a></li>      
+            </ul>
+        </nav>
+        <div class="dropdown">
+            <button class="dropbtn">Help 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
+                <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+            </div>
+        </div> 
+        </header>
+
+        <div class="centered">
+            <h2> Live Audio Recording </h2>
+            <div class="audioData_container">
+                <p class="subtitle">Real-Time Spectrogram</p>
+                <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
+                <p class="subtitle">Audio Waveform</p>
+                <canvas class="canvas_audio" id="canvas_waveform"></canvas>
+                <audio id="audioElement" src="" controls="true"></audio>
+            </div>
+
+            <div class="record_control_container">
+                <div class="setting">
+                    <div class="dataSource">
+                        <label for="dataSource">Audio Data Source:</label>
+                        <select name="dataSource" id="dataSource">
+                            <option value="op1">Microphone option 1</option>
+                            <option value="op2">Microphone option 2</option>
+                            <option value="op3">Microphone option 3</option>
+                            <option value="op4">Microphone option 4</option>
+                        </select>
+                    </div>
+                    <div class="Spect_Time">
+                        <label for="Spect_Time">Spectrogram Time (in seconds):</label>
+                        <input type="text" id="Spect_Time" name="Spect_Time" required size="10" >
+                    </div>
+                </div>
+                
+                <div class="rec_buttons">
+                    <button class="start_btn" id="startRecording">Start</button>
+                    <button class="stop_btn" id="stopRecording">Stop</button><br>
+                    <p id="isRecording">Click 'Start' button to record</p>
+                </div>
+            </div>
+            
+            <form class="save_buttons">
+                <input type="button" class= rec_save_btn id="save_wav_btn" value="Save 'Recorded audio' as MP3 file">
+                <input type="button" class= img_save_btn id="save_png_btn" value="Save 'Audio data Images' as PNG file">
+            </form>
+        </div>
+
+        
+    </body>
+
+    <script src="liveAudio_js/rec_script.js"></script>
+
+</html>
