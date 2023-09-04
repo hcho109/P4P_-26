@@ -88,6 +88,19 @@
     background: #ccc;
 }
 
+.fileTabcontent input{
+    float: right;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border: none;
+    width: 45%;
+    cursor: pointer;
+}
+
+.fileTabcontent p {
+    padding-left: 1rem;
+    font-size: small;
+}
 /********* plot style **********/
 #plot {
     float: right;
@@ -100,20 +113,89 @@ table, th, td {
     border-collapse: collapse;
 }
 
-#submit_btn:hover {
-    background-color: green;
-}
-
 .fileTabcontent {
-    display: flex; /* Use flex layout to position elements horizontally */
-    flex-direction: column; /* Align elements vertically */
-    align-items: center; /* Center content horizontally */
-    justify-content: center; /* Center content vertically */
-    padding: 20px; /* Add padding for spacing */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px; 
 }
 
 .canvas_audio {
     width: 100%;
-    height: 200px; /* Adjust the height as needed */
-    margin: 10px 0; /* Add margin for spacing between canvas elements */
+    height: 200px; 
+    margin: 10px 0; 
+}
+
+/*------------------ Buttons ---------------------*/
+#csv_plot, #clearButton, #saveButton, #submit_btn  {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF; 
+}
+
+#csv_plot:hover, #clearButton:hover, #saveButton:hover, #submit_btn:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF; 
+}
+
+#saveButton, #submit_btn, #prevButton {
+    margin-right: 3%;
+}
+
+#button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 1%;
+}
+
+#prevButton, #nextButton {
+    border: lightgray;
+    background-color: lightgray;
+    color: #000000;
+    padding: 10px 20px; 
+}
+
+#prevButton:hover, #nextButton:hover {
+    border: #393A3D;
+    background-color: #393A3D;
+    color: #FFFFFF;
+}
+
+
+
+#outputText, #outputText1 {
+    font-size: larger;
+}
+
+/*------------------ Table ---------------------*/
+#csv-table-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+#csv-table {
+    width: 80%; 
+    border-collapse: collapse; 
+    border: 2px solid #333; 
+}
+
+#csv-table th, #csv-table td {
+    padding: 8px 12px; 
+    text-align: center; 
+    border: 1px solid #333; 
+}
+
+#csv-table th {
+    background-color: #333;
+    color: white;
+}
+
+/*------------------ VA Plot IMG ---------------------*/
+#hide_image {
+    margin-top: 4%;
 }
