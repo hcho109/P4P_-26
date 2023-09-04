@@ -253,7 +253,7 @@ function savePoints(x,y){
     console.log('data added');
     valence_points.push(toValence(x).toFixed(2)); 
     arousal_points.push(toArousal(y).toFixed(2));
-    time_points.push(elapsedTime.toFixed(2)); 
+    time_points.push(elapsedTime); 
 
     console.log('timestamps:', time_points); 
     console.log('val :', valence_points); 
