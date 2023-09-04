@@ -90,7 +90,6 @@ class renderWave {
 
 var duration = 0;
 var currentTime = 0;
-var currentTimeInSec = 0;
 
 document.getElementById("fileinput").addEventListener("change", function () {
 
@@ -124,6 +123,5 @@ document.getElementById("fileinput").addEventListener("change", function () {
         wave.drawTimeline(percent);
 
         currentTime = this.currentTime;
-        currentTimeInSec = currentTime.toFixed(2);
     };
 });

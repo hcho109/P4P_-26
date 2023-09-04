@@ -228,6 +228,15 @@ function calculateOpacity() {
     return currentOpacity;
 }
 
+// Store the current time of a media player 
+function pushCurrentTimeToTimePoints() {
+    if (!videoPlayer.paused) {
+        time_points.push(videoPlayer.currentTime);
+    } else if (!audioPlayer.paused) {
+        time_points.push(audioPlayer.currentTime);
+    }
+}
+
 // Draw a circular point on the plot
 function drawPoint(x,y){
     const radius = calculateRadius();
@@ -253,7 +262,7 @@ function savePoints(x,y){
     console.log('data added');
     valence_points.push(toValence(x).toFixed(2)); 
     arousal_points.push(toArousal(y).toFixed(2));
-    time_points.push(elapsedTime); 
+    pushCurrentTimeToTimePoints();
 
     console.log('timestamps:', time_points); 
     console.log('val :', valence_points); 
@@ -292,7 +301,7 @@ function handleMouseMove(event){
                 savePoints(event.offsetX, event.offsetY);
             } else{
                 count_out_of_bounds +=1;
-                time_points.push(elapsedTime.toFixed(2)); 
+                pushCurrentTimeToTimePoints();
                 valence_points.push('Invalid');
                 arousal_points.push('Invalid');
                 out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
@@ -315,15 +324,15 @@ function annotateOnClick(event) {
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
             // Call autoclicking every 300ms
-            plotInterval =setInterval(() => autoClicking(null), 300);
+            plotInterval =setInterval(() => autoClicking(null), 100);
  
         } else {
             count_out_of_bounds +=1;   
-            time_points.push(elapsedTime.toFixed(2)); 
+            pushCurrentTimeToTimePoints();
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
             out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            plotInterval =setInterval(() => autoClicking(null), 300);
+            plotInterval =setInterval(() => autoClicking(null), 100);
         }
     } 
 }

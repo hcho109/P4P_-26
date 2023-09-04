@@ -22,39 +22,19 @@ function handleVideoFileChange() {
 
     let playerStatus = document.getElementById("playerStatus");
 
-    videoPlayer.addEventListener('durationchange', function() {
-        duration = videoPlayer.duration;
-    });
-
-    videoPlayer.addEventListener('timeupdate', function() {
-        currentTime = videoPlayer.currentTime;
-
-        var formattedTime = formatTime(currentTime);
-
-        currentTimeInSec = currentTime.toFixed(2);
-        
-    });
-
     videoPlayer.addEventListener('play', function() {
-        isPlaying = 1;
         playerStatus.textContent = "Video is playing...";
     });
     
     videoPlayer.addEventListener('pause', function() {
-        isPlaying = 0;
         playerStatus.textContent = "Video paused...";
     });
     
     videoPlayer.addEventListener('ended', function() {
-        isPlaying = 0;
         playerStatus.textContent = "Video ended...";
     });
 }
 
-var isPlaying = 0;
-var duration = 0;
-var currentTime = 0;
-var currentTimeInSec = 0;
 var videoFileInput = document.getElementById('video-file-input');
 
 videoFileInput.addEventListener('change', handleVideoFileChange);

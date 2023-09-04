@@ -32,16 +32,16 @@ function rangeSlider() {
                 if (sliderType === 'valence') {
                     console.log("User is interacting with Valence slider");
                     update_valence_note_lbl.innerHTML = "Valence Annotation in progress...";
-                    dataInterval =setInterval(() => autoSaving(null), 300);
+                    dataInterval =setInterval(() => autoSaving(null), 20);
 
                 } else if (sliderType === 'arousal') {
                     console.log("User is interacting with Arousal slider");
                     update_arousal_note_lbl.innerHTML = "Arousal Annotation in progress...";
-                    dataInterval =setInterval(() => autoSaving(null), 300);
+                    dataInterval =setInterval(() => autoSaving(null), 20);
                 } else if (sliderType === 'dominance') {
                     console.log("User is interacting with Dominance slider");
                     update_dominance_note_lbl.innerHTML = "Dominance Annotation in progress...";
-                    dataInterval =setInterval(() => autoSaving(null), 300);
+                    dataInterval =setInterval(() => autoSaving(null), 20);
                 }
             }
         });
@@ -86,9 +86,18 @@ function autoSaving(){
     }
 }
 
+// Retrieve current time of a media player
+function getCurrentTimeBasedOnMediaPlayer() {
+    if (!videoPlayer.paused) {
+        return videoPlayer.currentTime;
+    } else if (!audioPlayer.paused) {
+        return audioPlayer.currentTime;
+    } 
+}
+
 // Save data for valence, arousal or dominance along with timestamp in 2s.f.
 function saveData(x){
-    var currentTimeStamp = elapsedTime.toFixed(2); // Get the current timestamp
+    var currentTimeStamp = getCurrentTimeBasedOnMediaPlayer(); // Get the current timestamp
 
     if (sliderType === 'valence') {
         console.log('valence data added');
