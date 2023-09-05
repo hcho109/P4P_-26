@@ -140,8 +140,8 @@
             <div class="centered">
                 <img id = "hide_image" src="resources/VAplotIMG.png">
                 <div id="plot"> </div>
-                <button id="saveButton" class="py-button" onclick="savePlotAsImage()"> Save Plot</button>
-                <button id="clearButton" class="py-button" onclick="window.location.reload(true)"> Clear Plot</button>
+                <button id="saveButton" class="py-button" onclick="savePlotAsImage()" style="display: none;"> Save Plot</button>
+                <button id="clearButton" class="py-button" onclick="window.location.reload(true)" style="display: none;"> Clear Plot</button>
 
                 <py-script>
                     import matplotlib.pyplot as plt

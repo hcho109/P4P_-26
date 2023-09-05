@@ -125,10 +125,15 @@ prevButton.addEventListener("click", function () {
     }
 });
 
+
 function hideImage() {
     // Locate the image element by its id
     let imageElement = document.getElementById("hide_image");
     
     // Set the "hidden" attribute to hide the image
     imageElement.setAttribute("hidden", "hidden");
+
+    // Display the save and clear plot buttons
+    saveButton.style.display = "inline";
+    clearButton.style.display = "inline";
 }
