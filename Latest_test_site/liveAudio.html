@@ -4,13 +4,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>EmotionalGUI Annotation WebPage</title>
+        <title>EmotionGUI Live Audio Page</title>
         <!-- Add icon library -->
         <link 
         rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" 
         />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        <link rel="shortcut icon" href="#" />
         <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
         <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
         <link href="navStyle.css" rel="stylesheet" type="text/css" />
@@ -26,18 +28,18 @@
 
     <body>
         
-        <!-- Top navigation -->
-        <header>   
+    <!-- Top navigation -->
+    <header>   
         <div class="website_name">
-            <img src="resources/University_of_Auckland_logo.png" width='60px' height='auto' alt = "UoA logo">
+            <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
             <h3>EmotionGUI</h3>
         </div>
         <nav>
             <ul class="nav_links">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="annotation.html">Annotation</a></li>
-                <li><a href="visualise.html">Visualise</a></li>
-                <li><a class="active" href="liveAudio.html">Live Audio</a></li>      
+            <li><a href="home.html">Home</a></li>
+            <li><a href="annotation.html">Annotation</a></li>
+            <li><a href="visualise.html">Visualise</a></li>
+            <li><a class="active" href="liveAudio.html">Live Audio</a></li>      
             </ul>
         </nav>
         <div class="dropdown">
@@ -45,13 +47,13 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                <button onclick = "createPopupWin('about/aboutEmotionGUI.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
                 <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-                <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
-                <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+                <button onclick = "createPopupWin('about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+                <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
             </div>
         </div> 
-        </header>
+    </header>
 
         <div class="centered">
             <h2> Live Audio Recording </h2>
@@ -89,13 +91,17 @@
                 
             </div>
         </div>
+        <script src="annotation_js/helpWinScript.js"></script>
         <script src="image_utils.js"></script> <!-- downloading the plots javascript -->
         
     </body>
 
-    
     <!-- Audio recording javascript -->
     <script src="liveAudio_js/rec_script.js"></script>
+    
+    <script>
+        document.getElementById("saveSpectrogram").disabled = true;
+    </script>
 
     <!-- Temporarily added spectrogram image -->
     <script>
