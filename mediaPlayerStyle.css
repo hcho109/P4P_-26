@@ -1,4 +1,4 @@
-/**************** Multimedia players *******************/
+/**************** Multimedia players Style*******************/
 
 /*------ file button ------*/
 .mediaPlayerTabcontent input{
@@ -20,7 +20,7 @@
 
 .mediaPlayerTabcontent p {
     padding-left: 1rem;
-    font-size: small;
+    font-size: medium;
 }
 
 /************ Audio waveform ************/

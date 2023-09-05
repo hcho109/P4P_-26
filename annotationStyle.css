@@ -1,3 +1,5 @@
+/* Annotation Webpage Styles*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
@@ -11,6 +13,7 @@ body {
     font-family:"Roboto", sans-serif;
     padding: 0;
     margin: 0;
+    letter-spacing: 0.2px;
 }
 
 .subtitle {
@@ -212,12 +215,6 @@ body {
     color: white;
 }
 
-/* Discrete emotion model save button */
-
-.inputTextBox .save_btn {
-    margin-left: 30px;
-}
-
 /***** 1D buttons *****/
 .btns_1D {
     float: right;
@@ -264,12 +261,64 @@ body {
 } 
 
 /* Discrete/categorical emotion model */
-.inputTextBox label{
-    padding-left:30px;
-    padding-right:10px;
-    font-size:15px;
-    width: auto;
-    display: inline-block;
+.discrete_container label{
+    font-size: 15px;
+    width: auto; 
+}
+ 
+.discrete_container input[type="button"]{
+    width: 100px; 
+    margin-left: 80px;
+}
+  
+.EmotionListCreated {
+    display: flex;
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
+}
+.emotionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
+}
+#retrieveDefaultListBtn{
+    padding: 5px;
+    margin: 5px;
+    width: fit-content;
+
+}
+#emotionList {
+    border: 1px solid #ccc;
+    width: 160px; /* Set the width of the emotion list box */
+    min-height: 200px; /* Set a minimum height to keep the box visible */
+    padding: 10px;
+    margin-top: 10px;
+    float: left;
+}
+
+#emotionList option {
+    padding: 3px; /* Adjust the padding as needed */
+}
+  
+.list_control{
+    margin-left: 30px;
+}
+#customListInput, #mediaFileNameInput{
+    padding: 5px;
+    margin-left: 30px;
+}
+
+#customListInput{
+    margin-bottom: 20px;
+}
+
+.list_control input[type="button"]{
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    margin-left: 35px;
+    margin-top: 20px;
+    white-space: normal;
 }
 
 /* 1D emotion model */
@@ -369,18 +418,18 @@ input::-moz-focus-inner, input::-moz-focus-outer {
 
 .range-slider .endLabel {
     float:right;
-    width: 10%;
+    width: 12%;
 }
 
 .range-slider img {
     width: 100%;
-    margin-left: 10px;
+    margin-left: 0px;
     margin-bottom: 10px;
 }
 
 .range-slider span {
     font-size: small;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 /* 2D plot canvas*/
@@ -395,3 +444,25 @@ input::-moz-focus-inner, input::-moz-focus-outer {
 }
 
 
+#save_selection_btn, #retrieveDefaultListBtn,
+#valence_clear_btn, #valence_reannotate_btn, #valence_view_data_btn, #valence_CSV_btn, 
+#arousal_clear_btn, #arousal_reannotate_btn, #arousal_view_data_btn, #arousal_CSV_btn,
+#dominance_clear_btn, #dominance_reannotate_btn, #dominance_view_data_btn, #dominance_CSV_btn,
+#clearAll_1Dbtn, #view_Alldata_btn, #saveAll_1Dbtn,
+#clear_btn, #reannotate_btn, #td_view_data_btn, #td_CSV_btn  {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF; 
+}
+
+#save_selection_btn:hover, #retrieveDefaultListBtn:hover,
+#valence_clear_btn:hover, #valence_reannotate_btn:hover, #valence_view_data_btn:hover, #valence_CSV_btn:hover,
+#arousal_clear_btn:hover, #arousal_reannotate_btn:hover, #arousal_view_data_btn:hover, #arousal_CSV_btn:hover,
+#dominance_clear_btn:hover, #dominance_reannotate_btn:hover, #dominance_view_data_btn:hover, #dominance_CSV_btn:hover,
+#clearAll_1Dbtn:hover, #view_Alldata_btn:hover, #saveAll_1Dbtn:hover,
+#clear_btn:hover, #reannotate_btn:hover, #td_view_data_btn:hover, #td_CSV_btn:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF; 
+}

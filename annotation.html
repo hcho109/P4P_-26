@@ -1,20 +1,25 @@
+<!-- Webpage for Annotation -->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EmotionalGUI Annotation WebPage</title>
+    <title>EmotionGUI Annotation Page</title>
     <!-- Add icon library -->
     <link 
       rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
       crossorigin="anonymous" referrerpolicy="no-referrer" 
     />
+    <!-- Add papaParse library to extract csv-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="shortcut icon" href="#" />
     <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
     <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
     <link href="navStyle.css" rel="stylesheet" type="text/css" />
+    
   
   </head>
 
@@ -39,10 +44,10 @@
               <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-              <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+              <button onclick = "createPopupWin('about/aboutEmotionGUI.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
               <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-              <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
-              <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+              <button onclick = "createPopupWin('about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+              <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
           </div>
       </div> 
     </header>
@@ -107,7 +112,7 @@
             <div class="EMtabContent">
               <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
               'About', 900, 600);">
-                <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
               </button>
               <div class="content">
                 <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
@@ -122,22 +127,28 @@
                   </ul>
                 </p>
               </div>
-              <div class="inputTextBox">
-                <label for="emotionLabel">Emotion description (one word):</label>
-                <input type="text" id="emotionLabel" name="emotionLabel" required size="15" >
-                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br>
-                <label for="categories">Choose an emotion:</label>
-                <select id="categories" name="emotion-Categories">
-                  <option value="happy">Happiness</option>
-                  <option value="Sad">Sadness</option>
-                  <option value="fear">Fear</option>
-                  <option value="disgust">Disgust</option>
-                  <option value="anger">Anger</option>
-                  <option value="surprise">Surprise</option>
-                  <option value="trust">Trust</option>
-                  <option value="anticipation">Anticipation</option>
-                </select>
-                <input type="button" class= save_btn id="CSV_btn" value="Save as CSV"><br><br>
+              <div class="discrete_container">
+                <div class='EmotionListCreated'>
+                  <label for="emotionList">Select Emotions:</label>
+                  <div class ="emotionContainer">
+                    <select id="emotionList" multiple>
+                      <!-- Default emotion options will be populated here -->
+                    </select>
+                    <input type="button" id="retrieveDefaultListBtn" value="Retrieve Default List"></button>
+                  </div>
+                  <!-- buttons for manipulating emotion list-->
+                  <div class="list_control">
+                    <label for="customListInput">Add Custom List (CSV):</label>
+                    <input type="file" id="customListInput">
+
+                    <label for="mediaFileNameInput">Enter Media File Name:</label>
+                    <input type="text" id="mediaFileNameInput" placeholder="Ex. test_video1">
+                  
+                    <input type="button" class= save_selection id="save_selection_btn" value="Save as CSV" title="Save data into CSV file"><br><br>
+                    <p id="errorPlaceholder" class="error-message"></p>
+                  </div>
+                </div>
+                <p>* The default list is created by the University of Auckland (2023).</p>
               </div>
             </div>
 
@@ -156,7 +167,7 @@
                 <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
                 <p>
                   <ul>
-                    <li>As you watch a video or listen to an audio, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
+                    <li>As you watch or listen to a video/audio file, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
                     <li>Adjust each slider independently, focusing on one emotional dimension at a time.<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
                   </ul>
                 </p>
@@ -165,49 +176,61 @@
               <!--Valence slider bar-->
               <div class="range-slider"> 
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="py-button" class="clear_btn" id="valence_clear_btn" onclick="clear1dValues('valence')" value="Clear Values">
+                  <input type="button" class="py-button" class="reannotate_btn" id="valence_reannotate_btn" onclick="reAnnotate1dValues('valence')" value="Re-annotate">
+                  <input type="button" class="py-button" class="view_data_btn" id="valence_view_data_btn" onclick="open1dDataWindow('valence')" value="View Data">
+                  <input type="button" class="py-button" class="save_btn" id="valence_CSV_btn" onclick="downloadCSV_1d('valence')" value="Save as CSV">
                 </form>
                 <label for="valenceRange">Valence</label> 
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values" data-slider-type="valence">
                 <span class="range-slider__value">0</span><br>
                 <span>Unhappy</span>
                 <span class="endLabel">Happy</span>
                 <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+                <p id="valence__update-note"> Start annotating by playing a media file and moving the Valence slider. </p>
+
               </div>
               <hr>
               <!--Arousal slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="py-button" class="clear_btn" id="arousal_clear_btn" onclick="clear1dValues('arousal')" value="Clear Values">
+                  <input type="button" class="py-button" class="reannotate_btn" id="arousal_reannotate_btn" onclick="reAnnotate1dValues('arousal')" value="Re-annotate">
+                  <input type="button" class="py-button" class="view_data_btn" id="arousal_view_data_btn" onclick="open1dDataWindow('arousal')" value="View Data">
+                  <input type="button" class="py-button" class="save_btn" id="arousal_CSV_btn" onclick="downloadCSV_1d('arousal')" value="Save as CSV">
                 </form>
                 <label for="arousalRange">Arousal</label> 
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange" data-slider-type="arousal">
                 <span class="range-slider__value">0</span><br>
                 <span>Calm</span>
                 <span class="endLabel">Excited</span>
                 <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
+                <p id="arousal__update-note"> Start annotating by playing a media file and moving the Arousal slider. </p>
               </div>
               <hr>
               <!--Dominance slider bar-->
               <div class="range-slider">
                 <form class="btns_1D">
-                  <input type="button" class="clear_btn" id="clear_btn" value="Clear values">
-                  <input type="button" class="save_btn" id="CSV_btn" value="Save as CSV">
+                  <input type="button" class="py-button" class="clear_btn" id="dominance_clear_btn" onclick="clear1dValues('dominance')" value="Clear Values">
+                  <input type="button" class="py-button" class="reannotate_btn" id="dominance_reannotate_btn" onclick="reAnnotate1dValues('dominance')" value="Re-annotate">
+                  <input type="button" class="py-button" class="view_data_btn" id="dominance_view_data_btn" onclick="open1dDataWindow('dominance')" value="View Data">
+                  <input type="button" class="py-button" class="save_btn" id="dominance_CSV_btn" onclick="downloadCSV_1d('dominance')" value="Save as CSV">
                 </form>
                 <label for="dominanceRange">Dominance</label>
-                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange">
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange" data-slider-type="dominance">
                 <span class="range-slider__value">0</span><br>
-                <span>Low</span>
-                <span class="endLabel">High</span>
+                <span>Submissive</span>
+                <span class="endLabel">Confident</span>
                 <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
+                <p id="dominance__update-note"> Start annotating by playing a media file and moving the Dominance slider. </p>
               </div>
               <hr>
 
               <form class="btns_1D_all">
-                <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" value="Clear all current values">
-                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" value="Save all current values as CSV">
+                <input type="button" class="py-button" class="clearAll_btn" id="clearAll_1Dbtn" onclick="clearAllValues()" value="Clear all current values">
+                <input type="button" class="py-button" class="view_Alldata_btn" id="view_Alldata_btn" onclick="openAllDataWindow()" value="View All Data">                
+                <input type="button" class="py-button" class="saveAll_btn" id="saveAll_1Dbtn" onclick="downloadAllCSV()" value="Save all current values as CSV">
+                <p id="update-1dNote"> </p>              
               </form>
             </div>
 
@@ -219,7 +242,7 @@
             <div class="EMtabContent">
               <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
               'About', 900, 600);">
-                <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
                 <span class="helpPopupText" id="2dhelpPopup"></span>
               </button>
               <div class="content">
@@ -238,11 +261,11 @@
                 <canvas id="2dCanvas"></canvas>
                 <div>
                   <div class="xData" id=""> 
-                    <label for="x_input">x-data:</label>
+                    <label for="xData">x-data:</label>
                     <input type="text" id="xData" required size="5" >
                   </div>
                   <div class="yData"> 
-                    <label for="y_input">y-data:</label>
+                    <label for="yData">y-data:</label>
                     <input type="text" id="yData" required size="5" >
                   </div>
                 </div>
@@ -252,11 +275,10 @@
               <p id="update-note"> Start annotating by playing a media file and clicking anywhere within the plot area. </p>
 
               <form class="btns_2D">
-                <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
-                <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
-                <input type="button" class="view_data_btn" id="2d_view_data_btn" onclick="openDataDisplayWindow()" value="View Data">
-
-                <input type="button" class="save_btn" id="2d_CSV_btn" onclick="downloadCSV_2d()" value="Save as CSV">
+                <input type="button" class="py-button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
+                <input type="button" class="py-button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
+                <input type="button" class="py-button" class="view_data_btn" id="td_view_data_btn" onclick="openDataDisplayWindow()" value="View Data">
+                <input type="button" class="py-button" class="save_btn" id="td_CSV_btn" onclick="downloadCSV_2d()" value="Save as CSV">
               </form><br>
 
             </div>
@@ -265,6 +287,9 @@
       </div>
     </div>
 
+    <!-- discrete emotion model javascript -->
+    <script src="annotation_js/categoryScript.js"></script>
+    
     <!-- 2d plot javascript -->
     <script src="annotation_js/mediaControls.js"></script>
     <script src="annotation_js/2dPlotScript.js"></script>
@@ -272,15 +297,13 @@
     <!-- Audio waveform javascript -->
     <script src="annotation_js/audioScript.js"></script>
 
-
     <!-- video player javascript -->
     <script src="annotation_js/videoScript.js"></script>
 
     <!-- Help popup javascript -->
     <script src="annotation_js/helpWinScript.js"></script>
-    
 
-    <!-- 1D sliders javascript -->
+    <!-- 1D sliders javascript  -->
     <script src="annotation_js/1dSliderScript.js"></script>
 
     <!-- Temporarily added spectrogram image -->
@@ -306,6 +329,5 @@
       }
     </script>
 
-    <!-- <script src="annotationScript.js"></script> -->
   </body>
 </html>

@@ -1,3 +1,5 @@
+/* LiveAudio Webpage Styles*/
+
 html {
     scroll-behavior: smooth;
 }
@@ -21,7 +23,6 @@ body {
 }
 
 h2 {
-    font-family: 'Patrick Hand', cursive;
     margin-bottom: 20px;
 }
 
@@ -31,6 +32,7 @@ h2 {
     text-align: center;
     color: black;
     font-size: 17px;
+    font-weight: 600;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -53,51 +55,48 @@ h2 {
     overflow: hidden;
 }
 
+#canvas_waveform {
+    margin-bottom: 40px;
+}
+
 audio {
     width: 100%;
     margin-top: 10px;
-    margin-bottom: 30px;
 }
 
-.record_control_container {
+.container {
     width: 80%;
-    background: #fff;
-    border: 1px solid #ccc;
     display: flex;
-    align-items: center;
     margin-left: 10%;
     justify-content: space-evenly;
 }
 
-.setting {
-    float: left;
-    padding: 10px;
-    padding-left: 0;
+.record_control_container, .Btns_container {
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 48%; 
 }
 
-.dataSource, .Spect_Time {
-    text-align: left;
-    margin: 20px;
+.rec_buttons, .save_buttons{
+    text-align: center;
+    margin: 10px;
     margin-left: 0;
+    padding: 5px;
+    padding-top: 20px;
 }
 
-.rec_buttons {
-    width: max-content;
-    float: right;
-    border: none;
-    padding: 10px;
-    padding-top: 20px;
-    padding-right: 0;
-    align-items: center;
+.rec_buttons p {
+    text-align: center;
+    margin-left: 30px;
 }
 
 .rec_buttons button {
-    /* float: right; */
     border-radius: 3px;
     border-width: 1px;
     cursor: pointer;
-    padding: 10px 30px; 
+    padding: 10px 40px; 
     margin-left: 30px;
+    margin-bottom: 10px;
     font-weight: 500;
     transition: .3s;
 }
@@ -122,25 +121,39 @@ audio {
     transition: .3s;
 }
 
-.save_buttons {
-    width: 80%;
-    background: #fff;
-    border: none;
-    display: flex;
-    align-items: center;
-    margin-left: 10%;
-    justify-content: space-evenly;
-    padding: 20px 5%;
+.save_buttons{
+    margin-right: 0;
+    display: block;
 }
+
 .save_buttons input {
+    width: 170px;
+    text-align: center;
     border-radius: 3px;
     border-width: 1px;
     cursor: pointer;
-    padding: 10px 50px; 
-    margin-left: 30px;
+    padding: 10px 30px;
+    margin-bottom: 10px;
+}
+
+#saveRecording {
+    width: fit-content;
 }
 
 .save_buttons input[type="button"]:hover {
     background-color: #555555;
     color: white;
+}
+
+#saveRecording, #saveSpectrogram, #saveWaveform {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF;
+}
+
+#saveRecording:hover, #saveSpectrogram:hover, #saveWaveform:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF;
 }

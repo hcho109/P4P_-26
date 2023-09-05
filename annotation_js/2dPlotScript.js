@@ -1,5 +1,5 @@
-/* 2D annotation script
-   Draw 2d V-A plot on html canvas */
+/* 2D Emotion Eodel Annotation JS
+   Draw 2d V-A plot on anvas and save plots every 300ms*/
 
 // Function to convert x and y coordinates to canvas coordinates
 function toCanvasX(x) {
@@ -10,7 +10,7 @@ function toCanvasY(y) {
     return canvasHeight - (y - plotMin) / (plotMax - plotMin) * (canvasHeight * plotRectRatio) - (canvasHeight * (1 - plotRectRatio)) / 2;
 }
 
-// Function to convert canvas coordinates to Valence and Arousal values
+// Function to convert canvas coordinates to Valence 
 
 function toValence(canvasX) {
     return plotMin + (canvasX - (canvasWidth * (1 - plotRectRatio) / 2)) / (canvasWidth * plotRectRatio) * (plotMax - plotMin);
@@ -138,7 +138,6 @@ function drawPlot() {
     }
 
     // Draw the landmark scatter plots
-    // Landmark scatter plot data
     var landmarkEmotions = ['angry', 'afraid', 'sad', 'bored', 'excited', 'interested', 'happy', 'pleased', 'relaxed', 'content'];
     var landmarkValence = [-0.7, -0.65, -0.8, -0.1, 0.37, 0.2, 0.5, 0.35, 0.6, 0.5];
     var landmarkArousal = [0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45];
@@ -158,7 +157,6 @@ function drawPlot() {
         ctx.fill();
 
         // Add text label for the landmark
-        
         ctx.font = '11px Roboto';
         ctx.fillText(landmarkEmotions[i], plotX + 12, plotY - 15);
 
@@ -204,7 +202,7 @@ function getQuadrant(x, y) {
     }
 }
 
-// Function to calculate color based on angle
+// Calculate color based on angle
 function getColor(x, y) {
     const angle = Math.atan2(toArousal(y), toValence(x)); // Calculate the angle in radians
     const angleInDegrees = (angle < 0 ? angle + 2 * Math.PI : angle) * (180 / Math.PI); // Convert angle to degrees and ensure positive
@@ -215,7 +213,7 @@ function getColor(x, y) {
     return sliceColors[colorIndex];
 }
 
-// Function to calculate opacity based on progress
+// Calculate opacity based on progress
 function calculateOpacity() {
     // Define min and max opacity values
     const minOpacity = 0.1;
@@ -230,6 +228,15 @@ function calculateOpacity() {
     return currentOpacity;
 }
 
+// Store the current time of a media player 
+function pushCurrentTimeToTimePoints() {
+    if (!videoPlayer.paused) {
+        time_points.push(videoPlayer.currentTime);
+    } else if (!audioPlayer.paused) {
+        time_points.push(audioPlayer.currentTime);
+    }
+}
+
 // Draw a circular point on the plot
 function drawPoint(x,y){
     const radius = calculateRadius();
@@ -241,17 +248,25 @@ function drawPoint(x,y){
     ctx.beginPath();
     ctx.arc(x,y,radius,0,Math.PI * 2);
     ctx.fillStyle = colour;
+    ctx.strokeStyle = 'grey'; // Set the stroke color
+    ctx.lineWidth = 2;
     ctx.globalAlpha = currentOpacity; // Set the opacity
     ctx.fill();
+    ctx.stroke();
     ctx.globalAlpha = 1; // Reset the opacity
 }
 
 // Save data for valence, arousal, timestamp in 2s.f.
 function savePoints(x,y){
+
     console.log('data added');
     valence_points.push(toValence(x).toFixed(2)); 
     arousal_points.push(toArousal(y).toFixed(2));
-    time_points.push(elapsedTime.toFixed(2)); 
+    pushCurrentTimeToTimePoints();
+
+    console.log('timestamps:', time_points); 
+    console.log('val :', valence_points); 
+    console.log('aro :', arousal_points); 
 
     // Save the points to localStorage
     localStorage.setItem('time_points', JSON.stringify(time_points));
@@ -261,6 +276,8 @@ function savePoints(x,y){
 
 // Function to open the data display window
 function openDataDisplayWindow() {
+    localStorage.setItem('data_type', '2D'); // Set data_type to '2D'
+
     var dataDisplayWindow = window.open('annotation_data.html', '_blank', 'width=800,height=600');
     if (!dataDisplayWindow) {
         alert('Please allow pop-ups to view the data.');
@@ -284,7 +301,7 @@ function handleMouseMove(event){
                 savePoints(event.offsetX, event.offsetY);
             } else{
                 count_out_of_bounds +=1;
-                time_points.push(elapsedTime.toFixed(2)); 
+                pushCurrentTimeToTimePoints();
                 valence_points.push('Invalid');
                 arousal_points.push('Invalid');
                 out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
@@ -306,16 +323,16 @@ function annotateOnClick(event) {
             drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
 
-            // Call autoclicking every 20ms
-            plotInterval =setInterval(() => autoClicking(null), 300);
+            // Call autoclicking every 300ms
+            plotInterval =setInterval(() => autoClicking(null), 100);
  
         } else {
             count_out_of_bounds +=1;   
-            time_points.push(elapsedTime.toFixed(2)); 
+            pushCurrentTimeToTimePoints();
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
             out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            plotInterval =setInterval(() => autoClicking(null), 300);
+            plotInterval =setInterval(() => autoClicking(null), 100);
         }
     } 
 }
@@ -332,7 +349,7 @@ function autoClicking(){
     }
 }
 
-// Function to clear the plot and arrays
+// Clear the plot and data points arrays
 function clearPlot() {
     // Clear the canvas and redraw plot
     ctx.fillStyle = 'black';
@@ -342,7 +359,14 @@ function clearPlot() {
     valence_points = [];
     arousal_points = [];
     time_points = [];
+    localStorage.removeItem('time_points');
+    localStorage.removeItem('valence_points');
+    localStorage.removeItem('arousal_points');
     count_out_of_bounds = 0;
+
+    console.log('timestamps:', time_points); 
+    console.log('val :', valence_points); 
+    console.log('aro :', arousal_points); 
 
     // Clear the out of bounds label
     out_of_bounds_lbl.innerHTML = "Annotation data has been reset! <br><br> Get started by playing a media file and clicking anywhere within the plot area.";
@@ -418,11 +442,12 @@ var count_out_of_bounds=0;
 
 var plotInterval=0;
 
-// Define colors for 12 slices
+// Define colors for 8 slices
 const sliceColors = [
     '#66ff33', '#ffcc00', '#ff751a', '#ff3333',
     '#751aff', '#0066ff', '#00e6e6', '#009933'
 ];
+
 
 setupMediaControls(videoPlayer,audioPlayer);
 
@@ -431,4 +456,5 @@ canvas.addEventListener('click', annotateOnClick);
 
 // Call the drawPlot function initially
 drawPlot();
+
 

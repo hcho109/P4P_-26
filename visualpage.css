@@ -141,7 +141,7 @@ table, th, td {
     color: #FFFFFF; 
 }
 
-#saveButton, #submit_btn, #prevButton {
+#saveButton, #submit_btn, #prevButton, #extractFeaturesButton {
     margin-right: 3%;
 }
 
@@ -165,7 +165,18 @@ table, th, td {
     color: #FFFFFF;
 }
 
+#plotWAVButton, #extractFeaturesButton {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF;
+}
 
+#plotWAVButton:hover, #extractFeaturesButton:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF; 
+}
 
 #outputText, #outputText1 {
     font-size: larger;
