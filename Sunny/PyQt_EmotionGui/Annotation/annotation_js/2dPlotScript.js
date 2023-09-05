@@ -297,8 +297,8 @@ function handleMouseMove(event){
 
             if (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272) {
                 
-                // Save data every 20ms
-                if (saveCounter >= 15) {
+                // Save data every 20ms and draw data points every 200ms
+                if (saveCounter >= 10) {
                     drawPoint(event.offsetX, event.offsetY);
                     saveCounter = 0; // Reset the counter
                 } else {
@@ -332,7 +332,7 @@ function annotateOnClick(event) {
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
             saveCounter++;
             // Call autoclicking every 300ms
-            plotInterval =setInterval(() => autoClicking(null), 10);
+            plotInterval =setInterval(() => autoClicking(null), 20);
  
         } else {
             count_out_of_bounds +=1;   
@@ -341,7 +341,7 @@ function annotateOnClick(event) {
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
             out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            plotInterval =setInterval(() => autoClicking(null), 10);
+            plotInterval =setInterval(() => autoClicking(null), 20);
         }
     } 
 }
