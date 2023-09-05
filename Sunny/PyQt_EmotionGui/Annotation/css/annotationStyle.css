@@ -265,15 +265,6 @@ body {
     font-size: 15px;
     width: auto; 
 }
-
-.inputTextBox {
-    display: flex; /* Make the container a flex container */
-    align-items: center; /* Align items vertically in the center */
-}
-
-.inputTextBox input[type="text"]{
-    width: 160px; 
-}
  
 .discrete_container input[type="button"]{
     width: 100px; 
@@ -282,7 +273,6 @@ body {
   
 .EmotionListCreated {
     display: flex;
-yyyy
     /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
 }
 .emotionContainer {
@@ -312,7 +302,6 @@ yyyy
   
 .list_control{
     margin-left: 30px;
-    border: 1px solid #ccc;
 }
 #customListInput, #mediaFileNameInput{
     padding: 5px;
@@ -324,9 +313,9 @@ yyyy
 }
 
 .list_control input[type="button"]{
-    /*display: flex;
+    display: flex;
     align-items: center;
-    flex-direction: column; Stack buttons vertically */
+    flex-direction: column; 
     margin-left: 35px;
     margin-top: 20px;
     white-space: normal;

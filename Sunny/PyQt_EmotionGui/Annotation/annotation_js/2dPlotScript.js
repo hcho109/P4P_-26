@@ -297,13 +297,21 @@ function handleMouseMove(event){
 
             if (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272) {
                 
-                drawPoint(event.offsetX, event.offsetY);
-                savePoints(event.offsetX, event.offsetY);
+                // Save data every 20ms
+                if (saveCounter >= 15) {
+                    drawPoint(event.offsetX, event.offsetY);
+                    saveCounter = 0; // Reset the counter
+                } else {
+                    savePoints(event.offsetX, event.offsetY);
+                    saveCounter++;
+                }
+               
             } else{
                 count_out_of_bounds +=1;
                 pushCurrentTimeToTimePoints();
                 valence_points.push('Invalid');
                 arousal_points.push('Invalid');
+                saveCounter++;
                 out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
             }           
         }
@@ -322,17 +330,18 @@ function annotateOnClick(event) {
         if (event !== null && (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272)) {
             drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
-
+            saveCounter++;
             // Call autoclicking every 300ms
-            plotInterval =setInterval(() => autoClicking(null), 100);
+            plotInterval =setInterval(() => autoClicking(null), 10);
  
         } else {
             count_out_of_bounds +=1;   
+            saveCounter++;
             pushCurrentTimeToTimePoints();
             valence_points.push('Invalid');
             arousal_points.push('Invalid');
             out_of_bounds_lbl.textContent = `You have clicked out of the annotation model ${count_out_of_bounds} times. Do you want to re-annotate?`;
-            plotInterval =setInterval(() => autoClicking(null), 100);
+            plotInterval =setInterval(() => autoClicking(null), 10);
         }
     } 
 }
@@ -441,6 +450,7 @@ var time_points = [];
 var count_out_of_bounds=0;
 
 var plotInterval=0;
+let saveCounter =0;
 
 // Define colors for 8 slices
 const sliceColors = [
