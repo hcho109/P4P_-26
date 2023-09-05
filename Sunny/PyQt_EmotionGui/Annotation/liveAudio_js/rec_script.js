@@ -97,7 +97,29 @@ document
 
 let isRecording = document.getElementById("isRecording");
 let audioPlayer = document.getElementById("audioElement");
+let spectrogram = new Spectrogram("canvas_spectrogram");
 
+let audioStream;
+
+function displaySpectrogram(){
+  
+  navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(function(stream) {
+    audioStream = stream; // Store the stream object
+    spectrogram.gotStream(stream);
+  })
+  .catch(function(error) { 
+      console.error("Error accessing microphone:", error); 
+  });
+}
+// Function to stop streaming from the microphone
+function stopMicrophoneStream() {
+  if (audioStream) {
+      // Stop the microphone stream
+      audioStream.getTracks().forEach(track => track.stop());
+      audioStream = null;
+  }
+}
 function initFunction() {
   // Display recording
   async function getUserMedia(constraints) {
@@ -120,6 +142,7 @@ function initFunction() {
     }
   }
 
+  displaySpectrogram();
   isRecording.textContent = "Recording...";
   
   let audioChunks = [];
@@ -195,6 +218,7 @@ function initFunction() {
   // Stoping handler
   document.getElementById("stopRecording").addEventListener("click", (e) => {
     rec.stop();
+    stopMicrophoneStream();
     isRecording.textContent = "Click 'Play' button to start listening";
 
     console.log(audioChunks)
