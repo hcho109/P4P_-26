@@ -144,3 +144,17 @@ audio {
     background-color: #555555;
     color: white;
 }
+
+
+#saveRecording, #saveSpectrogram, #saveWaveform {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF;
+}
+
+#saveRecording:hover, #saveSpectrogram:hover, #saveWaveform:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF;
+}

@@ -99,6 +99,8 @@ let isRecording = document.getElementById("isRecording");
 let audioPlayer = document.getElementById("audioElement");
 let spectrogram = new Spectrogram("canvas_spectrogram");
 
+
+let waveform = document.getElementById("canvas_waveform");
 let audioStream;
 
 function displaySpectrogram(){
@@ -227,4 +229,56 @@ function initFunction() {
 
   
   document.getElementById("saveRecording").addEventListener("click", saveRecording);
+}
+function saveWaveform() {
+  const waveformCanvas = document.getElementById("canvas_waveform");
+  const waveformURL = waveformCanvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = waveformURL;
+  link.download = "waveform.png";
+  link.click();
+}
+
+function saveSpectrogram() {
+  const spectrogramCanvas = document.getElementById("canvas_spectrogram");
+  const spectrogramURL = spectrogramCanvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = spectrogramURL;
+  link.download = "spectrogram.png";
+  link.click();
+}
+//spectrogram
+async function saveSpectrogramImg() {
+  const timestamp = new Date().getTime();
+  const plotContainer = document.getElementById("canvas_spectrogram");
+  
+  try {
+      const canvas = await html2canvas(plotContainer);
+      const dataURL = canvas.toDataURL("image/png");
+      
+      const a = document.createElement("a");
+      a.href = dataURL;
+      a.download = `spectrogramIMG${timestamp}.png`;
+      a.click();
+  } catch (error) {
+      console.error("Error saving plot as image:", error);
+  }
+}
+
+//waveform
+async function saveWaveformImg() {
+  const timestamp = new Date().getTime();
+  const plotContainer = document.getElementById("canvas_waveform");
+  
+  try {
+      const canvas = await html2canvas(plotContainer);
+      const dataURL = canvas.toDataURL("image/png");
+      
+      const a = document.createElement("a");
+      a.href = dataURL;
+      a.download = `waveformIMG_${timestamp}.png`;
+      a.click();
+  } catch (error) {
+      console.error("Error saving plot as image:", error);
+  }
 }
