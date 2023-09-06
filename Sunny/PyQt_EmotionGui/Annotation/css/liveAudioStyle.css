@@ -158,3 +158,9 @@ audio {
     background-color: #e75100; 
     color: #FFFFFF;
 }
+
+#saveSpectrogram:disabled {
+    background-color: #6d6c6c; 
+    color: #ffffff; 
+    border: #4e4e4e; 
+}

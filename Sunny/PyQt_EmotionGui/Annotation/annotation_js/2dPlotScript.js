@@ -111,16 +111,16 @@ function drawPlot() {
     ctx.stroke();
 
     // Draw title, x and y axis labels
-    ctx.font = 'bold 15px Roboto';
+    ctx.font = 'bold 20px Roboto';
     ctx.fillText('V-A Plot', canvasWidth/2.16, 80);
 
-    ctx.font = 'bold 13px Roboto';
-    ctx.fillText('Valence', canvasWidth / 2.12, canvasHeight -60);
+    ctx.font = 'bold 18px Roboto';
+    ctx.fillText('Valence', canvasWidth / 2.2, canvasHeight -60);
 
     ctx.save();
     ctx.translate(canvasWidth * (1 - plotRectRatio) / 2 - 45, canvasHeight / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Arousal', -20, -5);
+    ctx.fillText('Arousal', -30, -10);
     ctx.restore();
 
     // Draw y values on the outer left side
@@ -157,7 +157,7 @@ function drawPlot() {
         ctx.fill();
 
         // Add text label for the landmark
-        ctx.font = '11px Roboto';
+        ctx.font = '17px Roboto';
         ctx.fillText(landmarkEmotions[i], plotX + 12, plotY - 15);
 
     }
