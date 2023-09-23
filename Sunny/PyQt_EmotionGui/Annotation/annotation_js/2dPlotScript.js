@@ -295,7 +295,7 @@ function handleMouseMove(event){
         if (event !== null && event.offsetX !== null && event.offsetY !== null) {
             printData(event.offsetX, event.offsetY);        
 
-            if (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272) {
+            if (event.offsetX >= 145.4545454 && event.offsetX <= 654.545454545 && event.offsetY >= 145.4545454 && event.offsetY <= 654.545454545) {
                 
                 // Save data every 20ms and draw data points every 200ms
                 if (saveCounter >= 10) {
@@ -327,7 +327,7 @@ function annotateOnClick(event) {
         /* draw circle for the x and y coordinates when mouse is clicked within the valid area
             when x=-1 -> mouseX=109.09091, x=1 -> mouseX=490.09091
             when y=-1 -> mouseY=490.09091, y=1 -> mouseY=109.09091*/
-        if (event !== null && (event.offsetX >= 127.2727 && event.offsetX <= 572.7272 && event.offsetY >= 127.2727 && event.offsetY <= 572.7272)) {
+        if (event !== null && (event.offsetX >= 145.4545454 && event.offsetX <= 654.545454545 && event.offsetY >= 145.4545454 && event.offsetY <= 654.545454545)) {
             drawPoint(event.offsetX, event.offsetY); // drawPoint(x,y,radius,colour,opacity)
             savePoints(event.offsetX, event.offsetY) // save x,y,time 
             saveCounter++;
@@ -432,8 +432,8 @@ var ctx = canvas.getContext('2d');
 var out_of_bounds_lbl =document.getElementById('update-note');
 
 // Set the canvas size
-canvas.width = 700;
-canvas.height = 700;
+canvas.width = 800;
+canvas.height = 800;
 
 // Set the canvas size and plot boundaries
 const canvasWidth = canvas.width;

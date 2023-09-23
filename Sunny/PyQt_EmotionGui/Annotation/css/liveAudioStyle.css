@@ -37,17 +37,30 @@ h2 {
 }
 
 .audioData_container {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack elements vertically within the container */
+    align-items: center;
     width: 100%;
     background: #fff;
     border: none;
     padding-left: 10%;
     padding-right: 10%;
+    
+}
+
+.container_wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.canvas_container {
+    flex-direction: column;
     align-items: center;
+    width: 48%;
 }
 
 .canvas_audio {
-    width: 100%;
-    height: 300px;
+    height: 350px;
     background: #f9f9f9;
     margin: auto;
     box-shadow: inset 0px 0px 25px -15px #000;
@@ -55,9 +68,6 @@ h2 {
     overflow: hidden;
 }
 
-#canvas_waveform {
-    margin-bottom: 40px;
-}
 
 audio {
     width: 100%;

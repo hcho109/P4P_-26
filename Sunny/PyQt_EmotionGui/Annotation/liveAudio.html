@@ -79,11 +79,18 @@
 
             <div class="audioData_container">
                 <audio id="audioElement" src="" controls="true"></audio>
-                <p class="subtitle">Real-Time Spectrogram</p>
-                <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
-                <p class="subtitle">Audio Waveform</p>
-                <canvas class="canvas_audio" id="canvas_waveform"  height="512" width="700"></canvas>
+                <div class="container_wrapper">
+                    <div class="canvas_container">
+                        <p class="subtitle">Real-Time Spectrogram</p>
+                        <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
+                    </div>
+                    <div class="canvas_container">
+                        <p class="subtitle">Audio Waveform</p>
+                        <canvas class="canvas_audio" id="canvas_waveform" height="512" width="700"></canvas>
+                    </div>
+                </div>
             </div>
+
         </div>
 
     </body>
