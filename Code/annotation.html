@@ -1,0 +1,333 @@
+<!-- Webpage for Annotation -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EmotionalGUI Annotation WebPage</title>
+    <!-- Add icon library -->
+    <link 
+      rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" 
+    />
+    <!-- Add papaParse library to extract csv-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <link rel="shortcut icon" href="#" />
+    <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
+    <link href="mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+    <link href="navStyle.css" rel="stylesheet" type="text/css" />
+  
+  </head>
+
+  <body>
+    
+    <!-- Top navigation -->
+    <header>   
+      <div class="website_name">
+          <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
+          <h3>EmotionGUI</h3>
+      </div>
+      <nav>
+          <ul class="nav_links">
+            <li><a href="home.html">Home</a></li>
+            <li><a class="active" href="annotation.html">Annotation</a></li>
+            <li><a href="visualise.html">Visualise</a></li>
+            <li><a href="liveAudio.html">Live Audio</a></li>      
+          </ul>
+      </nav>
+      <div class="dropdown">
+          <button class="dropbtn">Help 
+              <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <button onclick = "createPopupWin('home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+              <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+              <button onclick = "createPopupWin('about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+              <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
+          </div>
+      </div> 
+    </header>
+
+    <!------------------ Left column ------------------------->
+    <div class="split left">
+      <div class="centered">
+        <div class="subtitle">
+          <h3>Video/Audio Multimedia</h3>
+        </div>
+
+        <!--Multimedia player tab links-->
+        <div class="mediaPlayerTabs">
+          <!---------------- Video player tab------------------>
+          <input type="radio" id="tabVideoPlayer" name="mediaPlayerTabs" checked="checked">
+          <label for="tabVideoPlayer">Video player</label>
+          
+          <!-- Video player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" type="file" accept="audio*,video*" id="video-file-input" value="Open Video File">
+            <video class="video" id="video" controls>
+              Your browser does not support the video tag.
+            </video><br>
+            <p id="playerStatus" style="padding-bottom:0">Choose a 'MP4' video file and Click 'Play' button to start playing</p>
+            <p style="float:right; font-size:small"> * This video player does not support WMV files </p>
+          </div>
+
+          <!------------------ Audio player tab---------------------->
+          <input type="radio" id="tabAudioPlayer" name="mediaPlayerTabs">
+          <label for="tabAudioPlayer">Audio player</label>
+
+          <!-- Audio player tab content-->
+          <div class="mediaPlayerTabcontent">
+            <input class="open-file-btn" id="fileinput" type="file" accept="audio*,video*"/>
+            <h3 style="color: blueviolet;">Spectrogram Under Development!!!!!! </h3>
+            <canvas class="canvas_audio" id="canvas_spectrogram"></canvas>
+            <canvas class="canvas_audio" id="canvas_waveform"></canvas>
+            <audio id="audio" src="" controls="true"></audio>
+            <p id="AudioPlayerStatus">Choose a 'WAV'/'MP3' audio file and Click 'Play' button to start playing</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------ Right Column ----------------->
+    <div class="split right">
+      <div class="centered">
+        <div class="subtitle">
+          <h3>Speech Emotion Annotation</h3>
+        </div>
+        <p>'Click' on the emotional model you want to use to annotate emotions in speech within the tabs below. Enjoy annotating emotions!</p>
+
+        <div class="scrollable-content">
+        
+          <!--Multimedia player tab links-->
+          <div class="EMtabs">
+
+            <!----------- discrete/categorical emotion model tab------------------->
+            <input type="radio" id="tabCategory" name="EMtabs">
+            <label for="tabCategory">Discrete/Categorical</label>
+            
+            <!-- categorical tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">Discrete/Categorical Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:260px">
+                <p>
+                  <ul>
+                    <li>In a discrete/categorical emotion model, emotions are typically represented 
+                      as a fixed set of basic or primary emotions. 
+                      Some commonly recognized basic emotions include happiness, sadness, anger, fear, surprise, and disgust.</li>
+                    <li>After watching a video/ audio file, write a specific emotion that you believe best describes the overall emotion delivered in the video.  
+                      <br><br>For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+              <div class="discrete_container">
+                <div class='EmotionListCreated'>
+                  <label for="emotionList">Select Emotions:</label>
+                  <div class ="emotionContainer">
+                    <select id="emotionList" multiple>
+                      <!-- Default emotion options will be populated here -->
+                    </select>
+                    <input type="button" id="retrieveDefaultListBtn" value="Retrieve Default List"></button>
+                  </div>
+                  <!-- buttons for manipulating emotion list-->
+                  <div class="list_control">
+                    <label for="customListInput">Add Custom List (CSV):</label>
+                    <input type="file" id="customListInput">
+
+                    <label for="mediaFileNameInput">Enter Media File Name:</label>
+                    <input type="text" id="mediaFileNameInput" placeholder="Ex. test_video1">
+                  
+                    <input type="button" class= save_selection id="save_selection_btn" value="Save as CSV" title="Save data into CSV file"><br><br>
+                    <p id="errorPlaceholder" class="error-message"></p>
+                  </div>
+                </div>
+                <p>* The default list is created by the University of Auckland (2023).</p>
+              </div>
+            </div>
+
+            <!------------- 1D emotion model tab------------------>
+            <input type="radio" id="tab1D" name="EMtabs">
+            <label for="tab1D">1-D</label>
+            
+            <!-- 1D tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/about1D.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">One-dimensional (1-D) Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+                <p>
+                  <ul>
+                    <li>As you watch or listen to a video/audio file, use sliders below to annotate the emotions expressed in terms of valence, arousal and dominance.</li>
+                    <li>Adjust each slider independently, focusing on one emotional dimension at a time.<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+              
+              <!--Valence slider bar-->
+              <div class="range-slider"> 
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="valence_clear_btn" onclick="clear1dValues('valence')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="valence_reannotate_btn" onclick="reAnnotate1dValues('valence')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="valence_view_data_btn" onclick="open1dDataWindow('valence')" value="View Data">
+                  <input type="button" class="save_btn" id="valence_CSV_btn" onclick="downloadCSV_1d('valence')" value="Save as CSV">
+                </form>
+                <label for="valenceRange">Valence</label> 
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="valenceRange" list="values" data-slider-type="valence">
+                <span class="range-slider__value">0</span><br>
+                <span>Unhappy</span>
+                <span class="endLabel">Happy</span>
+                <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+                <p id="valence__update-note"> Start annotating by playing a media file and moving the Valence slider. </p>
+
+              </div>
+              <hr>
+              <!--Arousal slider bar-->
+              <div class="range-slider">
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="arousal_clear_btn" onclick="clear1dValues('arousal')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="arousal_reannotate_btn" onclick="reAnnotate1dValues('arousal')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="arousal_view_data_btn" onclick="open1dDataWindow('arousal')" value="View Data">
+                  <input type="button" class="save_btn" id="arousal_CSV_btn" onclick="downloadCSV_1d('arousal')" value="Save as CSV">
+                </form>
+                <label for="arousalRange">Arousal</label> 
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step= "0.01" id="arousalRange" data-slider-type="arousal">
+                <span class="range-slider__value">0</span><br>
+                <span>Calm</span>
+                <span class="endLabel">Excited</span>
+                <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
+                <p id="arousal__update-note"> Start annotating by playing a media file and moving the Arousal slider. </p>
+              </div>
+              <hr>
+              <!--Dominance slider bar-->
+              <div class="range-slider">
+                <label for="dominanceRange">Dominance</label>
+                <form class="btns_1D">
+                  <input type="button" class="clear_btn" id="dominance_clear_btn" onclick="clear1dValues('dominance')" value="Clear Values">
+                  <input type="button" class="reannotate_btn" id="dominance_reannotate_btn" onclick="reAnnotate1dValues('dominance')" value="Re-annotate">
+                  <input type="button" class="view_data_btn" id="dominance_view_data_btn" onclick="open1dDataWindow('dominance')" value="View Data">
+                  <input type="button" class="save_btn" id="dominance_CSV_btn" onclick="downloadCSV_1d('dominance')" value="Save as CSV">
+                </form>
+                <!-- <label for="dominanceRange">Dominance</label> -->
+                <input class="range-slider__range" type="range" value="0" min="-1" max="1" step="0.01" id="dominanceRange" data-slider-type="dominance">
+                <span class="range-slider__value">0</span><br>
+                <span>Submissive</span>
+                <span class="endLabel">Confident</span>
+                <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
+                <p id="dominance__update-note"> Start annotating by playing a media file and moving the Dominance slider. </p>
+              </div>
+              <hr>
+              <br>
+              <form class="btns_1D_all">
+                <input type="button" class="clearAll_btn" id="clearAll_1Dbtn" onclick="clearAllValues()" value="Clear all current values">
+                <input type="button" class="view_Alldata_btn" id="view_Alldata_btn" onclick="openAllDataWindow()" value="View All Data">                
+                <input type="button" class="saveAll_btn" id="saveAll_1Dbtn" onclick="downloadAllCSV()" value="Save all current values as CSV">
+                <p id="update-1dNote"> </p>              
+              </form>
+            </div>
+
+            <!----------------- 2D emotion model tab------------------->
+            <input type="radio" id="tab2D" name="EMtabs" checked="checked">
+            <label for="tab2D">2-D</label>
+            
+            <!-- 2D tab content-->
+            <div class="EMtabContent">
+              <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
+              'About', 900, 600);">
+                <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
+                <span class="helpPopupText" id="2dhelpPopup"></span>
+              </button>
+              <div class="content">
+                <h4 style="margin-bottom: 0px; margin-top: 10px">Two-dimensional (2-D) Emotion Model</h4>
+                <hr style="height:1.5px;border-width:0;color:gray;background-color:gray;margin-top: none;;margin-left:0;width:275px">
+                <p>
+                  <ul>
+                    <li>Please use the valence-arousal plot below to indicate your perception of emotions in the video or audio.</li>
+                    <li> Move your cursor vertically for valence (positivity/negativity) and horizontally for arousal (intensity).<br><br> For detailed instructions, click on the '?' at the top rigt corner.</li>
+                  </ul>
+                </p>
+              </div>
+
+              <!--------------- 2D V-A plot-------------->
+              <div class="plotCanvas" >
+                <canvas id="2dCanvas"></canvas>
+                <div>
+                  <div class="xData" id=""> 
+                    <label for="xData">x-data:</label>
+                    <input type="text" id="xData" required size="5" >
+                  </div>
+                  <div class="yData"> 
+                    <label for="yData">y-data:</label>
+                    <input type="text" id="yData" required size="5" >
+                  </div>
+                </div>
+              </div>
+              <br>
+
+              <p id="update-note"> Start annotating by playing a media file and clicking anywhere within the plot area. </p>
+
+              <form class="btns_2D">
+                <input type="button" class="clear_btn" id="clear_btn" onclick="clearPlot()" value="Clear">
+                <input type="button" class="reannotate_btn" id="reannotate_btn" onclick="reAnnotate()" value="Re-annotate">
+                <input type="button" class="view_data_btn" id="td_view_data_btn" onclick="openDataDisplayWindow()" value="View Data">
+                <input type="button" class="save_btn" id="td_CSV_btn" onclick="downloadCSV_2d()" value="Save as CSV">
+              </form><br>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- discrete emotion model javascript -->
+    <script src="annotation_js/categoryScript.js"></script>
+    
+    <!-- 2d plot javascript -->
+    <script src="annotation_js/mediaControls.js"></script>
+    <script src="annotation_js/2dPlotScript.js"></script>
+
+    <!-- Audio waveform javascript -->
+    <script src="annotation_js/audioScript.js"></script>
+
+    <!-- video player javascript -->
+    <script src="annotation_js/videoScript.js"></script>
+
+    <!-- Help popup javascript -->
+    <script src="annotation_js/helpWinScript.js"></script>
+
+    <!-- 1D sliders javascript  -->
+    <script src="annotation_js/1dSliderScript.js"></script>
+
+    <!-- Temporarily added spectrogram image -->
+    <script>
+      function drawImageScaled(img, ctx) {
+        var canvas = ctx.canvas ;
+        var hRatio = canvas.width  / img.width    ;
+        var vRatio =  canvas.height / img.height  ;
+        var ratio  = Math.max ( hRatio, vRatio );
+        var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
+        var centerShift_y = ( canvas.height - img.height*ratio ) / 2;  
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        ctx.drawImage(img, 0,0, img.width, img.height,
+                            centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);  
+      }
+      
+      var canvas_spec=document.getElementById("canvas_spectrogram");
+      var ctx_spec=canvas_spec.getContext("2d");
+      var img = new Image();
+      img.src = "resources/spec.png";
+      img.onload = function(){
+        drawImageScaled(img,ctx_spec)
+      }
+    </script>
+
+  </body>
+</html>

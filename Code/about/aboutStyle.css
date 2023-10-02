@@ -1,0 +1,18 @@
+.about_container{
+    padding:30px;
+    font-family:"Roboto", sans-serif;
+}
+
+ol, p {
+    font-size: 15px;
+}
+
+.visu_img1, .visu_img2, .visu_img3, .visu_img4 {
+    width: 50%;
+    height: auto;
+}
+
+.visu_img5, .visu_img6 {
+    width: 30%;
+    height: auto;
+}
