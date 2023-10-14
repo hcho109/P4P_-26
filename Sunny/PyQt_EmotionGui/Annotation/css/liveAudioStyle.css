@@ -16,8 +16,8 @@ body {
 .centered {
     position: absolute;
     margin-top: 100px;
-    left: 5%;
-    right: 5%;
+    left: 1%;
+    right: 1%;
     text-align: center;
     font-size: 17px;
 }
@@ -79,11 +79,12 @@ audio {
     display: flex;
     margin-left: 10%;
     justify-content: space-evenly;
+    border: 1px solid #ccc;
 }
 
 .record_control_container, .Btns_container {
     background: #fff;
-    border: 1px solid #ccc;
+   
     width: 48%; 
 }
 

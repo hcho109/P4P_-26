@@ -1,5 +1,6 @@
-/* Audio waveform Js file
-  generates waveform once recording completes and let users replay the recording */
+/* let display Audio waveform and Spectrogram
+visualise spectrogram as audio is being recorded  
+generates waveform once recording completes and let users replay the recording */
   
 "use strict";
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -114,6 +115,7 @@ function displaySpectrogram(){
       console.error("Error accessing microphone:", error); 
   });
 }
+
 // Function to stop streaming from the microphone
 function stopMicrophoneStream() {
   if (audioStream) {
