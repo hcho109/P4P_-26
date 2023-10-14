@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotation Data Display</title>
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            padding:100px;
+            padding-top:10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black; /* Add a border to the table */
+            margin-top: 30px; /* Add spacing above the table */
+        }
+
+        th, td {
+            border: 1px solid black; /* Add a border to table cells */
+            padding: 8px; /* Add padding inside cells */
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Add a background color to header cells */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Add alternating row background color */
+        }
+    </style>
+</head>
+<body>
+    <h2>Annotated Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Valence</th>
+                <th>Time</th>
+                <th>Arousal</th>
+                <th>Time</th>
+                <th>Dominance</th>
+            </tr>
+        </thead>
+        <tbody id="data-body">
+            <!-- Data rows will be added here -->
+        </tbody>
+    </table>
+
+    <!-- Inside annotation_data.html -->
+<script>
+    var data_type = localStorage.getItem('data_type');
+    var view_type = localStorage.getItem('1d_annotation_type'); // Get the button view type
+
+    var body = document.getElementById('data-body');
+
+    var valenceTimeHeader = document.querySelector('table').querySelector('th:nth-child(1)');
+    var arousalTimeHeader = document.querySelector('table').querySelector('th:nth-child(3)');
+    var dominanceTimeHeader = document.querySelector('table').querySelector('th:nth-child(5)');
+
+    var valenceHeader = document.querySelector('table').querySelector('th:nth-child(2)');
+    var arousalHeader = document.querySelector('table').querySelector('th:nth-child(4)');
+    var dominanceHeader = document.querySelector('table').querySelector('th:nth-child(6)');
+
+    if (data_type === '1D') {
+        var valence_time_points = JSON.parse(localStorage.getItem('1d_valence_time_points'));
+        var arousal_time_points = JSON.parse(localStorage.getItem('1d_arousal_time_points'));
+        var dominance_time_points = JSON.parse(localStorage.getItem('1d_dominance_time_points'));
+
+        var valence_points_1d = JSON.parse(localStorage.getItem('1d_valence_points'));
+        var arousal_points_1d = JSON.parse(localStorage.getItem('1d_arousal_points'));
+        var dominance_points_1d = JSON.parse(localStorage.getItem('1d_dominance_points'));
+
+        // Determine the longest array length
+        var maxArrayLength = Math.max(valence_time_points.length, arousal_time_points.length, dominance_time_points.length);
+
+        for (var i = 0; i < maxArrayLength; i++) {
+            var newRow = body.insertRow();
+            var timeCell = newRow.insertCell(0);
+            var dataCell = newRow.insertCell(1);
+
+            // Hide headers for unused data types
+            if (view_type === 'valence') {
+                arousalTimeHeader.style.display = 'none';
+                arousalHeader.style.display = 'none';
+                dominanceTimeHeader.style.display = 'none';
+                dominanceHeader.style.display = 'none';
+                if (i < valence_time_points.length) {
+                    timeCell.innerHTML = valence_time_points[i];
+                    dataCell.innerHTML = valence_points_1d[i];
+                } 
+            } else if (view_type === 'arousal') {
+                valenceTimeHeader.style.display = 'none';
+                valenceHeader.style.display = 'none';
+                dominanceTimeHeader.style.display = 'none';
+                dominanceHeader.style.display = 'none';
+                if (i < arousal_time_points.length) {
+                    timeCell.innerHTML = arousal_time_points[i];
+                    dataCell.innerHTML = arousal_points_1d[i];
+                }
+            } else if (view_type === 'dominance') {
+                valenceTimeHeader.style.display = 'none';
+                valenceHeader.style.display = 'none';
+                arousalTimeHeader.style.display = 'none';
+                arousalHeader.style.display = 'none';
+                if (i < dominance_time_points.length) {
+                    timeCell.innerHTML = dominance_time_points[i];
+                    dataCell.innerHTML = dominance_points_1d[i];
+                }
+            } else{
+                // Create a new table row for the combined data table
+                var combinedArousalTimeCell = newRow.insertCell(2);
+                var combinedArousalCell = newRow.insertCell(3);
+                var combinedDominanceTimeCell = newRow.insertCell(4);
+                var combinedDominanceCell = newRow.insertCell(5);
+
+                // Populate the combined data cells with data from each data type
+                timeCell.innerHTML = i < valence_time_points.length ? valence_time_points[i] : "";
+                dataCell.innerHTML = i < valence_points_1d.length ? valence_points_1d[i] : "";
+                combinedArousalTimeCell.innerHTML = i < arousal_time_points.length ? arousal_time_points[i] : "";
+                combinedArousalCell.innerHTML = i < arousal_points_1d.length ? arousal_points_1d[i] : "";
+                combinedDominanceTimeCell.innerHTML = i < dominance_time_points.length ? dominance_time_points[i] : "";
+                combinedDominanceCell.innerHTML = i < dominance_points_1d.length ? dominance_points_1d[i] : "";
+            
+                // Add vertical lines between columns
+                dataCell.style.borderRight = '4px double black';
+                valenceHeader.style.borderRight = '4px double black';
+                arousalHeader.style.borderRight = '4px double black';
+                combinedArousalCell.style.borderRight = '4px double black';             
+            }
+        }
+    } else if (data_type === '2D') {
+        var time_points_2d = JSON.parse(localStorage.getItem('time_points'));
+        var valence_points_2d = JSON.parse(localStorage.getItem('valence_points'));
+        var arousal_points_2d = JSON.parse(localStorage.getItem('arousal_points'));
+
+        for (var i = 0; i < time_points_2d.length; i++) {
+            var newRow = body.insertRow();
+            var timeCell = newRow.insertCell(0);
+            var valenceCell = newRow.insertCell(1);
+            var arousalCell = newRow.insertCell(2);
+
+            timeCell.innerHTML = time_points_2d[i];
+            valenceCell.innerHTML = valence_points_2d[i];
+            arousalCell.innerHTML = arousal_points_2d[i];
+
+           
+        }
+        // Hide all the headers except for time, valence, arousal
+        arousalTimeHeader.style.display = 'none';
+        dominanceTimeHeader.style.display = 'none';
+        dominanceHeader.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

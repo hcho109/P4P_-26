@@ -1,0 +1,9 @@
+.about_container{
+    padding:30px;
+    font-family:"Roboto", sans-serif;
+}
+
+ol, p {
+    font-size: 15px;
+}
+

@@ -1,0 +1,24 @@
+/* Homepage Styles*/
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #24252A;
+    /* background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255)); */
+    font-family:"Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+    order: 1;
+}
+
+.centered {
+    position: absolute;
+    margin-top: 100px;
+    left: 5%;
+    right: 5%;
+    text-align: center;
+    font-size: 17px;
+    color: white;
+}
