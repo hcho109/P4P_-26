@@ -4,15 +4,22 @@ Part 4 Research Project 2023(project #26) ECSE Department, University of Aucklan
 
 This repository contains all the required files for deploying the website on a server.
 
+[This is the link to EmotionGUI](https://emotiongui-6e64839cbbec.herokuapp.com/home/home.html)
+
 ## Introduction
+EmotionGUI is a user-intuitive tool for the visualisation and annotation of emotions in speech and video signals. This tool is currently intented for **Research Purposes** that will potentially be useful for speech based technologies in the future.
+
 
 ## Annotation
+The annotation section allows users to annotate emotions of a media(audio or video) file using categorical(discrete), 1D(Arousal vs time, Valence vs time and Dominance vs time)) or 2D model(Aroiusal, Valence vs time).
 
 ## Visualisation
+The annotation section allows users to visualise speech emotions on a 2D Valence-Arousal plot that is encoded as a CSV file or a WAV file. (Machine learning emotion prediction using the WAV file upload is currently not functional)
 
 ## Live Audio Recording
+The Live-Audio section provides a real-time audio recording feature that can help create data for different emotional training and annotation tasks. Users can also visualise this live audio as a waveform or a spectrograme on the screen.
 
-
+## Folders
 
 - **about**: Contains HTML files needed for the help pages.
 
