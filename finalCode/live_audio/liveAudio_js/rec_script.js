@@ -4,6 +4,9 @@ generates waveform once recording completes and let users replay the recording *
   
 "use strict";
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+let isRecordingInProgress = false; // Flag to track if recording is in progress
+
 class renderWave {
   constructor(message) {
       this._samples = 10000;
@@ -98,23 +101,11 @@ document
 
 let isRecording = document.getElementById("isRecording");
 let audioPlayer = document.getElementById("audioElement");
-let spectrogram = new Spectrogram("canvas_spectrogram");
-
+let audioStream;
+let rec;
 
 let waveform = document.getElementById("canvas_waveform");
-let audioStream;
 
-function displaySpectrogram(){
-  
-  navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(function(stream) {
-    audioStream = stream; // Store the stream object
-    spectrogram.gotStream(stream);
-  })
-  .catch(function(error) { 
-      console.error("Error accessing microphone:", error); 
-  });
-}
 
 // Function to stop streaming from the microphone
 function stopMicrophoneStream() {
@@ -125,162 +116,117 @@ function stopMicrophoneStream() {
   }
 }
 function initFunction() {
-  // Display recording
-  async function getUserMedia(constraints) {
-    if (window.navigator.mediaDevices) {
-      return window.navigator.mediaDevices.getUserMedia(constraints);
-    }
-
-    let legacyApi =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia;
-
-    if (legacyApi) {
-      return new Promise(function (resolve, reject) {
-        legacyApi.bind(window.navigator)(constraints, resolve, reject);
-      });
-    } else {
-      alert("user api not supported");
-    }
-  }
-
-  displaySpectrogram();
-  isRecording.textContent = "Recording...";
-  
-  let audioChunks = [];
-  let rec;
-
-  function handlerFunction(stream) {
-    rec = new MediaRecorder(stream);
-    rec.start();
-    rec.ondataavailable = (e) => {
-      audioChunks.push(e.data);
-      if (rec.state == "inactive") {
-        let blob = new Blob(audioChunks, { type: "audio/wav" });
-        console.log(blob);
-        audioPlayer.src = URL.createObjectURL(blob);
-
-        // Tear down after recording.
-        rec.stream.getTracks().forEach(t => t.stop())
-        // rec = null
-
-        if (audioChunks.length > 0) {
-          // Initialize renderWave after recording is stopped
-          const wave = new renderWave(audioChunks[0].arrayBuffer());
-
-          audioPlayer.addEventListener("play", function () {
-            wave.isPlaying = true;
-          });
-
-          audioPlayer.addEventListener("pause", function () {
-            wave.isPlaying = false;
-          });
-          audioPlayer.addEventListener("ended", function () {
-            wave.isPlaying = false;
-          });
-          
-          audioPlayer.addEventListener("timeupdate", function () {
-            let percent = this.currentTime / this.duration;
-            wave.drawTimeline(percent);
-            wave.drawData(wave.data, percent); // Update the waveform visualization
-
-          });
-        }else {
-          console.log("No recorded audio available.");
-        }
-      }
-    };
-  }
-
-  function startusingBrowserMicrophone(boolean) {
-    getUserMedia({ audio: boolean }).then((stream) => {
-      handlerFunction(stream);
-    });
-  }
-
-  startusingBrowserMicrophone(true);
-
-  function saveRecording() {
-    console.log(audioChunks)
-    if (audioChunks.length === 0) {
-      console.log("No recorded audio available.");
-      return;
-    }
-  
-    const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(audioBlob);
-    link.download = "recorded_audio.wav";
-    link.click();
-
-     // Clear the audioChunks array
-     audioChunks = [];
-  }
-
-  // Stoping handler
-  document.getElementById("stopRecording").addEventListener("click", (e) => {
+  if(isRecordingInProgress){
+    // If recording is already in progress, stop it
     rec.stop();
     stopMicrophoneStream();
-    isRecording.textContent = "Click 'Play' button to start listening";
+    isRecordingInProgress = false;
+  } else {
+      // If recording is not in progress, start it
+      isRecordingInProgress = true;
+      isRecording.textContent = "Recording...";
+      let audioChunks = [];
 
-    console.log(audioChunks)
-
-  });
-
-  
-  document.getElementById("saveRecording").addEventListener("click", saveRecording);
-}
-function saveWaveform() {
-  const waveformCanvas = document.getElementById("canvas_waveform");
-  const waveformURL = waveformCanvas.toDataURL("image/png");
-  const link = document.createElement("a");
-  link.href = waveformURL;
-  link.download = "waveform.png";
-  link.click();
-}
-
-function saveSpectrogram() {
-  const spectrogramCanvas = document.getElementById("canvas_spectrogram");
-  const spectrogramURL = spectrogramCanvas.toDataURL("image/png");
-  const link = document.createElement("a");
-  link.href = spectrogramURL;
-  link.download = "spectrogram.png";
-  link.click();
-}
-//spectrogram
-async function saveSpectrogramImg() {
-  const timestamp = new Date().getTime();
-  const plotContainer = document.getElementById("canvas_spectrogram");
-  
-  try {
-      const canvas = await html2canvas(plotContainer);
-      const dataURL = canvas.toDataURL("image/png");
+      // Display recording
+      async function getUserMedia(constraints) {
+        if (window.navigator.mediaDevices) {
+          return window.navigator.mediaDevices.getUserMedia(constraints);
+        }
+    
+        let legacyApi =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia ||
+          navigator.msGetUserMedia;
+    
+        if (legacyApi) {
+          return new Promise(function (resolve, reject) {
+            legacyApi.bind(window.navigator)(constraints, resolve, reject);
+          });
+        } else {
+          alert("user api not supported");
+        }
+      }
+    
+      function handlerFunction(stream) {
+        rec = new MediaRecorder(stream);
+        rec.start();
+        rec.ondataavailable = (e) => {
+          audioChunks.push(e.data);
+          if (rec.state == "inactive") {
+            let blob = new Blob(audioChunks, { type: "audio/wav" });
+            console.log(blob);
+            audioPlayer.src = URL.createObjectURL(blob);
+    
+            // Tear down after recording.
+            rec.stream.getTracks().forEach(t => t.stop())
+            // rec = null
+    
+            if (audioChunks.length > 0) {
+              // Initialize renderWave after recording is stopped
+              const wave = new renderWave(audioChunks[0].arrayBuffer());
+    
+              audioPlayer.addEventListener("play", function () {
+                wave.isPlaying = true;
+              });
+    
+              audioPlayer.addEventListener("pause", function () {
+                wave.isPlaying = false;
+              });
+              audioPlayer.addEventListener("ended", function () {
+                wave.isPlaying = false;
+              });
+              
+              audioPlayer.addEventListener("timeupdate", function () {
+                let percent = this.currentTime / this.duration;
+                wave.drawTimeline(percent);
+                wave.drawData(wave.data, percent); // Update the waveform visualization
+    
+              });
+            }else {
+              console.log("No recorded audio available.");
+            }
+          }
+        };
+      }
+    
+      function startusingBrowserMicrophone(boolean) {
+        getUserMedia({ audio: boolean }).then((stream) => {
+          handlerFunction(stream);
+        });
+      }
+    
+      startusingBrowserMicrophone(true);
+    
+      function saveRecording() {
+        console.log(audioChunks)
+        if (audioChunks.length === 0) {
+          console.log("No recorded audio available.");
+          return;
+        }
       
-      const a = document.createElement("a");
-      a.href = dataURL;
-      a.download = `spectrogramIMG${timestamp}.png`;
-      a.click();
-  } catch (error) {
-      console.error("Error saving plot as image:", error);
-  }
-}
-
-//waveform
-async function saveWaveformImg() {
-  const timestamp = new Date().getTime();
-  const plotContainer = document.getElementById("canvas_waveform");
-  
-  try {
-      const canvas = await html2canvas(plotContainer);
-      const dataURL = canvas.toDataURL("image/png");
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(audioBlob);
+        link.download = "recorded_audio.wav";
+        link.click();
+    
+         // Clear the audioChunks array
+         audioChunks = [];
+      }
+    
+      // Stoping handler
+      document.getElementById("stopRecording").addEventListener("click", (e) => {
+        rec.stop();
+        stopMicrophoneStream();
+        isRecording.textContent = "Recording's DONE! Click 'Play' button to start listening";
+        isRecordingInProgress = false;
+        console.log(audioChunks)
+    
+      });
+    
       
-      const a = document.createElement("a");
-      a.href = dataURL;
-      a.download = `waveformIMG_${timestamp}.png`;
-      a.click();
-  } catch (error) {
-      console.error("Error saving plot as image:", error);
-  }
+      document.getElementById("saveRecording").addEventListener("click", saveRecording);
+    }
+
 }
