@@ -1,4 +1,0 @@
-EmotionGUI is a versatile tool for analysing and annotating human emotions in speech, aiding in the creation of emotion databases. It also offers two-dimensional data visualisation and live audio recording for emotion analysis.
-
-
-

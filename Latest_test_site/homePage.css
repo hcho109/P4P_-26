@@ -1,0 +1,79 @@
+body {
+    background-color: white ;
+}
+
+a {
+    text-decoration: none;
+    color: #00996B;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.logo {
+    float: right;
+}
+
+.image_speech {
+    margin-left: 20%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.text {
+    line-height: 1.5;
+    text-align: justify;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+    padding-bottom: 1%;
+}
+
+h3 {
+    color: #e75100;
+    padding-top: 1%;
+    margin-left: 1%;
+}
+
+h1 {
+    margin-top: 1.5%;
+    color: #e75100;
+    text-align: center;
+    font-weight: bolder;
+}
+
+
+.sections {
+    width: 94%;
+    height:max-content;
+    margin-left: 3%;
+    margin-right: 3%;
+    /* background-color: #00996B;  */
+    background-color: #ddd;
+    border-radius: 20px;
+}
+
+.mini {
+    color: black; 
+    margin-left: 1%;
+}
+
+#VA_Plot {
+    width: 300px;
+    height: 250px;
+}
+
+.va-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; 
+}
+.va-section {
+    display: flex; 
+    flex-direction: column; 
+    flex: 0.45;
+    align-items: center; 
+}

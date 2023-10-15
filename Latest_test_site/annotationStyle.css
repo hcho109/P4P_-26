@@ -1,0 +1,468 @@
+/* Annotation Webpage Styles*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: white;
+    /* background: linear-gradient(rgb(223, 255, 181), rgb(255, 255, 255)); */
+    font-family:"Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 0.2px;
+}
+
+.subtitle {
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    color: black;
+    font-size: 17px;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    column-fill: balance;
+    float: left;
+    width: 50%;
+}
+
+/* Split the screen in half */
+.split {
+    height: 90%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    overflow-x: hidden;
+}
+
+.left, .right{
+    /* background-color: white; */
+    background: linear-gradient(hsl(0, 0%, 100%), rgb(252, 255, 249));
+}
+
+/* Control the left side */
+.left {
+    left: 0;
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.scrollable-content{
+    min-width: 700px;
+}
+
+/* Add invisible content to trigger scroll bar */
+.scrollable-content::after {
+    content: "";
+    display: block;
+    width: 800px;
+    height: 400px; 
+}
+/* content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    text-align: left;
+}
+
+.centered p {
+    padding: 10px 6%;
+    font-size: 15px;
+}
+
+.left .centered {
+    right:2%
+}
+
+.right .centered {
+    left:2%
+}
+
+/* Style the image inside the centered container*/
+.centered img {
+    width: 100%;
+    border-radius: 0%;
+}
+
+.centered span {
+    padding: 10px;
+}
+
+/*********** Multimedia Tabs & Emotion model Tabs *************/
+
+/* Style the tab */
+.mediaPlayerTabs, .EMtabs{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    /* max-width: fit-content; */
+    max-width: 100%;
+    padding: 10px;
+}
+
+.mediaPlayerTabs input[type="radio"], .EMtabs input[type="radio"]{
+    display: none;
+}
+
+/* Tab labels */
+.mediaPlayerTabs label, .EMtabs label {
+    background-color: inherit;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 30px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    display: block;
+}
+
+.mediaPlayerTabs .mediaPlayerTabcontent, .EMtabs .EMtabContent {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    order: 1;
+    display: none;
+    padding-left: 10px;
+    padding-right:10px;
+    align-items: center;
+}
+
+.mediaPlayerTabs input[type="radio"]:checked + label + .mediaPlayerTabcontent, .EMtabs input[type="radio"]:checked + label + .EMtabContent {
+    display: block;
+}
+
+.mediaPlayerTabs input[type="radio"]:checked + label, .EMtabs input[type="radio"]:checked + label {
+    background: #ccc;
+}
+
+.yData, .xData {
+    float: left;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.xData{
+    margin-left: 100px;
+}
+
+.yData{
+    margin-left: 10px;
+}
+
+.xData label, .yData label {
+    padding: 2px;
+    font-weight: 100;
+    font-size: small;
+}
+
+.xData input, .yData input{
+    border: none;
+    font-weight: 100;
+    font-size: small;
+    text-align: left;
+}
+/***************** Help popup *******************/
+.help_popup_btn {
+    margin-top: 13px;
+    padding: 5px;
+    float: right;
+    size: 40px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.help_popup_btn:hover {
+    background-color: #f4f0f0;
+}
+
+/* Popup container - can be anything you want */
+/* .help_popup_btn {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+} */
+
+/************ Buttons **************/
+
+.EMtabContent input[type="button"] {
+    border-radius: 3px;
+    color: black;
+    border: 1px solid #555555;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.EMtabContent input[type="button"]:hover {
+    background-color: #555555;
+    color: white;
+}
+
+/***** 1D buttons *****/
+.btns_1D {
+    float: right;
+    padding: 10px 0;
+}
+.btns_1D .save_btn, .btns_1D .clear_btn {
+    margin-left: 5px;
+}
+
+.btns_1D_all {
+    padding: 10px 48px;    
+}
+
+.btns_1D_all .clearAll_btn, .btns_1D_all .saveAll_btn {
+    margin: 10px;
+}
+
+/***** 2D buttons *****/
+.btns_2D {
+    float: right;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+}
+
+.btns_2D .save_btn, .btns_2D .reannotate_btn, .btns_2D .view_data_btn{
+    margin-left: 10px;
+}
+
+/*************** Emotion Models ***************/
+
+/* Emotion model instructions */
+.EMtabContent .content {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+}
+
+.EMtabContent .content ul {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom:10px;
+    margin-top: 5px;
+    font-size: 15px;
+} 
+
+/* Discrete/categorical emotion model */
+.discrete_container label{
+    font-size: 15px;
+    width: auto; 
+}
+ 
+.discrete_container input[type="button"]{
+    width: 100px; 
+    margin-left: 80px;
+}
+  
+.EmotionListCreated {
+    display: flex;
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
+}
+.emotionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* flex-wrap: wrap;  Wrap items to a new line if they overflow */
+}
+#retrieveDefaultListBtn{
+    padding: 5px;
+    margin: 5px;
+    width: fit-content;
+
+}
+#emotionList {
+    border: 1px solid #ccc;
+    width: 160px; /* Set the width of the emotion list box */
+    min-height: 200px; /* Set a minimum height to keep the box visible */
+    padding: 10px;
+    margin-top: 10px;
+    float: left;
+}
+
+#emotionList option {
+    padding: 3px; /* Adjust the padding as needed */
+}
+  
+.list_control{
+    margin-left: 30px;
+}
+#customListInput, #mediaFileNameInput{
+    padding: 5px;
+    margin-left: 30px;
+}
+
+#customListInput{
+    margin-bottom: 20px;
+}
+
+.list_control input[type="button"]{
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    margin-left: 35px;
+    margin-top: 20px;
+    white-space: normal;
+}
+
+/* 1D emotion model */
+
+/**** 1D slider bars ****/
+
+.range-slider {
+    margin: 10px 0 0 0;
+    width: 95%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.range-slider__range {
+    -webkit-appearance: none;
+    width: 90%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d7dcdf;
+    outline: none;
+    margin: 20px;
+    margin-right: 10px;
+}
+
+.range-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -webkit-transition: background 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out;
+}
+.range-slider__range::-webkit-slider-thumb:hover {
+    background: #1abc9c;
+}
+.range-slider__range:active::-webkit-slider-thumb {
+    background: #1abc9c;
+}
+.range-slider__range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: #2c3e50;
+    cursor: pointer;
+    -moz-transition: background 0.15s ease-in-out;
+    transition: background 0.15s ease-in-out;
+}
+.range-slider__range::-moz-range-thumb:hover {
+    background: #1abc9c;
+}
+.range-slider__range:active::-moz-range-thumb {
+    background: #1abc9c;
+}
+.range-slider__range:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 6px #1abc9c;
+}
+
+.range-slider__value {
+    display: inline-block;
+    position: absolute;
+    width: fit-content;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: #2c3e50;
+    padding: 5px 15px;
+    margin-top: 10px;
+}
+
+.range-slider__value:after {
+    position: absolute;
+    top: 8px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #2c3e50;
+    border-bottom: 7px solid transparent;
+    content: "";
+}
+
+::-moz-range-track {
+    background: #d7dcdf;
+    border: 0;
+}
+
+input::-moz-focus-inner, input::-moz-focus-outer {
+    border: 0;
+}
+
+/**** 1D sliders with labels and SAM images ****/
+
+.range-slider .endLabel {
+    float:right;
+    width: 12%;
+}
+
+.range-slider img {
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+.range-slider span {
+    font-size: small;
+    margin-left: 0px;
+}
+
+/* 2D plot canvas*/
+
+.plotCanvas {
+    border:1px solid grey;
+    width: 100%;
+    height:fit-content;
+    background: #ffffff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+
+#save_selection_btn, #retrieveDefaultListBtn,
+#valence_clear_btn, #valence_reannotate_btn, #valence_view_data_btn, #valence_CSV_btn, 
+#arousal_clear_btn, #arousal_reannotate_btn, #arousal_view_data_btn, #arousal_CSV_btn,
+#dominance_clear_btn, #dominance_reannotate_btn, #dominance_view_data_btn, #dominance_CSV_btn,
+#clearAll_1Dbtn, #view_Alldata_btn, #saveAll_1Dbtn,
+#clear_btn, #reannotate_btn, #td_view_data_btn, #td_CSV_btn  {
+    margin-top: 1%;
+    border: rgba(0,136,169,1);
+    background-color: rgba(0,136,169,1); 
+    color: #FFFFFF; 
+}
+
+#save_selection_btn:hover, #retrieveDefaultListBtn:hover,
+#valence_clear_btn:hover, #valence_reannotate_btn:hover, #valence_view_data_btn:hover, #valence_CSV_btn:hover,
+#arousal_clear_btn:hover, #arousal_reannotate_btn:hover, #arousal_view_data_btn:hover, #arousal_CSV_btn:hover,
+#dominance_clear_btn:hover, #dominance_reannotate_btn:hover, #dominance_view_data_btn:hover, #dominance_CSV_btn:hover,
+#clearAll_1Dbtn:hover, #view_Alldata_btn:hover, #saveAll_1Dbtn:hover,
+#clear_btn:hover, #reannotate_btn:hover, #td_view_data_btn:hover, #td_CSV_btn:hover {
+    border: #e75100;
+    background-color: #e75100; 
+    color: #FFFFFF; 
+}

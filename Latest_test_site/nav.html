@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Navigation</title>
+        <!-- Add icon library -->
+        <link 
+        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" 
+        />
+        <link href="navStyle.css" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    </head>
+
+    <body>
+        <header>   
+            <div class="website_name">
+                <img src="resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo">
+                <h3>EmotionGUI</h3>
+            </div>
+            <nav>
+                <ul class="nav_links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="visualize.html">Visualise</a></li>
+                    <li class="active"><a href="annotation.html">Annotation</a></li>
+                    <li><a href="live_audio.html">Live Audio</a></li>      
+                </ul>
+            </nav>
+            <div class="dropdown">
+                <button class="dropbtn">Help 
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                    <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                    <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
+                    <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+                </div>
+            </div> 
+        </header>
+    </body>
+</html>
