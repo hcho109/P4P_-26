@@ -1,8 +1,18 @@
-# EmotionGUI
+# EmotionGUI - UoA
+
+Part 4 Research Project 2023(project #26) ECSE Department, University of Auckland
 
 This repository contains all the required files for deploying the website on a server.
 
-## Folder Structure
+## Introduction
+
+## Annotation
+
+## Visualisation
+
+## Live Audio Recording
+
+
 
 - **about**: Contains HTML files needed for the help pages.
 
