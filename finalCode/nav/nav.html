@@ -12,7 +12,7 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" 
         />
-        <link href="css/navStyle.css" rel="stylesheet" type="text/css" />
+        <link href="navStyle.css" rel="stylesheet" type="text/css" />
 
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -22,15 +22,15 @@
     <body>
         <header>   
             <div class="website_name">
-                <img src="resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo">
+                <img src="../resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo">
                 <h3>EmotionGUI</h3>
             </div>
             <nav>
                 <ul class="nav_links">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="visualize.html">Visualise</a></li>
-                    <li class="active"><a href="annotation.html">Annotation</a></li>
-                    <li><a href="live_audio.html">Live Audio</a></li>      
+                    <li><a href="../home/home.html">Home</a></li>
+                    <li><a href="../visualisation/visualise.html">Visualise</a></li>
+                    <li class="active"><a href="../annotation/annotation.html">Annotation</a></li>
+                    <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
                 </ul>
             </nav>
             <div class="dropdown">
@@ -38,10 +38,10 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
-                    <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-                    <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
-                    <button onclick = "createPopupWin('#aboutLiveAudio', 'Live Audio', 1000, 650);">Live Audio</button>
+                    <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                    <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                    <button onclick = "createPopupWin('./about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+                    <button onclick = "createPopupWin('./about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
                 </div>
             </div> 
         </header>

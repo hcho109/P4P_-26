@@ -15,9 +15,9 @@
     <!-- Add papaParse library to extract csv-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="shortcut icon" href="#" />
-    <link href="css/annotationStyle.css" rel="stylesheet" type="text/css" />
-    <link href="css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
-    <link href="css/navStyle.css" rel="stylesheet" type="text/css" />
+    <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
+    <link href="../css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+    <link href="../nav/navStyle.css" rel="stylesheet" type="text/css" />
   
   </head>
 
@@ -26,15 +26,15 @@
     <!-- Top navigation -->
     <header>   
       <div class="website_name">
-          <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
+          <img src="../resources/University_of_Auckland_logo.png" alt = "UoA logo">
           <h3>EmotionGUI</h3>
       </div>
       <nav>
           <ul class="nav_links">
-            <li><a href="home.html">Home</a></li>
+            <li><a href="../home/home.html">Home</a></li>
             <li><a class="active" href="annotation.html">Annotation</a></li>
-            <li><a href="visualise.html">Visualise</a></li>
-            <li><a href="liveAudio.html">Live Audio</a></li>      
+            <li><a href="../visualisation/visualise.html">Visualise</a></li>
+            <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
           </ul>
       </nav>
       <div class="dropdown">
@@ -42,10 +42,10 @@
               <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-              <button onclick = "createPopupWin('#aboutEmotionGUI', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
-              <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-              <button onclick = "createPopupWin('#aboutVisualise', 'Visualise', 1000, 650);">Visualise</button>
-              <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
+            <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+            <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+            <button onclick = "createPopupWin('../about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+            <button onclick = "createPopupWin('../about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
           </div>
       </div> 
     </header>
@@ -108,7 +108,7 @@
             
             <!-- categorical tab content-->
             <div class="EMtabContent">
-              <button class="help_popup_btn" onclick="createPopupWin('about/aboutDisc.html',
+              <button class="help_popup_btn" onclick="createPopupWin('../about/aboutDisc.html',
               'About', 900, 600);">
                 <i class="fas fa-question-circle fa-2xl" style="color: rgb(23, 60, 154);"></i>
               </button>
@@ -156,7 +156,7 @@
             
             <!-- 1D tab content-->
             <div class="EMtabContent">
-              <button class="help_popup_btn" onclick="createPopupWin('about/about1D.html',
+              <button class="help_popup_btn" onclick="createPopupWin('../about/about1D.html',
               'About', 900, 600);">
                 <i class="fas fa-question-circle fa-2xl" style="color: #ff1500;"></i>
               </button>
@@ -184,7 +184,7 @@
                 <span class="range-slider__value">0</span><br>
                 <span>Unhappy</span>
                 <span class="endLabel">Happy</span>
-                <img class="samPics" src="resources/valenceSAM.png" alt="SAM valence images">
+                <img class="samPics" src="../resources/valenceSAM.png" alt="SAM valence images">
                 <p id="valence__update-note"> Start annotating by playing a media file and moving the Valence slider. </p>
 
               </div>
@@ -202,7 +202,7 @@
                 <span class="range-slider__value">0</span><br>
                 <span>Calm</span>
                 <span class="endLabel">Excited</span>
-                <img class="samPics" src="resources/arousalSAM.png" alt="SAM arousal images">
+                <img class="samPics" src="../resources/arousalSAM.png" alt="SAM arousal images">
                 <p id="arousal__update-note"> Start annotating by playing a media file and moving the Arousal slider. </p>
               </div>
               <hr>
@@ -219,7 +219,7 @@
                 <span class="range-slider__value">0</span><br>
                 <span>Submissive</span>
                 <span class="endLabel">Confident</span>
-                <img class="samPics" src="resources/dominanceSAM.png" alt="SAM dominance images">
+                <img class="samPics" src="../resources/dominanceSAM.png" alt="SAM dominance images">
                 <p id="dominance__update-note"> Start annotating by playing a media file and moving the Dominance slider. </p>
               </div>
               <hr>
@@ -238,7 +238,7 @@
             
             <!-- 2D tab content-->
             <div class="EMtabContent">
-              <button class="help_popup_btn" onclick="createPopupWin('about/about2D.html',
+              <button class="help_popup_btn" onclick="createPopupWin('../about/about2D.html',
               'About', 900, 600);">
                 <i class="fas fa-question-circle fa-2xl" style="color: #04AA6D;"></i>
                 <span class="helpPopupText" id="2dhelpPopup"></span>
@@ -321,7 +321,7 @@
       var canvas_spec=document.getElementById("canvas_spectrogram");
       var ctx_spec=canvas_spec.getContext("2d");
       var img = new Image();
-      img.src = "resources/spec.png";
+      img.src = "../resources/spec.png";
       img.onload = function(){
         drawImageScaled(img,ctx_spec)
       }

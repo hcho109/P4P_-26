@@ -13,9 +13,9 @@
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <link rel="shortcut icon" href="#" />
-        <link href="css/annotationStyle.css" rel="stylesheet" type="text/css" />
-        <link href="css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
-        <link href="css/navStyle.css" rel="stylesheet" type="text/css" />
+        <link href="../annotation/annotationStyle.css" rel="stylesheet" type="text/css" />
+        <link href="../css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+        <link href="../nav/navStyle.css" rel="stylesheet" type="text/css" />
         <link href="homePage.css" rel="stylesheet" type="text/css" /> <!-- css file for home page-->
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
@@ -26,15 +26,15 @@
         <!-- Top navigation -->
         <header>   
             <div class="website_name">
-                <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
+                <img src="../resources/University_of_Auckland_logo.png" alt = "UoA logo">
                 <h3>EmotionGUI</h3>
             </div>
             <nav>
                 <ul class="nav_links">
                   <li><a class="active" href="home.html">Home</a></li>
-                  <li><a href="annotation.html">Annotation</a></li>
-                  <li><a href="visualise.html">Visualise</a></li>
-                  <li><a href="liveAudio.html">Live Audio</a></li>      
+                  <li><a href="../annotation/annotation.html">Annotation</a></li>
+                  <li><a href="../visualisation/visualise.html">Visualise</a></li>
+                  <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
                 </ul>
             </nav>
             <div class="dropdown">
@@ -43,9 +43,9 @@
                 </button>
                 <div class="dropdown-content">
                     <button onclick = "createPopupWin('home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
-                    <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-                    <button onclick = "createPopupWin('about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
-                    <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
+                    <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                    <button onclick = "createPopupWin('../about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+                    <button onclick = "createPopupWin('../about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
                 </div>
             </div> 
           </header>
@@ -62,7 +62,7 @@
                 </p>
                 <div class="va-container">
                     <div id="VA_sec1" class="va-section">
-                        <img id="VA_Plot" src="resources/VAplotIMG.png">
+                        <img id="VA_Plot" src="../resources/VAplotIMG.png">
                     </div>
                     <div id="VA_sec2" class="va-section">
                         <p class="text"> <b>Valence - </b>The intensity(Exciting ------- Calm) of an emotion </p>
@@ -127,8 +127,8 @@
                 <h3 class="mini"> Demo: </h3>
     
                     <video class = "demo" width="70%" height="auto" controls>
-                        <source src="resources/demo_emotionGUI.mp4" type="video/mp4"> 
-                        <source src="resources/demo_emotionGUI.ogg" type="video/ogg"> 
+                        <source src="../resources/demo_emotionGUI.mp4" type="video/mp4"> 
+                        <source src="../resources/demo_emotionGUI.ogg" type="video/ogg"> 
                     </video>
                 <br>
             </div>
@@ -140,7 +140,7 @@
                 <h3>Want to learn more about speech emotion?</h3>
                 <p class="text"> The Speech Research Group at the University of Auckland consists of engineers, linguists, and educational
                     researchers focussing on different aspects of speech research. <br> For more information visit the official website for <a href="https://speechresearch.auckland.ac.nz"> UoA Speech Research Group</a>. </p>
-                <img class="image_speech" src="resources/uoa_speech_research.png" width='60%' height = 'auto'>
+                <img class="image_speech" src="../resources/uoa_speech_research.png" width='60%' height = 'auto'>
             </div>
             
             <!-------- automatic Guide popup ---------->
@@ -170,7 +170,7 @@
                 });
             </script> -->
     
-            <script src="annotation_js/helpWinScript.js"></script>
+            <script src="../annotation/annotation_js/helpWinScript.js"></script>
     
         </body>
     

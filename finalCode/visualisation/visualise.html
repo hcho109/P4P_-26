@@ -13,9 +13,9 @@
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
         <link rel="shortcut icon" href="#" />
-        <link href="css/annotationStyle.css" rel="stylesheet" type="text/css" />
-        <link href="css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
-        <link href="css/navStyle.css" rel="stylesheet" type="text/css" />
+        <link href="../annotation/annotation_js/" rel="stylesheet" type="text/css" />
+        <link href="../css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
+        <link href="../nav/navStyle.css" rel="stylesheet" type="text/css" />
         <link href="visualpage.css" rel="stylesheet" type="text/css" /> <!-- css file for visual page-->
 
         <!-- Py-Script header files -->
@@ -53,15 +53,15 @@
     <!-- Top navigation -->
     <header>   
         <div class="website_name">
-            <img src="resources/University_of_Auckland_logo.png" alt = "UoA logo">
+            <img src="../resources/University_of_Auckland_logo.png" alt = "UoA logo">
             <h3>EmotionGUI</h3>
         </div>
         <nav>
             <ul class="nav_links">
-              <li><a href="home.html">Home</a></li>
-              <li><a href="annotation.html">Annotation</a></li>
+              <li><a href="../home/home.html">Home</a></li>
+              <li><a href="../annotation/annotation.html">Annotation</a></li>
               <li><a class="active" href="visualise.html">Visualise</a></li>
-              <li><a href="liveAudio.html">Live Audio</a></li>      
+              <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
             </ul>
         </nav>
         <div class="dropdown">
@@ -69,10 +69,10 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <button onclick = "createPopupWin('about/aboutEmotionGUI.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
-                <button onclick = "createPopupWin('about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
-                <button onclick = "createPopupWin('about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
-                <button onclick = "createPopupWin('about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
+                <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
+                <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
+                <button onclick = "createPopupWin('../about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
+                <button onclick = "createPopupWin('../about/aboutLiveAudio.html', 'Live Audio', 1000, 650);">Live Audio</button>
             </div>
         </div> 
       </header>
@@ -138,7 +138,7 @@
         <!------------------ Right column ------------------------->
         <div class="split right">
             <div class="centered">
-                <img id = "hide_image" src="resources/VAplotIMG.png">
+                <img id = "hide_image" src="../resources/VAplotIMG.png">
                 <div id="plot"> </div>
                 <button id="saveButton" class="py-button" onclick="savePlotAsImage()" style="display: none;"> Save Plot</button>
                 <button id="clearButton" class="py-button" onclick="window.location.reload(true)" style="display: none;"> Clear Plot</button>
@@ -338,11 +338,11 @@
         <!-- <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script> -->
         <!-- <script src="bundle.js"></script> -->
         <!-- Help popup javascript -->
-        <script src="annotation_js/helpWinScript.js"></script>
-        <script src="annotation_js/mediaControls.js"></script>
-        <script src="csv.js"></script> <!-- CSV javascript -->
-        <script src="image_utils.js"></script> <!-- downloading the plots javascript -->
-        <script src="audio.js"></script> <!-- Audio waveform javascript -->
+        <script src="../annotation/annotation_js/helpWinScript.js"></script>
+        <script src="../annotation/annotation_js/mediaControls.js"></script>
+        <script src="visualise_js/csv.js"></script> <!-- CSV javascript -->
+        <script src="visualise_js/image_utils.js"></script> <!-- downloading the plots javascript -->
+        <script src="visualise_js/audio.js"></script> <!-- Audio waveform javascript -->
 
     </body>
 </html> 
