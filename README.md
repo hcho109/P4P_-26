@@ -28,6 +28,7 @@ The annotation section allows users to visualise speech emotions on a 2D Valence
 The Live-Audio section provides a real-time audio recording feature that can help create data for different emotional training and annotation tasks. Users can also visualise this live audio as a waveform or a spectrograme on the screen.
 
 ## Folders
+![code folder](https://github.com/hcho109/P4P_-26/assets/79812899/a47fcc97-969d-4bd3-abda-e7695731e582)
 
 - **about**: Contains HTML files needed for the help pages.
 
