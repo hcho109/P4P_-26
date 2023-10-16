@@ -1,9 +1,11 @@
+// Get references to HTML elements
 const myForm = document.getElementById("form");
 const csvFile = document.getElementById("file");
 const tableContainer = document.getElementById("csv-table-container");
 const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
 
+// Arrays to store CSV data
 var valence_arr = [];
 var arousal_arr = [];
 var time_arr = [];
@@ -21,6 +23,7 @@ function processCSV() {
         const text = e.target.result;
         array = csvToArray(text);
 
+        // Extract relevant data from CSV and store in arrays
         for (let i = 1; i < array.length; i++) {
             const values = array[i];
             if (values.length >= 3) {
@@ -41,8 +44,6 @@ function processCSV() {
         console.log("Valence:", valence_arr); // Debugging
         console.log("Arousal:", arousal_arr); // Debugging
         console.log("Time:", time_arr); // Debugging
-
-        imageToHide.style.display = "none";
     };
 
     reader.readAsText(input);
@@ -52,11 +53,10 @@ function processCSV() {
 document.getElementById("submit_btn").addEventListener("click", function (e) {
     e.preventDefault(); // Prevent the default form submission behavior
     processCSV(); // Call the function to process the CSV
-    document.getElementById("outputText").textContent = "CSV upload complete!!!!!"; 
-
+    document.getElementById("outputText").textContent = "CSV upload complete!!!!!";
 });
 
-
+// Function to convert CSV string to a 2D array
 function csvToArray(str, delimiter = ",") {
     const lines = str.split("\n");
     var array = lines.map(line => line.split(delimiter).map(cell => cell.replace(/"/g, '')));
@@ -82,6 +82,7 @@ function createCSVTable(data) {
     });
     table.appendChild(headerRow);
 
+    // Populate the table with data rows
     for (let i = startIndex + 1; i < endIndex; i++) { // Start from index 1 to skip the header row
         const rowData = data[i];
         const row = document.createElement("tr");
@@ -107,8 +108,6 @@ function createCSVTable(data) {
     updateNavigationButtons();
 }
 
-
-
 // Event listener for the "Next" button
 nextButton.addEventListener("click", function () {
     if ((currentPage + 1) * 10 < time_arr.length) {
@@ -125,11 +124,11 @@ prevButton.addEventListener("click", function () {
     }
 });
 
-
+// Function to hide an image and display buttons
 function hideImage() {
     // Locate the image element by its id
     let imageElement = document.getElementById("hide_image");
-    
+
     // Set the "hidden" attribute to hide the image
     imageElement.setAttribute("hidden", "hidden");
 

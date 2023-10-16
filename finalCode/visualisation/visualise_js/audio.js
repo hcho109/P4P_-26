@@ -1,7 +1,7 @@
 "use strict";
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
+window.AudioContext = window.AudioContext || window.webkitAudioContext; // Ensure AudioContext is defined
 
-var arrayBuffer = null;
+var arrayBuffer = null; // Initialize arrayBuffer variable
 
 document.addEventListener("DOMContentLoaded", function () {
     class renderWave {
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.playheadPosition = 0;
             this.data = [];
 
+            // Event listener to resume AudioContext on user action
             document.body.addEventListener("click", () => {
                 if (this.audioContext.state !== "running") {
                     this.audioContext.resume().then(() => {
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
+            // Process the audio data and draw the waveform
             message
                 .then(arrayBuffer => {
                     return this.audioContext.decodeAudioData(arrayBuffer);
@@ -34,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         normalizedData(audioBuffer) {
+            // Normalize audio data for drawing the waveform
             const rawData = audioBuffer.getChannelData(0);
             const samples = this._samples;
             const blockSize = Math.floor(rawData.length / samples);
@@ -45,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         draw(normalizedData) {
+            // Draw the waveform on the canvas
             const canvas = this.canvas;
             const dpr = window.devicePixelRatio || 1;
             const padding = 10;
@@ -72,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         drawLineSegment(ctx, x, height, width, isEven, colors = this._strokeStyle) {
+            // Draw a segment of the waveform
             ctx.lineWidth = 1;
             ctx.strokeStyle = colors;
             ctx.beginPath();
@@ -82,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         drawData(data) {
+            // Draw all waveform segments
             data.forEach(item => {
                 const colors = this.isPlaying && item.x <= this.playheadPosition * this.canvas.offsetWidth
                   ? "#000000"
@@ -91,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         drawTimeline(percent) {
+            // Draw the timeline based on the playhead position
             let end = Math.ceil(this._samples * percent);
             let start = end - 5 || 0;
             let t = this.data.slice(0, end);
@@ -106,11 +113,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("fileinput").addEventListener("change", function () {
         var audioPlayer = document.getElementById("audio");
 
+        // Create a new renderWave instance
         var wave = new renderWave(this.files[0].arrayBuffer());
+
+        // Set the audio source and update the UI
         audioPlayer.src = URL.createObjectURL(this.files[0]);
 
         let playerStatus = document.getElementById("AudioPlayerStatus");
 
+        // Event listeners for play, pause, and end of audio playback
         audioPlayer.addEventListener("play", () => {
             wave.isPlaying = 1;
             playerStatus.textContent = "Audio is playing...";
@@ -126,14 +137,17 @@ document.addEventListener("DOMContentLoaded", function () {
             playerStatus.textContent = "Audio ended...";
         });
 
+        // Event listener for duration change
         audioPlayer.addEventListener('durationchange', function() {
             duration = this.duration;
         });
 
+        // Load the array buffer for future use
         this.files[0].arrayBuffer().then(buffer => {
             arrayBuffer = buffer;
         });
 
+        // Update the timeline during audio playback
         audioPlayer.ontimeupdate = function () {
             let percent = this.currentTime / this.duration;
             wave.drawTimeline(percent);
@@ -142,8 +156,10 @@ document.addEventListener("DOMContentLoaded", function () {
             currentTimeInSec = currentTime.toFixed(2);
         };
 
+        // Event listener for feature extraction button click
         document.getElementById("extractFeaturesButton").addEventListener("click", async () => {
             if (arrayBuffer) {
+                // Feature extraction using Meyda library
                 const frameLengthT = 0.02;
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
@@ -160,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     },
                 });
 
+                // Start audio playback and feature extraction
                 sourceNode.start();
                 sourceNode.onended = () => {
                     sourceNode.disconnect();
