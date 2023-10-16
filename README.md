@@ -9,14 +9,19 @@ This repository contains all the required files for deploying the website on a s
 ## Introduction
 EmotionGUI is a user-intuitive tool for the visualisation and annotation of emotions in speech and video signals. This tool is currently intented for **Research Purposes** that will potentially be useful for speech based technologies in the future.
 
+## Demo
+https://github.com/hcho109/P4P_-26/assets/79812899/de74bbd6-4d78-4dbd-9fae-5be15383e504
 
 ## Annotation
+![annotation](https://github.com/hcho109/P4P_-26/assets/79812899/8481cf7d-67c3-4167-a5ad-49dba93c0b21)
 The annotation section allows users to annotate emotions of a media(audio or video) file using categorical(discrete), 1D(Arousal vs time, Valence vs time and Dominance vs time)) or 2D model(Aroiusal, Valence vs time).
 
 ## Visualisation
+![visualise](https://github.com/hcho109/P4P_-26/assets/79812899/9254a8fe-ba48-41d4-9d0f-480f48634a78)
 The annotation section allows users to visualise speech emotions on a 2D Valence-Arousal plot that is encoded as a CSV file or a WAV file. (Machine learning emotion prediction using the WAV file upload is currently not functional)
 
 ## Live Audio Recording
+![liveAudio](https://github.com/hcho109/P4P_-26/assets/79812899/04f6baa6-2e96-43b2-91e2-bcafc8187619)
 The Live-Audio section provides a real-time audio recording feature that can help create data for different emotional training and annotation tasks. Users can also visualise this live audio as a waveform or a spectrograme on the screen.
 
 ## Folders
