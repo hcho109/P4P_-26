@@ -1,5 +1,5 @@
-/* Video player JS
-    Need to tidy up (merge into mediaControls.js??) */
+/* Video player JS 
+    upload video file when a video file is selected from user*/
 function formatTime(time) {
     var minutes = Math.floor(time / 60);
     var seconds = Math.floor(time % 60);
@@ -18,7 +18,6 @@ function handleVideoFileChange() {
     // Load the video file
     var videoPlayer = document.getElementById('video');
     videoPlayer.src = URL.createObjectURL(videoFiles[0]);
-    // videoPlayer.play();
 
     let playerStatus = document.getElementById("playerStatus");
 

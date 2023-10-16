@@ -25,11 +25,16 @@
                 <img src="../resources/University_of_Auckland_logo.png" width='50px' height='auto' alt = "UoA logo">
                 <h3>EmotionGUI</h3>
             </div>
+            <!-- Navigation links section -->
             <nav>
                 <ul class="nav_links">
+                    <!-- Home link -->
                     <li><a href="../home/home.html">Home</a></li>
+                     <!-- Visualise link -->
                     <li><a href="../visualisation/visualise.html">Visualise</a></li>
+                    <!-- Annotation link (active) -->
                     <li class="active"><a href="../annotation/annotation.html">Annotation</a></li>
+                     <!-- Live Audio link -->
                     <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
                 </ul>
             </nav>
@@ -38,6 +43,7 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
+                    <!-- Various help options with onclick functions to create popup windows -->
                     <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
                     <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
                     <button onclick = "createPopupWin('./about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>

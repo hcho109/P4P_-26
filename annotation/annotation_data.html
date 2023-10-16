@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annotation Data Display</title>
     <style>
+     /* CSS styles for the table */
         body {
             font-family: "Roboto", sans-serif;
             font-size: 14px;
@@ -42,6 +43,7 @@
     <h2>Annotated Data</h2>
     <table>
         <thead>
+            <!-- Table header row for time, valence, arousal, and dominance -->
             <tr>
                 <th>Time</th>
                 <th>Valence</th>
@@ -52,15 +54,17 @@
             </tr>
         </thead>
         <tbody id="data-body">
-            <!-- Data rows will be added here -->
+            <!-- Data rows will be added here dynamically -->
         </tbody>
     </table>
 
-    <!-- Inside annotation_data.html -->
+    <!-- JavaScript to populate and format the table based on stored data -->
 <script>
+    // Retrieve data type and view type from local storage
     var data_type = localStorage.getItem('data_type');
     var view_type = localStorage.getItem('1d_annotation_type'); // Get the button view type
 
+    // Get table body element
     var body = document.getElementById('data-body');
 
     var valenceTimeHeader = document.querySelector('table').querySelector('th:nth-child(1)');
@@ -71,6 +75,7 @@
     var arousalHeader = document.querySelector('table').querySelector('th:nth-child(4)');
     var dominanceHeader = document.querySelector('table').querySelector('th:nth-child(6)');
 
+    // Populate the table based on the selected view type
     if (data_type === '1D') {
         var valence_time_points = JSON.parse(localStorage.getItem('1d_valence_time_points'));
         var arousal_time_points = JSON.parse(localStorage.getItem('1d_arousal_time_points'));
@@ -139,6 +144,7 @@
             }
         }
     } else if (data_type === '2D') {
+        // Retrieve 2D data points from local storage
         var time_points_2d = JSON.parse(localStorage.getItem('time_points'));
         var valence_points_2d = JSON.parse(localStorage.getItem('valence_points'));
         var arousal_points_2d = JSON.parse(localStorage.getItem('arousal_points'));

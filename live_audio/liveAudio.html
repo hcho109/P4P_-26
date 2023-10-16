@@ -2,28 +2,27 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <!-- Meta tags for character set and viewport settings -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Title of the webpage -->
         <title>EmotionalGUI Live Audio WebPage</title>
-        <!-- Add icon library -->
-        <link 
-        rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-        crossorigin="anonymous" referrerpolicy="no-referrer" 
-        />
+
+        <!-- External CSS and JavaScript libraries -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+        <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> <!--for capturing the images of the plots-->
+
+        <!-- Custom CSS files for styling -->      
         <link rel="shortcut icon" href="#" />
         <link href="../annotation/annotationStyle.css" rel="stylesheet" type="text/css" />
         <link href="../css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
         <link href="../nav/navStyle.css" rel="stylesheet" type="text/css" />
         <link href="liveAudioStyle.css" rel="stylesheet" type="text/css" />
-        
-        <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
-        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> <!--for capturing the images of the plots-->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"> </script>
-        
     </head>
 
     <body>
@@ -31,9 +30,11 @@
         <!-- Top navigation -->
         <header>   
         <div class="website_name">
+            <!-- UoA logo -->
             <img src="../resources/University_of_Auckland_logo.png" width='60px' height='auto' alt = "UoA logo">
             <h3>EmotionGUI</h3>
         </div>
+         <!-- Navigation links -->
         <nav>
             <ul class="nav_links">
                 <li><a href="../home/home.html">Home</a></li>
@@ -42,11 +43,13 @@
                 <li><a class="active" href="liveAudio.html">Live Audio</a></li>      
             </ul>
         </nav>
+        <!-- Help dropdown menu -->
         <div class="dropdown">
             <button class="dropbtn">Help 
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
+                <!-- Buttons to open help windows for different sections of the website -->
                 <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
                 <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
                 <button onclick = "createPopupWin('../about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>
@@ -55,10 +58,13 @@
         </div> 
         </header>
 
+        <!-- Main content area -->
         <div class="centered">
             <h2> Live Audio Recording </h2>
+            <!-- Container for recording controls -->
             <div class="container">
                 <div class="record_control_container">
+                    <!-- Buttons to start and stop audio recording -->
                     <div class="rec_buttons">
                         <button class="start_btn" id="startRecording">Start</button>
                         <button class="stop_btn" id="stopRecording">Stop</button><br>
@@ -66,6 +72,7 @@
                     </div>
                 </div>
 
+                <!-- Container for save buttons -->
                 <div class="Btns_container">
                     <form class="save_buttons">
                         <input type="button" class= rec_save_btn id="saveRecording" value="Download Audio Recording">
@@ -73,13 +80,16 @@
                 </div>
             </div>
 
+            <!-- Container for audio player and visualizations -->
             <div class="audioData_container">
                 <audio id="audioElement" src="" controls="true"></audio>
                 <div class="container_wrapper">
+                    <!-- Container for real-time spectrogram visualization -->
                     <div class="canvas_container">
                         <p class="subtitle">Real-Time Spectrogram</p>
                         <div class="canvas_audio" id="canvas_spectrogram"></div>
                     </div>
+                    <!-- Container for audio waveform visualization -->
                     <div class="canvas_container">
                         <p class="subtitle">Audio Waveform</p>
                         <canvas class="canvas_audio" id="canvas_waveform" height="512" width="700"></canvas>
@@ -91,22 +101,20 @@
 
     </body>
 
-    <!-- Help popup javascript -->
+    <!-- JS for popup Hel-->
     <script src="../annotation/annotation_js/helpWinScript.js"></script>
 
-     <!-- downloading the plots javascript -->
-
-    <!-- Spectrogram javascript -->
+    <!-- Spectrogram JS -->
     <script src="liveAudio_js/spectrogram_script.js"></script>
     <script src="liveAudio_js/three.js"></script>
 
-    <!-- Audio recording javascript -->
+    <!-- Audio recording JS -->
     <script src="liveAudio_js/rec_script.js"></script>
 
 
-    <!-- draw vertex Shader
-        manages mesh's vetices
-        modify positions from cpu onto graphics card-->
+    <!-- For spectrogram display -->
+    <!-- Vertex shader script for mesh manipulation -->
+    <!-- draw vertex Shader, manages mesh's vetices, modify positions from cpu onto graphics card-->
     <script type="x-shader/x-vertex" id="vertexshader">
         attribute float displacement;
         uniform vec3 vLut[256];
@@ -120,16 +128,12 @@
         }
     </script>
     
-    <!-- draw fragment Shader
-        takes all infor and print values to pixels on the screen-->
+    <!-- Fragment shader script for pixel coloration -->
+    <!-- draw fragment Shader, takes all infor and print values to pixels on the screen-->
     <script type="x-shader/x-fragment" id="fragmentshader">
         varying vec3 vColor;
         void main(){
             gl_FragColor = vec4(vColor,1.0);
         }
     </script>
-
-    <!-- draw mesh for spectrogram display -->
-
-
 </html>

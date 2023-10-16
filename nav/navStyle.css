@@ -1,12 +1,16 @@
-/* Top Navigation bar Styles */
+/* CSS Styles for Top Navigation Bar */
+
+/* Import Montserrat font with specific weight */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
+/* Apply styles to all elements within the document */
 * {
     box-sizing: border-box;
     margin: 0;
     padding:0;
 }
 
+/* Styles for navigation links and dropdown button */
 .nav_links li a, .dropbtn{
     font-family: "Montserrat", sans-serif;
     font-weight: 550;
@@ -31,6 +35,8 @@ header {
     float: left;
     align-items: center;
 }
+
+/* Styles for the logo image */
 .website_name img {
     padding: 5px;
     width: 70px;
@@ -44,10 +50,7 @@ header {
     color:white;
 }
 
-/* .logo {
-    cursor: pointer;
-} */
-
+/* Styles for navigation links list */
 .nav_links {
     list-style: none;
 }
@@ -62,16 +65,20 @@ header {
     position: relative;
 }
 
+/* Styles for navigation links */
 .nav_links li a {
     transition: all 0.3s ease 0s;
     text-transform: uppercase;
     text-align: center;
 }
 
+/* Styles for navigation links hover effect */
 .nav_links li a:hover {
     color: #0088a9;
 }
 
+
+/* Styles for navigation links underline animation */
 .nav_links li a::before {
     content:'';
     display: block;
@@ -83,10 +90,12 @@ header {
     transition: all ease-in-out 250ms;   
 }
 
+/* Styles for navigation links hover underline animation */
 .nav_links li a:hover::before {
     width:100%
 }
 
+/* Styles for active navigation link */
 .nav_links li a.active {
     color:  #e07001;
 }
@@ -131,6 +140,7 @@ header {
     font-size: 15px;
 }
 
+/* Styles for dropdown content button hover effect */
 .dropdown-content button:hover {
     background-color: #ddd;
 }

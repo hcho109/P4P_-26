@@ -1,5 +1,5 @@
 /* 2D Emotion Eodel Annotation JS
-   Draw 2d V-A plot on anvas and save plots every 300ms*/
+    On 2D V-A plot, Save plot data every 20ms and Draw plot data every 200ms*/
 
 // Function to convert x and y coordinates to canvas coordinates
 function toCanvasX(x) {

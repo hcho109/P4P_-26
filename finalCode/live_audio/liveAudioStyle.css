@@ -1,5 +1,6 @@
-/* CSS Styles for Live Audio webpage */
+/* LiveAudio Webpage Styles*/
 
+/* Enable smooth scrolling behavior for the entire webpage */
 html {
     scroll-behavior: smooth;
 }
@@ -13,6 +14,7 @@ body {
     order: 1;
 }
 
+/* Center the content on the page */
 .centered {
     position: absolute;
     margin-top: 100px;
@@ -36,6 +38,7 @@ h2 {
     font-family: "Montserrat", sans-serif;
 }
 
+/* Styling for the container of audio visualizations; audio playback, spectrogram and waveform */
 .audioData_container {
     display: flex; /* Use flexbox */
     flex-direction: column; /* Stack elements vertically within the container */
@@ -48,17 +51,21 @@ h2 {
     
 }
 
+/* Styling for the container that holds two visualizations side by side */
 .container_wrapper{
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
+
+/* Individual visualization containers */
 .canvas_container {
     flex-direction: column;
     align-items: center;
     width: 48%;
 }
 
+/* Canvas elements used for audio visualizations */
 .canvas_audio {
     height: 350px;
     background: #f9f9f9;
@@ -69,11 +76,13 @@ h2 {
 }
 
 
+/* Audio player */
 audio {
     width: 100%;
     margin-top: 10px;
 }
 
+/* Main recording and control container */
 .container {
     width: 80%;
     display: flex;
@@ -82,6 +91,7 @@ audio {
     border: 1px solid #ccc;
 }
 
+/* Recording control and save button containers */
 .record_control_container, .Btns_container {
     background: #fff;
    
@@ -112,20 +122,24 @@ audio {
     transition: .3s;
 }
 
+/* Start recording button */
 .start_btn {
     background-color: rgb(38, 222, 47);
 }
 
+/* Stop recording button */
 .stop_btn {
     background-color: rgb(255, 47, 47);
 }
 
+/* Hover effect for start recording button */
 .rec_buttons .start_btn:hover {
     background-color: rgb(25, 141, 31);
     color: white;
     transition: .3s;
 }
 
+/* Hover effect for stop recording button */
 .rec_buttons .stop_btn:hover {
     background-color: rgb(200, 45, 45);
     color: white;
@@ -147,31 +161,25 @@ audio {
     margin-bottom: 10px;
 }
 
-#saveRecording {
-    width: fit-content;
-}
-
+/* Save button on hover */
 .save_buttons input[type="button"]:hover {
     background-color: #555555;
     color: white;
 }
 
 
-#saveRecording, #saveSpectrogram, #saveWaveform {
+#saveRecording{
+    width: fit-content;
     margin-top: 1%;
     border: rgba(0,136,169,1);
     background-color: rgba(0,136,169,1); 
     color: #FFFFFF;
 }
 
-#saveRecording:hover, #saveSpectrogram:hover, #saveWaveform:hover {
+/* Hover effect for save button for recoding */
+#saveRecording:hover{
     border: #e75100;
     background-color: #e75100; 
     color: #FFFFFF;
 }
 
-#saveSpectrogram:disabled {
-    background-color: #6d6c6c; 
-    color: #ffffff; 
-    border: #4e4e4e; 
-}

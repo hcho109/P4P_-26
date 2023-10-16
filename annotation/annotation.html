@@ -14,21 +14,24 @@
     />
     <!-- Add papaParse library to extract csv-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+       
+    <!-- Link to custom CSS files -->
     <link rel="shortcut icon" href="#" />
     <link href="annotationStyle.css" rel="stylesheet" type="text/css" />
     <link href="../css/mediaPlayerStyle.css" rel="stylesheet" type="text/css" />
     <link href="../nav/navStyle.css" rel="stylesheet" type="text/css" />
-  
   </head>
 
   <body>
     
     <!-- Top navigation -->
     <header>   
+      <!-- Logo and website name -->
       <div class="website_name">
           <img src="../resources/University_of_Auckland_logo.png" alt = "UoA logo">
           <h3>EmotionGUI</h3>
       </div>
+      <!-- Navigation links -->
       <nav>
           <ul class="nav_links">
             <li><a href="../home/home.html">Home</a></li>
@@ -37,11 +40,13 @@
             <li><a href="../live_audio/liveAudio.html">Live Audio</a></li>      
           </ul>
       </nav>
+      <!-- Help dropdown menu -->
       <div class="dropdown">
           <button class="dropbtn">Help 
               <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
+          <!-- Buttons to open popup windows for help topics -->
             <button onclick = "createPopupWin('../home/home.html', 'EmotionGUI', 1000, 650);">EmotionGUI</button>
             <button onclick = "createPopupWin('../about/aboutAnnotation.html', 'Annotation', 1000, 650);">Annotation</button>
             <button onclick = "createPopupWin('../about/aboutVisualise.html', 'Visualise', 1000, 650);">Visualise</button>

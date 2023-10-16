@@ -1,8 +1,13 @@
 // spectrogram_script.js
+/* Logic for handling visualization of spectrogram
+Generates live spectrogram as audio is being recorded */
 
 "use strict";
 
+// flag to track if the spectrogram is running or not
 let isSpectrogramRunning = false;
+
+// Get the start and stop buttons from the HTML document
 let startButton = document.getElementById("startRecording");
 let stopButton = document.getElementById("stopRecording");
 
@@ -10,6 +15,7 @@ let stopButton = document.getElementById("stopRecording");
 let frequency_samples; // Y resolution
 let DATA = new Uint8Array(frequency_samples); 
 
+// Variables for Three.js
 let camera, scene, renderer;
 let heights, mesh;
 let time_samples; // X resolution
@@ -28,13 +34,12 @@ let yhalfSize;
 let xsegmentSize; //Size of one square
 let ysegmentSize;
 
-
+// Event listener for the start button
 startButton.addEventListener("click", function(){
     if(!isSpectrogramRunning){
         isSpectrogramRunning=true;
-        // Initialise and display the spectrogram
 
-         // Initialize Scene parameters
+        // Initialise and display the spectrogram
         frequency_samples = 256;
         DATA = new Uint8Array(frequency_samples); 
 
@@ -61,6 +66,7 @@ startButton.addEventListener("click", function(){
         xsegmentSize = xsize / xsegments; //Size of one square
         ysegmentSize = ysize / ysegments;
 
+        // Call functions to set up audio processing and visualization
         init();
         animate();
 
@@ -68,26 +74,16 @@ startButton.addEventListener("click", function(){
 
 });
 
+// Event listener for the stop button
 stopButton.addEventListener("click",function(){
     if (isSpectrogramRunning) {
         isSpectrogramRunning = false;
 
-        // Stop the animation loop
-
-        // Disconnect the audio nodes
-        if (SOURCE) {
-            SOURCE.disconnect();
-        }
-
-        // Clear heights data (optional)
-        heights = new Uint8Array(heights.length);
-
-        // Update the geometry to stop displaying the spectrogram
-        update_geometry();
     }
 
 });
 
+// Function to initialize Three.js and set up the scene
 function init() {
     // Place the camera in space
     camera = new THREE.PerspectiveCamera( 27, 1, 1, 1000 );
@@ -203,7 +199,8 @@ function render() {
     update_geometry(); 
     renderer.render( scene, camera );				
 }
-            
+      
+// Function to update the spectrogram visualization
 function update_geometry() {
     ANALYSER.getByteFrequencyData(DATA); // take info temorarily saved in the microphone, do analysis and put into data array
     let start_val = frequency_samples+1;
@@ -221,5 +218,7 @@ function update_geometry() {
 
     //heights.copyWithin(0, start_val, n_vertices+1); // shift all column, delete the first col and add new in the last col
     //heights.set(DATA, end_val-start_val);
+    
+    // Update the geometry with the new heights data
     mesh.geometry.setAttribute('displacement', new THREE.Uint8BufferAttribute(heights, 1));
 }

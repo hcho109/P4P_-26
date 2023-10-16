@@ -1,22 +1,33 @@
-/* let display Audio waveform and Spectrogram
-visualise spectrogram as audio is being recorded  
-generates waveform once recording completes and let users replay the recording */
+/* Logic for handling audio recording, visualization of waveform, and playback.
+Generates waveform once recording completes and let users replay the recording */
   
 "use strict";
+
+// Check if AudioContext is supported by the browser, use the webkit prefixed version for Safari compatibility
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-let isRecordingInProgress = false; // Flag to track if recording is in progress
+// Flag to track if recording is in progress
+let isRecordingInProgress = false; 
 
+// Class for rendering the audio waveform visualization
 class renderWave {
   constructor(message) {
       this._samples = 10000;
       this._strokeStyle = "#3098ff";
+
+      // Create an AudioContext instance
       this.audioContext = new AudioContext();
+
       this.canvas = document.querySelector("#canvas_waveform");
       this.ctx = this.canvas.getContext("2d");
+
       this.isPlaying = false; // Flag to track if audio is currently playing
       this.playheadPosition = 0; // Current position of the playhead (slider)
+
+      // Data array for storing waveform visualization points
       this.data = [];
+
+      // Process the audio data and draw the waveform visualization
       message
           .then(arrayBuffer => {
           return this.audioContext.decodeAudioData(arrayBuffer);
@@ -26,6 +37,8 @@ class renderWave {
           this.drawData(this.data);
       });
   }
+
+  // Normalize audio data and filter samples
   normalizedData(audioBuffer) {
       const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
       const samples = this._samples; // Number of samples we want to have in our final data set
@@ -36,6 +49,8 @@ class renderWave {
       }
       return filteredData;
   }
+
+  // Draw the waveform visualization on the canvas
   draw(normalizedData) {
       // set up the canvas
       const canvas = this.canvas;
@@ -66,6 +81,8 @@ class renderWave {
       }
       return this.data;
   }
+
+  // Draw individual line segments for the waveform visualization
   drawLineSegment(ctx, x, height, width, isEven, colors = this._strokeStyle) {
       ctx.lineWidth = 1; // how thick the line is
       ctx.strokeStyle = colors; // what color our line is
@@ -76,6 +93,7 @@ class renderWave {
       ctx.stroke();
   }
 
+  // Draw the waveform data on the canvas
   drawData(data, playheadPosition) {
     data.forEach(item => {
         const colors = item.x <= playheadPosition * this.canvas.offsetWidth
@@ -86,6 +104,7 @@ class renderWave {
 }
 
 
+  // Draw the timeline based on the playback position
   drawTimeline(percent) {
       let end = Math.ceil(this._samples * percent);
       let start = end - 5 || 0;
@@ -95,6 +114,7 @@ class renderWave {
   }
 }
 
+// Event listener for the "Start Recording" button
 document
   .getElementById("startRecording")
   .addEventListener("click", initFunction);
@@ -115,6 +135,8 @@ function stopMicrophoneStream() {
       audioStream = null;
   }
 }
+
+// Function to initialize audio recording
 function initFunction() {
   if(isRecordingInProgress){
     // If recording is already in progress, stop it
@@ -133,6 +155,7 @@ function initFunction() {
           return window.navigator.mediaDevices.getUserMedia(constraints);
         }
     
+        // Use legacy API for older browsers
         let legacyApi =
           navigator.getUserMedia ||
           navigator.webkitGetUserMedia ||
@@ -151,8 +174,11 @@ function initFunction() {
       function handlerFunction(stream) {
         rec = new MediaRecorder(stream);
         rec.start();
+
+        // Event listener for data available event
         rec.ondataavailable = (e) => {
           audioChunks.push(e.data);
+
           if (rec.state == "inactive") {
             let blob = new Blob(audioChunks, { type: "audio/wav" });
             console.log(blob);
@@ -160,7 +186,6 @@ function initFunction() {
     
             // Tear down after recording.
             rec.stream.getTracks().forEach(t => t.stop())
-            // rec = null
     
             if (audioChunks.length > 0) {
               // Initialize renderWave after recording is stopped
@@ -190,12 +215,14 @@ function initFunction() {
         };
       }
     
+      // Function to start using the browser's microphone
       function startusingBrowserMicrophone(boolean) {
         getUserMedia({ audio: boolean }).then((stream) => {
           handlerFunction(stream);
         });
       }
-    
+ 
+      // Start recording from the browser's microphone
       startusingBrowserMicrophone(true);
     
       function saveRecording() {
@@ -204,7 +231,8 @@ function initFunction() {
           console.log("No recorded audio available.");
           return;
         }
-      
+        
+        // Create a Blob from audio chunks and initiate download  
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(audioBlob);
@@ -224,9 +252,9 @@ function initFunction() {
         console.log(audioChunks)
     
       });
-    
-      
-      document.getElementById("saveRecording").addEventListener("click", saveRecording);
+        
+    // Event listener for the "Download Audio Recording" button
+    document.getElementById("saveRecording").addEventListener("click", saveRecording);
     }
 
 }
