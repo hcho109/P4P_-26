@@ -13,15 +13,18 @@ EmotionGUI is a user-intuitive tool for the visualisation and annotation of emot
 https://github.com/hcho109/P4P_-26/assets/79812899/de74bbd6-4d78-4dbd-9fae-5be15383e504
 
 ## Annotation
-![annotation](https://github.com/hcho109/P4P_-26/assets/79812899/8481cf7d-67c3-4167-a5ad-49dba93c0b21)
+![annotation](https://github.com/hcho109/P4P_-26/assets/79812899/77457974-89a3-4122-a18c-32018d6fd163)
+
 The annotation section allows users to annotate emotions of a media(audio or video) file using categorical(discrete), 1D(Arousal vs time, Valence vs time and Dominance vs time)) or 2D model(Aroiusal, Valence vs time).
 
 ## Visualisation
-![visualise](https://github.com/hcho109/P4P_-26/assets/79812899/9254a8fe-ba48-41d4-9d0f-480f48634a78)
+![visualise](https://github.com/hcho109/P4P_-26/assets/79812899/d89c6295-6564-4c29-9a0f-e53c48bc375d)
+
 The annotation section allows users to visualise speech emotions on a 2D Valence-Arousal plot that is encoded as a CSV file or a WAV file. (Machine learning emotion prediction using the WAV file upload is currently not functional)
 
 ## Live Audio Recording
-![liveAudio](https://github.com/hcho109/P4P_-26/assets/79812899/04f6baa6-2e96-43b2-91e2-bcafc8187619)
+![liveAudio](https://github.com/hcho109/P4P_-26/assets/79812899/55587c0d-c673-4f54-90b8-301710c2e689)
+
 The Live-Audio section provides a real-time audio recording feature that can help create data for different emotional training and annotation tasks. Users can also visualise this live audio as a waveform or a spectrograme on the screen.
 
 ## Folders
